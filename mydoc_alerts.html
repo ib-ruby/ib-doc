@@ -41,7 +41,7 @@
 <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
 
-<link rel="alternate" type="application/rss+xml" title="documentation-theme-jekyll" href="/feed.xml">
+<link rel="alternate" type="application/rss+xml" title="documentation-theme-jekyll" href="https://github.com/feed.xml">
 
     <script>
         $(document).ready(function() {
@@ -228,10 +228,6 @@ $('#toc').on('click', 'a', function() {
 
     
 
-    <a target="_blank" rel="noopener" href="https://github.com/ib-ruby/ib-doc/blob/gh-pages/pages/mydoc/mydoc_alerts.md" class="btn btn-default githubEditButton" role="button"><i class="fa fa-github fa-lg"></i> Edit me</a>
-
-    
-
    <h2 id="about-alerts">About alerts</h2>
 
 <p>Alerts are little warnings, info, or other messages that you have called out in special formatting. In order to use these alerts or callouts, reference the appropriate value stored in the alerts.yml file as described in the following sections.</p>
@@ -245,7 +241,7 @@ $('#toc').on('click', 'a', function() {
 
 <p>Here’s the result:</p>
 
-<div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> <b>Note:</b> This is my note. All the content I type here is treated as a single paragraph.</div>
+<div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> <b>::</b> This is my note. All the content I type here is treated as a single paragraph.</div>
 
 <p>With alerts, there’s just one include property:</p>
 
@@ -273,7 +269,7 @@ $('#toc').on('click', 'a', function() {
 
 <p>Here’s the result:</p>
 
-<div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> <b>Note:</b> This is my note. All the content I type here is treated as a single paragraph. <br /><br /> Now I’m typing on a new line.</div>
+<div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> <b>::</b> This is my note. All the content I type here is treated as a single paragraph. <br /><br /> Now I’m typing on a new line.</div>
 
 <p>The include uses <code class="language-plaintext highlighter-rouge">markdown="span"</code> as an attribute, which means kramdown will process the entire <code class="language-plaintext highlighter-rouge">content</code> as a span. You can’t use block elements such as <code class="language-plaintext highlighter-rouge">p</code> or <code class="language-plaintext highlighter-rouge">div</code> or <code class="language-plaintext highlighter-rouge">pre</code>. If you need these elements, you can either manually surround the content with the HTML from the include, or you can use these tags:</p>
 
@@ -311,7 +307,7 @@ def foo(x):<br />
 
 <p>They function the same except they have a different color, icon, and alert word. You include the different types by selecting the include template you want. Here are samples of each alert:</p>
 
-<div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> <b>Note:</b> This is my note.</div>
+<div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> <b>::</b> This is my note.</div>
 
 <div class="alert alert-success" role="alert"><i class="fa fa-check-square-o"></i> <b>Tip:</b> This is my tip.</div>
 
@@ -420,7 +416,7 @@ def foo(x):<br />
 
 <p>Here’s the result:</p>
 
-<div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> <b>Note:</b> The ib-ruby is pleased to announce an upcoming release.</div>
+<div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> <b>::</b> The ib-ruby is pleased to announce an upcoming release.</div>
 
 <p>Note the omission of quotation marks with variable parameters.</p>
 
@@ -470,7 +466,7 @@ def foo(x):<br />
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2020 ib-ruby. All rights reserved. <br />
-<span>Page last updated:</span> July 3, 2016<br/> Site last generated: Oct 26, 2020 <br />
+<span>Page last updated:</span> July 3, 2016<br/> Site last generated: Oct 27, 2020 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>

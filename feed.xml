@@ -3,10 +3,10 @@
     <channel>
         <title>documentation-theme-jekyll</title>
         <description>Documentation for the ib-ruby-project</description>
-        <link>/</link>
-        <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-        <pubDate>Mon, 26 Oct 2020 09:06:52 +0000</pubDate>
-        <lastBuildDate>Mon, 26 Oct 2020 09:06:52 +0000</lastBuildDate>
+        <link>https://github.com/</link>
+        <atom:link href="https://github.com/feed.xml" rel="self" type="application/rss+xml"/>
+        <pubDate>Tue, 27 Oct 2020 20:13:28 +0000</pubDate>
+        <lastBuildDate>Tue, 27 Oct 2020 20:13:28 +0000</lastBuildDate>
         <generator>Jekyll v3.9.0</generator>
         
         <item>
@@ -21,8 +21,8 @@
 
 </description>
             <pubDate>Fri, 26 Feb 2016 00:00:00 +0000</pubDate>
-            <link>/samplepost.html</link>
-            <guid isPermaLink="true">/samplepost.html</guid>
+            <link>https://github.com/samplepost.html</link>
+            <guid isPermaLink="true">https://github.com/samplepost.html</guid>
             
             <category>news</category>
             
@@ -47,8 +47,8 @@
 
 </description>
             <pubDate>Wed, 24 Feb 2016 00:00:00 +0000</pubDate>
-            <link>/myupdate.html</link>
-            <guid isPermaLink="true">/myupdate.html</guid>
+            <link>https://github.com/myupdate.html</link>
+            <guid isPermaLink="true">https://github.com/myupdate.html</guid>
             
             <category>news</category>
             
@@ -61,8 +61,8 @@
 
 </description>
             <pubDate>Sun, 12 Apr 2015 00:00:00 +0000</pubDate>
-            <link>/test-post-from-last-year.html</link>
-            <guid isPermaLink="true">/test-post-from-last-year.html</guid>
+            <link>https://github.com/test-post-from-last-year.html</link>
+            <guid isPermaLink="true">https://github.com/test-post-from-last-year.html</guid>
             
             <category>news</category>
             

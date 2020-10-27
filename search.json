@@ -1,6 +1,83 @@
 [
 
 
+{
+"title": "Setup Ruby and Install the Software",
+"tags": "getting_startedtroubleshooting",
+"keywords": "",
+"url": "Setup_Ruby_and_Install_the_Software.html",
+"summary": "In most cases, first a proper <em>Ruby-Installation</em> is needed. The software can then installed in your _home_-directory and/or as gem."
+}
+,
+
+
+
+
+
+{
+"title": "Create a new Project",
+"tags": "getting_started",
+"keywords": "",
+"url": "Create_a_new_project.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Get Marketprice",
+"tags": "contract",
+"keywords": "contracts, verify",
+"url": "market_price.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Setup Ruby and Install the Software",
+"tags": "getting_startedtroubleshooting",
+"keywords": "",
+"url": "Setup_Ruby_and_Install_the_Software.html",
+"summary": "In most cases, first a proper <em>Ruby-Installation</em> is needed. The software can then installed in your <em>Home</em>-directory and/or as gem."
+}
+,
+
+
+
+{
+"title": "Specify and Query Contracts",
+"tags": "contract",
+"keywords": "contracts, query, verify",
+"url": "Specify_and_query_contracts.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Verify Contracts",
+"tags": "contract",
+"keywords": "contracts, verify",
+"url": "Verify_contracts.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Merge and Essential",
+"tags": "contract",
+"keywords": "contracts, verify",
+"url": "contract_merge_and_essential.html",
+"summary": ""
+}
+,
+
 
 
 
@@ -11,17 +88,6 @@
 "keywords": "authors",
 "url": "ibruby_about.html",
 "summary": "Why ib-ruby?."
-}
-,
-
-
-
-{
-"title": "About Ruby, Gems, Bundler, and other prerequisites",
-"tags": "getting_startedtroubleshooting",
-"keywords": "",
-"url": "ibruby_about_ruby_gems_etc.html",
-"summary": "Ruby is a programming language you must have on your computer in order to run ib-ruby. Ruby has various gems (or plugins) that provide various functionality. Each ib-ruby project usually requires certain gems."
 }
 ,
 
@@ -94,11 +160,11 @@
 
 
 {
-"title": "The ib-ruby Project",
+"title": "The IB-Ruby Project",
 "tags": "getting_started",
 "keywords": "sample homepage",
 "url": "index.html",
-"summary": "These documentation provides the basic informations how to use ib-ruby in a productive way."
+"summary": "These documentation provides basic informations how to use ib-ruby in a productive way."
 }
 ,
 

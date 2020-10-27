@@ -4,9 +4,9 @@
     <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Why ib-ruby?.">
-<meta name="keywords" content="getting_started,  authors">
-<title>About the ib-ruby Project | ib-ruby documentation</title>
+<meta name="description" content="">
+<meta name="keywords" content="contract,  contracts, verify">
+<title>Verify Contracts | ib-ruby documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -144,7 +144,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="About the ib-ruby Project">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Verify Contracts">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -247,7 +247,7 @@
           
           
           
-          <li><a title="Verify" href="Verify_contracts.html">Verify</a></li>
+          <li class="active"><a title="Verify" href="Verify_contracts.html">Verify</a></li>
           
           
           
@@ -319,7 +319,7 @@
         <!-- Content Column -->
         <div class="col-md-9" id="tg-sb-content">
             <div class="post-header">
-   <h1 class="post-title-main">About the ib-ruby Project</h1>
+   <h1 class="post-title-main">Verify Contracts</h1>
 </div>
 
 
@@ -327,7 +327,7 @@
 <div class="post-content">
 
    
-    <div class="summary">Why ib-ruby?.</div>
+    <div class="summary"></div>
    
 
     
@@ -358,21 +358,85 @@ $('#toc').on('click', 'a', function() {
 
     
 
-   <h3 id="introduction-form--paul-legato-the-founder-of-this-project">Introduction form  Paul Legato, the founder of this project:</h3>
+   <div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> <b>::</b> 
+The <code class="language-plaintext highlighter-rouge">ib-extensions</code> Gem defines a few macros to ease the specification and verification of contracts.  <br />
+Include  * <code class="language-plaintext highlighter-rouge">require '}ib-api'</code>  and  * <code class="language-plaintext highlighter-rouge">require 'ib/verify'</code> in your scripts.
+</div>
 
-<blockquote>
-  <p>This is a pure Ruby implementation of Interactive Brokers API. It is NOT a wrapper for a Java or C++ API, but rather uses socket API directly. So it does not have any dependencies other than TWS/Gateway itself.</p>
+<h3 id="contractverify">Contract#verify</h3>
+<p>To ease the process of verification of given contract-attributes, a handy <code class="language-plaintext highlighter-rouge">verify</code> method is provided.</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">&gt;</span> <span class="n">w</span> <span class="o">=</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Stocks</span><span class="p">.</span><span class="nf">wfc</span>
+ <span class="o">&gt;</span> <span class="n">w</span><span class="p">.</span><span class="nf">con_id</span>                     <span class="o">=&gt;</span> <span class="mi">0</span> 
+ <span class="o">&gt;</span> <span class="n">ww</span> <span class="o">=</span> <span class="n">w</span><span class="p">.</span><span class="nf">verify</span><span class="p">.</span><span class="nf">first</span>
+ <span class="o">&gt;</span> <span class="n">ww</span><span class="p">.</span><span class="nf">con_id</span>                    <span class="o">=&gt;</span> <span class="mi">10375</span> 
+ <span class="o">&gt;</span> <span class="n">ww</span><span class="p">.</span><span class="nf">contract_detail</span><span class="p">.</span><span class="nf">long_name</span>   <span class="o">=&gt;</span> <span class="s2">"WELLS FARGO &amp; CO"</span> 
+</code></pre></div></div>
 
-  <p>Why Ruby? Many people are put off by the amount of boilerplate code/plumbing required by Java, ActiveX or C++ API to do even the simplest of things, like getting account data and placing/monitoring orders. This library intends to keep all the fluff away and let you focus on writing your business logics, rather than useless boilerplate.</p>
+<p>In its basic form 
+<code class="language-plaintext highlighter-rouge">IB::Contract.verify</code> just sends a <code class="language-plaintext highlighter-rouge">:RequestContractData</code>-Message, extracts <code class="language-plaintext highlighter-rouge">IB::Contracts</code> 
+from the response and returns them as array.</p>
 
-  <p>No more endless definitions of obligatory methods you’d never need, no spaghetti code to divide your execution flow between multiple callbacks and interfaces.</p>
+<div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> <b>::</b>  <code class="language-plaintext highlighter-rouge">Contract#verify</code> queries the TWS for a valid contract and <strong>returns the response as new object</strong>.</div>
 
-  <p>Instead, a very simple paradigm is offered: your code interacts with the server (TWS or Gateway) via exchange of messages. You subscribe to the server messages that you’re interested in, and send messages to server that request specific data from it. You wait for specific messages being received, or other conditions you define. The execution flow is under your control, rather than delegated somewhere.</p>
+<h4 id="manipulations-of-the-response">Manipulations of the response</h4>
 
-  <p>Using this clear paradigm, you can hack together a simple automation of your daily TWS-related routine in just a couple of minutes. Alternatively, you can create a mechanical trading system with complex order processing logics, that contains 1/10th of code and is 500% more maintaineable than it is possible with other API implementations. The choice is yours.</p>
-</blockquote>
+<p><code class="language-plaintext highlighter-rouge">Contract#verify</code> accepts a block to to manipulate the returned contract.  The block has access to any returned 
+<code class="language-plaintext highlighter-rouge">IB::Contract</code>-object.</p>
 
-<p><strong><em>IB-RUBY</em></strong> is actively maintained since 2008</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="o">&gt;</span> <span class="n">f</span> <span class="o">=</span>  <span class="no">Future</span><span class="p">.</span><span class="nf">new</span> <span class="ss">symbol: </span><span class="s1">'DAX'</span><span class="p">,</span> <span class="ss">expiry: </span><span class="mi">2021</span><span class="p">,</span> <span class="ss">exchange: </span><span class="s1">'DTB'</span><span class="p">,</span> <span class="ss">currency: </span><span class="s1">'EUR'</span><span class="p">,</span> <span class="ss">multiplier: </span><span class="mi">5</span>
+<span class="o">&gt;</span> <span class="n">dax_con_ids</span> <span class="o">=</span>  <span class="n">f</span><span class="p">.</span><span class="nf">verify</span><span class="p">{</span><span class="o">|</span><span class="n">c</span><span class="o">|</span> <span class="p">{</span><span class="n">c</span><span class="p">.</span><span class="nf">expiry</span> <span class="o">=&gt;</span> <span class="n">c</span><span class="p">.</span><span class="nf">con_id</span> <span class="p">}}</span>
+ <span class="o">=&gt;</span>  <span class="p">[{</span><span class="s2">"20201218"</span><span class="o">=&gt;</span><span class="mi">413140771</span><span class="p">},</span> <span class="p">{</span><span class="s2">"20210319"</span><span class="o">=&gt;</span><span class="mi">428741696</span><span class="p">},</span> <span class="p">{</span><span class="s2">"20210618"</span><span class="o">=&gt;</span><span class="mi">446220391</span><span class="p">}]</span>
+</code></pre></div></div>
+<p>or – if you want to store the returned contracts</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="o">&gt;</span> <span class="n">f</span> <span class="o">=</span>  <span class="no">Future</span><span class="p">.</span><span class="nf">new</span> <span class="ss">symbol: </span><span class="s1">'DAX'</span><span class="p">,</span> <span class="ss">expiry: </span><span class="mi">2021</span><span class="p">,</span> <span class="ss">exchange: </span><span class="s1">'DTB'</span><span class="p">,</span> <span class="ss">currency: </span><span class="s1">'EUR'</span><span class="p">,</span> <span class="ss">multiplier: </span><span class="mi">5</span>
+<span class="o">&gt;</span> <span class="n">dax_contracts</span> <span class="o">=</span>  <span class="n">f</span><span class="p">.</span><span class="nf">verify</span><span class="p">{</span><span class="o">|</span><span class="n">c</span><span class="o">|</span> <span class="n">c</span><span class="p">.</span><span class="nf">essential</span><span class="p">.</span><span class="nf">to_yaml</span> <span class="p">}</span>
+<span class="o">&gt;</span> <span class="n">pp</span><span class="p">.</span><span class="nf">dax_contracts</span><span class="p">.</span><span class="nf">last</span>
+  <span class="s2">"--- !ruby/object:IB::Future</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span>
+  <span class="s2">"attributes:</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span>
+  <span class="s2">"  :symbol: DAX</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span>
+  <span class="s2">"  :con_id: 446220391</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span>
+  <span class="s2">"  :exchange: DTB</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span>
+  <span class="s2">"  :right: ''</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span>
+  <span class="s2">"  :currency: EUR</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span>
+  <span class="s2">"  :expiry: '20210618'</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span>
+  <span class="s2">"  :strike: 0.0</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span>
+  <span class="s2">"  :local_symbol: FDXM JUN 21</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span>
+  <span class="s2">"  :last_trading_day: '2021-06-18'</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span>
+  <span class="s2">"  :multiplier: 5</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span>
+  <span class="s2">"  :trading_class: FDXM</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span>
+  <span class="s2">"  :sec_type: FUT</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span>
+  <span class="s2">"  :created_at: 2020-10-27 07:41:52.297145470 +00:00</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span>
+  <span class="s2">"  :include_expired: false</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span>
+  <span class="s2">"description: DAX 30 Index (Deutsche Aktien Xchange 30)</span><span class="se">\n</span><span class="s2">"</span>
+
+
+</code></pre></div></div>
+<h4 id="asynchronous-verification">Asynchronous Verification</h4>
+
+<p>If a bunch of <code class="language-plaintext highlighter-rouge">IB::Contracts</code> should be verified, <code class="language-plaintext highlighter-rouge">verify</code> can be called for each.
+The entries are processed sequentially, which is slow.</p>
+
+<p><code class="language-plaintext highlighter-rouge">Contract.verify( thread: true  )</code> just submits requests. It returns the receiver-thread and performs the
+query asynchron.</p>
+
+<p>Assuming, a <a href="Watchlists">watchlist</a> was setup. (You can do this by running  <code class="language-plaintext highlighter-rouge">ruby input.rb</code> in the examples
+directory of <code class="language-plaintext highlighter-rouge">ib-extensions</code>), then</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="no">Symbols</span><span class="p">.</span><span class="nf">allocate_collection</span> <span class="ss">:W500</span>
+<span class="o">&gt;</span> <span class="nb">puts</span> <span class="no">Symbols</span><span class="o">::</span><span class="no">W500</span><span class="p">.</span><span class="nf">all</span><span class="p">.</span><span class="nf">size</span>      <span class="o">=&gt;</span> <span class="mi">456</span>
+</code></pre></div></div>
+<p>To verify all <code class="language-plaintext highlighter-rouge">IB::Contracts</code> asynchronous, collect any thread into an array and join it.</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">verified_symbols</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="o">&gt;</span> <span class="no">Symbols</span><span class="o">::</span><span class="no">W500</span><span class="p">.</span><span class="nf">map</span><span class="p">{</span><span class="o">|</span><span class="n">y</span><span class="o">|</span> <span class="n">y</span><span class="p">.</span><span class="nf">verify</span><span class="p">(</span><span class="ss">thread: </span><span class="kp">true</span><span class="p">){</span> <span class="o">|</span><span class="n">c</span><span class="o">|</span> <span class="n">verified_symbols</span> <span class="o">&lt;&lt;</span> <span class="n">c</span>  <span class="p">}}.</span><span class="nf">join</span>
+<span class="c1"># after a while</span>
+<span class="o">&gt;</span> <span class="nb">puts</span> <span class="n">verified_symbols</span><span class="p">.</span><span class="nf">size</span>      <span class="o">=&gt;</span> <span class="mi">456</span>
+</code></pre></div></div>
+
+<p>If the verification is performed asynchron, the thread itself is returned for joining. The results must compiled through 
+the block (as shown above).</p>
+
 
 
     <div class="tags">
@@ -380,8 +444,6 @@ $('#toc').on('click', 'a', function() {
         <b>Tags: </b>
         
         
-        
-        <a href="tag_getting_started.html" class="btn btn-default navbar-btn cursorNorm" role="button">getting_started</a>
         
         
         
@@ -398,7 +460,7 @@ $('#toc').on('click', 'a', function() {
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2020 ib-ruby. All rights reserved. <br />
-<span>Page last updated:</span> Oct 26, 2020<br/> Site last generated: Oct 27, 2020 <br />
+<span>Page last updated:</span> October 27, 2020<br/> Site last generated: Oct 27, 2020 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>

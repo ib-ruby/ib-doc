@@ -41,7 +41,7 @@
 <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
 
-<link rel="alternate" type="application/rss+xml" title="documentation-theme-jekyll" href="/feed.xml">
+<link rel="alternate" type="application/rss+xml" title="documentation-theme-jekyll" href="https://github.com/feed.xml">
 
     <script>
         $(document).ready(function() {
@@ -228,10 +228,6 @@ $('#toc').on('click', 'a', function() {
 
     
 
-    <a target="_blank" rel="noopener" href="https://github.com/ib-ruby/ib-doc/blob/gh-pages/pages/mydoc/mydoc_tags.md" class="btn btn-default githubEditButton" role="button"><i class="fa fa-github fa-lg"></i> Edit me</a>
-
-    
-
    <h2 id="add-a-tag-to-a-page">Add a tag to a page</h2>
 <p>You can add tags to pages by adding <code class="language-plaintext highlighter-rouge">tags</code> in the frontmatter with values inside brackets, like this:</p>
 
@@ -244,11 +240,11 @@ tags: [formatting, single_sourcing]
 
 <h2 id="tags-overview">Tags overview</h2>
 
-<div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> <b>Note:</b>  With posts, tags have a namespace that you can access with <code>posts.tags.tagname</code>, where <code>tagname</code> is the name of the tag. You can then list all posts in that tag namespace. But pages don’t off this same tag namespace, so you could actually use another key instead of <code>tags</code>. Nevertheless, I’m using the same <code>tags</code> approach for posts as with pages.</div>
+<div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> <b>::</b>  With posts, tags have a namespace that you can access with <code>posts.tags.tagname</code>, where <code>tagname</code> is the name of the tag. You can then list all posts in that tag namespace. But pages don’t off this same tag namespace, so you could actually use another key instead of <code>tags</code>. Nevertheless, I’m using the same <code>tags</code> approach for posts as with pages.</div>
 
 <p>To prevent tags from getting out of control and inconsistent, first make sure the tag appears in the _data/tags.yml file. If it’s not there, the tag you add to a page won’t be read. I added this check just to make sure I’m using the same tags consistently and not adding new tags that don’t have tag archive pages.</p>
 
-<div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> <b>Note:</b> In contrast to WordPress, with Jekyll to get tags on pages you have to build out the functionality for tags so that clicking a tag name shows you all pages with that tag. Tags in Jekyll are much more manual.</div>
+<div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> <b>::</b> In contrast to WordPress, with Jekyll to get tags on pages you have to build out the functionality for tags so that clicking a tag name shows you all pages with that tag. Tags in Jekyll are much more manual.</div>
 
 <p>Additionally, you must create a tag archive page similar to the other pages named tag_{tagname}.html folder. This theme doesn’t auto-create tag archive pages.</p>
 
@@ -287,7 +283,7 @@ sidebar: mydoc_sidebar
 <span class="p">{%</span><span class="w"> </span><span class="nt">include</span><span class="w"> </span>taglogic.html<span class="w"> </span><span class="p">%}</span>
 </code></pre></div>    </div>
 
-    <div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> <b>Note:</b> In the _includes/mydoc folder, there’s a taglogic.html file. This file (included in each tag archive file) has common logic for getting the tags and listing out the pages containing the tag in a table with summaries or truncated excerpts. You don’t have to do anything with the file — just leave it there because the tag archive pages reference it.</div>
+    <div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> <b>::</b> In the _includes/mydoc folder, there’s a taglogic.html file. This file (included in each tag archive file) has common logic for getting the tags and listing out the pages containing the tag in a table with summaries or truncated excerpts. You don’t have to do anything with the file — just leave it there because the tag archive pages reference it.</div>
   </li>
   <li>
     <p>Change the title, tagName, and permalink values to be specific to the tag name you just created.</p>
@@ -336,19 +332,49 @@ sidebar: mydoc_sidebar
 
 
 
+<li><a href="Setup_Ruby_and_Install_the_Software.html">Setup Ruby and Install the Software</a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="Create_a_new_project.html">Create a new Project</a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="Setup_Ruby_and_Install_the_Software.html">Setup Ruby and Install the Software</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 
 <li><a href="ibruby_about.html">About the ib-ruby Project</a></li>
-
-
-
-
-
-<li><a href="ibruby_about_ruby_gems_etc.html">About Ruby, Gems, Bundler, and other prerequisites</a></li>
-
-
 
 
 
@@ -386,7 +412,7 @@ sidebar: mydoc_sidebar
 
 
 
-<li><a href="index.html">The ib-ruby Project</a></li>
+<li><a href="index.html">The IB-Ruby Project</a></li>
 
 
 
@@ -771,14 +797,6 @@ Getting started pages:
 
 
 
-<li><a href="ibruby_about_ruby_gems_etc.html">About Ruby, Gems, Bundler, and other prerequisites</a></li>
-
-
-
-
-
-
-
 <li><a href="mydoc_about_ruby_gems_etc.html">About Ruby, Gems, Bundler, and other prerequisites</a></li>
 
 
@@ -824,6 +842,16 @@ Getting started pages:
 
 
 
+
+
+
+
+
+
+
+
+
+<li><a href="Create_a_new_project.html">Create a new Project</a></li>
 
 
 
@@ -886,6 +914,10 @@ Getting started pages:
 
 
 <li><a href="ibruby_install_on_mac.html">Install ib-ruby on Mac</a></li>
+
+
+
+
 
 
 
@@ -1049,11 +1081,31 @@ Getting started pages:
 
 
 
+<li><a href="Setup_Ruby_and_Install_the_Software.html">Setup Ruby and Install the Software</a></li>
+
+
+
+
+
+
+
+<li><a href="Setup_Ruby_and_Install_the_Software.html">Setup Ruby and Install the Software</a></li>
+
+
+
+
+
+
+
 
 
 
 
 <li><a href="mydoc_sidebar_navigation.html">Sidebar Navigation</a></li>
+
+
+
+
 
 
 
@@ -1105,7 +1157,11 @@ Getting started pages:
 
 
 
-<li><a href="index.html">The ib-ruby Project</a></li>
+<li><a href="index.html">The IB-Ruby Project</a></li>
+
+
+
+
 
 
 
@@ -1192,7 +1248,7 @@ Getting started pages:
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2020 ib-ruby. All rights reserved. <br />
-<span>Page last updated:</span> July 16, 2016<br/> Site last generated: Oct 26, 2020 <br />
+<span>Page last updated:</span> July 16, 2016<br/> Site last generated: Oct 27, 2020 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>

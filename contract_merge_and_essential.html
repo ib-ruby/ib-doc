@@ -4,9 +4,9 @@
     <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="You can automatically link together topics belonging to the same series. This helps users know the context within a particular process.">
-<meta name="keywords" content="content_types,  series, connected articles, tutorials, hello world">
-<title>Series | ib-ruby documentation</title>
+<meta name="description" content="">
+<meta name="keywords" content="contract,  contracts, verify">
+<title>Merge and Essential | ib-ruby documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -144,7 +144,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Series">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Merge and Essential">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -170,8 +170,138 @@
                 
 
 <ul id="mysidebar" class="nav">
-  <li class="sidebarTitle"> </li>
+  <li class="sidebarTitle">ib-ruby </li>
   
+  
+  
+  <li>
+      <a title="Overview" href="#">Overview</a>
+      <ul>
+          
+          
+          
+          <li><a title="The ib-ruby Project" href="index.html">The ib-ruby Project</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Introduction" href="ibruby_introduction.html">Introduction</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Support" href="ibruby_support.html">Support</a></li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+  
+  <li>
+      <a title="Installation" href="#">Installation</a>
+      <ul>
+          
+          
+          
+          <li><a title="Setup Ruby and Install the Software." href="Setup_Ruby_and_Install_the_Software.html">Setup Ruby and Install the Software.</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Create a new Project" href="Create_a_new_project.html">Create a new Project</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Install on Windows" href="ibruby_install_on_windows.html">Install on Windows</a></li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+  
+  <li>
+      <a title="Contracts" href="#">Contracts</a>
+      <ul>
+          
+          
+          
+          <li><a title="Specify and Query" href="Specify_and_query_contracts.html">Specify and Query</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Verify" href="Verify_contracts.html">Verify</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Market Price" href="market_price.html">Market Price</a></li>
+          
+          
+          
+          <li class="subfolders">
+              <a title="Tag archive pages" href="#">Tag archive pages</a>
+              <ul>
+                  
+                  
+                  
+                  <li><a title="Formatting pages" href="tag_formatting.html">Formatting pages</a></li>
+                  
+                  
+                  
+              </ul>
+          </li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+  
+  <li>
+      <a title="Release Notes" href="#">Release Notes</a>
+      <ul>
+          
+          
+          
+          <li><a title="ib-api 972 gem release" href="ibruby_release_notes_api_972_gem.html">ib-api 972 gem release</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="ib-symbols 1.0" href="ibruby_release_notes_symbols_1.html">ib-symbols 1.0</a></li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+      
       <!-- if you aren't using the accordion, uncomment this block:
          <p class="external">
              <a href="#" id="collapseAll">Collapse All</a> | <a href="#" id="expandAll">Expand All</a>
@@ -189,7 +319,7 @@
         <!-- Content Column -->
         <div class="col-md-9" id="tg-sb-content">
             <div class="post-header">
-   <h1 class="post-title-main">Series</h1>
+   <h1 class="post-title-main">Merge and Essential</h1>
 </div>
 
 
@@ -197,7 +327,7 @@
 <div class="post-content">
 
    
-    <div class="summary">You can automatically link together topics belonging to the same series. This helps users know the context within a particular process.</div>
+    <div class="summary"></div>
    
 
     
@@ -228,93 +358,16 @@ $('#toc').on('click', 'a', function() {
 
     
 
-   <h2 id="using-series-for-pages">Using series for pages</h2>
+   <h3 id="contractessential">Contract#Essential</h3>
 
-<p>You create a series by looking for all pages within a tag namespace that contain certain frontmatter. Here’s a <a href="mydoc_seriesdemo1.html">demo</a>.</p>
+<p>The primary goal for <code class="language-plaintext highlighter-rouge">Contract#essential</code> is to provide a storeable representation of contracts. 
+The method is aliased from <code class="language-plaintext highlighter-rouge">Contract#to_yaml</code>.</p>
 
-<h2 id="1-create-the-series-button">1. Create the series button</h2>
+<p>It returns a new contract-object, containing any information required to use the contract-object to fetch market-prices, option-parameters or  historical data, as well as argument to place an order.</p>
 
-<p>First create an include that contains your series button:</p>
-
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"seriesContext"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"btn-group"</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">data-toggle=</span><span class="s">"dropdown"</span> <span class="na">class=</span><span class="s">"btn btn-primary dropdown-toggle"</span><span class="nt">&gt;</span>Series Demo <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"caret"</span><span class="nt">&gt;&lt;/span&gt;&lt;/button&gt;</span>
-        <span class="nt">&lt;ol</span> <span class="na">class=</span><span class="s">"dropdown-menu"</span><span class="nt">&gt;</span>
-            {% assign pages = site.pages | sort:"weight"  %}
-            {% for p in pages %}
-            {% if p.series == "ACME series" %}
-            {% if p.url == page.url %}
-            <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"active"</span><span class="nt">&gt;</span> → {{p.weight}}. {{p.title}}<span class="nt">&lt;/li&gt;</span>
-            {% else %}
-            <span class="nt">&lt;li&gt;</span>
-                <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"{{p.url | remove: "</span><span class="err">/"}}"</span><span class="nt">&gt;</span>{{p.weight}}. {{p.title}}<span class="nt">&lt;/a&gt;</span>
-            <span class="nt">&lt;/li&gt;</span>
-            {% endif %}
-            {% endif %}
-            {% endfor %}
-        <span class="nt">&lt;/ol&gt;</span>
-    <span class="nt">&lt;/div&gt;</span>
-<span class="nt">&lt;/div&gt;</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="no">Symbols</span><span class="p">.</span><span class="nf">allocate_collection</span> <span class="ss">:W500</span>
+<span class="o">&gt;</span> <span class="nb">puts</span> <span class="no">Symbols</span><span class="o">::</span><span class="no">W500</span><span class="p">.</span><span class="nf">all</span><span class="p">.</span><span class="nf">size</span>      <span class="o">=&gt;</span> <span class="mi">456</span>
 </code></pre></div></div>
-
-<p>Change “ACME series” to the name of your series.</p>
-
-<p>Save this in your _includes/custom folder as something like series_acme.html.</p>
-
-<div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-circle"></i> <b>Warning:</b> With pages, there isn’t a universal namespace created from tags or categories like there is with Jekyll posts. As a result, you have to loop through all pages. If you have a lot of pages in your site (e.g., 1,000+), then this looping will create a slow build time. If this is the case, you will need to rethink the approach to looping here.</div>
-
-<h2 id="2-create-the-next-include">2. Create the “next” include</h2>
-
-<p>Now create another include for the Next button at the bottom of the page. Copy the following code, changing the series name to your series’name:</p>
-
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;p&gt;</span>{% assign series_pages = site.tags.series_acme %}
-    {% for p in pages %}
-    {% if p.series == "ACME series" %}
-    {% assign nextTopic = page.weight | plus: "1"  %}
-    {% if p.weight == nextTopic  %}
-    <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"{{p.url}}"</span><span class="nt">&gt;&lt;button</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn btn-primary"</span><span class="nt">&gt;</span>Next: {{p.weight}}  {{p.title}}<span class="nt">&lt;/button&gt;&lt;/a&gt;</span>
-    {% endif %}
-    {% endif %}
-    {% endfor %}
-<span class="nt">&lt;/p&gt;</span>
-</code></pre></div></div>
-
-<p>Change “acme” to the name of your series.</p>
-
-<p>Save this in your _includes/custom/mydoc folder as series_acme_next.html.</p>
-
-<h2 id="3-add-the-correct-frontmatter-to-each-of-your-series-pages">3. Add the correct frontmatter to each of your series pages</h2>
-
-<p>Now add the following frontmatter to each page in the series:</p>
-
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">series:</span><span class="w"> </span><span class="s2">"ACME series"</span><span class="w">
-</span><span class="err">weight:</span><span class="w"> </span><span class="mf">1.0</span><span class="w">
-</span></code></pre></div></div>
-
-<p>With weights, Jekyll will treat 10 as coming after 1. If you have more than 10 items, consider changing <code class="language-plaintext highlighter-rouge">plus: "1.0"</code> to <code class="language-plaintext highlighter-rouge">plus: "0.1"</code>.</p>
-
-<p>Additionally, if your page names are prefaced with numbers, such as “1. Download the code,” then the <code class="language-plaintext highlighter-rouge">{{p.weight}}</code> will create a duplicate number. In that case, just remove the <code class="language-plaintext highlighter-rouge">{{p.weight}}</code> from both code samples here.</p>
-
-<h2 id="4-add-links-to-the-series-button-and-next-button-on-each-page">4. Add links to the series button and next button on each page.</h2>
-
-<p>On each series page, add a link to the series button at the top and a link to the next button at the bottom.</p>
-
-<div class="language-liquid highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!-- your frontmatter goes here --&gt;
-
-<span class="p">{%</span><span class="w"> </span><span class="nt">include</span><span class="w"> </span>custom/series_acme.html<span class="w"> </span><span class="p">%}</span>
-
-&lt;!-- your page content goes here ... --&gt;
-
-<span class="p">{%</span><span class="w"> </span><span class="nt">include</span><span class="w"> </span>custom/series_acme_next.html<span class="w"> </span><span class="p">%}</span>
-</code></pre></div></div>
-
-<h2 id="changing-the-series-drop-down-color">Changing the series drop-down color</h2>
-
-<p>The Bootstrap menu uses the <code class="language-plaintext highlighter-rouge">primary</code> class for styling. If you change this class in your theme, the Bootstrap menu should automatically change color as well. You can also just use another Bootstrap class in your button code. Instead of <code class="language-plaintext highlighter-rouge">btn-primary</code>, use <code class="language-plaintext highlighter-rouge">btn-info</code> or <code class="language-plaintext highlighter-rouge">btn-warning</code>. See [Labels][mydoc_labels] for more Bootstrap button classes.</p>
-
-<h2 id="using-a-collection-with-your-series">Using a collection with your series</h2>
-
-<p>Instead of copying and pasting the button includes on each of your series, you could also create a collection and define a layout for the collection that has the include code. For more information on creating collections, see [Collections][mydoc_collections] for more details.</p>
 
 
 
@@ -323,8 +376,6 @@ $('#toc').on('click', 'a', function() {
         <b>Tags: </b>
         
         
-        
-        <a href="tag_content_types.html" class="btn btn-default navbar-btn cursorNorm" role="button">content_types</a>
         
         
         
