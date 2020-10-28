@@ -4,9 +4,9 @@
     <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="This is just a sample topic...">
-<meta name="keywords" content=" sample">
-<title>Sample 6 Topic (Product 1) | ib-ruby documentation</title>
+<meta name="description" content="">
+<meta name="keywords" content="contract,  contracts, historical-data, eod">
+<title>Get Historical Data | ib-ruby documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -144,7 +144,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Sample 6 Topic (Product 1)">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Get Historical Data">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -170,40 +170,31 @@
                 
 
 <ul id="mysidebar" class="nav">
-  <li class="sidebarTitle">Product1 1.0</li>
+  <li class="sidebarTitle">ib-ruby </li>
   
   
-  
-      
   
   <li>
-      <a title="Getting Started" href="#">Getting Started</a>
+      <a title="Overview" href="#">Overview</a>
       <ul>
           
           
           
-          <li><a title="Product 1 home" href="p1_landing_page.html">Product 1 home</a></li>
+          <li><a title="The ib-ruby Project" href="index.html">The ib-ruby Project</a></li>
           
           
           
           
           
           
-          <li><a title="Sample 1" href="p1_sample1.html">Sample 1</a></li>
+          <li><a title="Introduction" href="ibruby_introduction.html">Introduction</a></li>
           
           
           
           
           
           
-          <li><a title="Sample 2" href="p1_sample2.html">Sample 2</a></li>
-          
-          
-          
-          
-          
-          
-          <li><a title="Sample 3" href="p1_sample3.html">Sample 3</a></li>
+          <li><a title="Support" href="ibruby_support.html">Support</a></li>
           
           
           
@@ -214,33 +205,108 @@
       
   
   <li>
-      <a title="Another heading" href="#">Another heading</a>
+      <a title="Installation" href="#">Installation</a>
       <ul>
           
           
           
-          <li><a title="Sample 4" href="p1_sample4.html">Sample 4</a></li>
+          <li><a title="Setup Ruby and Install the Software." href="Setup_Ruby_and_Install_the_Software.html">Setup Ruby and Install the Software.</a></li>
           
           
           
           
           
           
-          <li><a title="Sample 5" href="p1_sample5.html">Sample 5</a></li>
+          <li><a title="Create a new Project" href="Create_a_new_project.html">Create a new Project</a></li>
           
           
           
           
           
           
-          <li class="active"><a title="Sample 6" href="p1_sample6.html">Sample 6</a></li>
+          <li><a title="Install on Windows" href="ibruby_install_on_windows.html">Install on Windows</a></li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+  
+  <li>
+      <a title="Contracts" href="#">Contracts</a>
+      <ul>
+          
+          
+          
+          <li><a title="Specify and Query" href="Specify_and_query_contracts.html">Specify and Query</a></li>
           
           
           
           
           
           
-          <li><a title="Sample 7" href="p1_sample7.html">Sample 7</a></li>
+          <li><a title="Expiry vs. Last-Trading-Day" href="expiry_and_last_trading_day.html">Expiry vs. Last-Trading-Day</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Verify" href="Verify_contracts.html">Verify</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Market Price" href="market_price.html">Market Price</a></li>
+          
+          
+          
+          
+          
+          
+          <li class="active"><a title="Historical Data" href="Historical_data.html">Historical Data</a></li>
+          
+          
+          
+          <li class="subfolders">
+              <a title="Tag archive pages" href="#">Tag archive pages</a>
+              <ul>
+                  
+                  
+                  
+                  <li><a title="Formatting pages" href="tag_formatting.html">Formatting pages</a></li>
+                  
+                  
+                  
+              </ul>
+          </li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+  
+  <li>
+      <a title="Release Notes" href="#">Release Notes</a>
+      <ul>
+          
+          
+          
+          <li><a title="ib-api 972 gem release" href="ibruby_release_notes_api_972_gem.html">ib-api 972 gem release</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="ib-symbols 1.0" href="ibruby_release_notes_symbols_1.html">ib-symbols 1.0</a></li>
           
           
           
@@ -267,15 +333,13 @@
         <!-- Content Column -->
         <div class="col-md-9" id="tg-sb-content">
             <div class="post-header">
-   <h1 class="post-title-main">Sample 6 Topic (Product 1)</h1>
+   <h1 class="post-title-main">Get Historical Data</h1>
 </div>
 
 
 
 <div class="post-content">
 
-   
-    <div class="summary">This is just a sample topic...</div>
    
 
     
@@ -306,23 +370,92 @@ $('#toc').on('click', 'a', function() {
 
     
 
-   <h2 id="sample-content">Sample Content</h2>
+   <div class="bs-callout bs-callout-info">
+To use the <em>Endo of Data Historical Data</em> feature, include the <em>ib-extensions</em> Gem  in the Gemfile and use    
 
-<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+<pre> 
+require 'ib-api' 
+require 'ib/eod' 
+</pre>
 
-<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ‘Content here, content here’, making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for ‘lorem ipsum’ will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
+in your scripts.
+</div>
 
-<h2 id="more-sample-content">More sample content</h2>
+<h3 id="historical-data">Historical Data</h3>
 
-<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of “de Finibus Bonorum et Malorum” (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, “Lorem ipsum dolor sit amet..”, comes from a line in section 1.10.32.</p>
+<p>The <em>historical data feature</em> of the <em>TWS</em> is invoked by sending a <code class="language-plaintext highlighter-rouge">:RequestHistoricalData</code>-Message.<br />
+Next the script has to listen for a <code class="language-plaintext highlighter-rouge">:HistoricalData</code>-Response.</p>
 
-<p>The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from “de Finibus Bonorum et Malorum” by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>
+<p>The <code class="language-plaintext highlighter-rouge">IB::Contract.eod</code>-method bundles the nesseary steps to get <em>End of Day</em>-Data for specified date ranges.</p>
 
-<p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don’t look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn’t anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">contract.eod( duration: '10 d' )</code>  gets closing price of the last 10 trading days.</li>
+  <li><code class="language-plaintext highlighter-rouge">contract.eod( duration: '10 w', start: Date.new(2019,3,14) what: :historical_volatility )</code>  gets the histrorical volatility for the  10 weeks starting on March 14th 2019.</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+IB::Contract.eod start: {a date}, to: {a date; Default: Date.today},
+                 duration: {string  or integer},
+                 what: {symbol; Default: :trades }
+
+
+The duration can either be specified as Sting " yx D", " yx W", "yx M" , "xy Y" 
+or as Integer. If the string-notation is used, ensure to include a space.
+
+The parameter :what specifies the kind of received data: 
+Valid values:
+        :trades, :midpoint, :bid, :ask, :bid_ask,
+        :historical_volatility, :option_implied_volatility,
+        :option_volume, :option_open_interest
+
+IB::Contract.eod returns an array of IB::Bar objects unless they are  preprocessed in a block.
+
+&gt; IB::Symbols.Index.estx.eod( duration: '10 d' ){ |r| r.close  }
+
+returns an array of close prices of the last ten days.
+
+&gt; IB::Symbols.Index.estx.eod( duration: '10 d' ){ |r| r.high - r.low  }
+
+returns an array of price-ranges  of the last ten days.
+</code></pre></div></div>
+
+<h3 id="examples">Examples</h3>
+
+<p>Get close prices for General Electric between Jun 15 and Jun 21 2015</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="no">IB</span><span class="o">::</span><span class="no">Stock</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span> <span class="ss">symbol: </span><span class="s1">'GE'</span> <span class="p">).</span>
+           <span class="nf">eod</span><span class="p">(</span> <span class="ss">start: </span><span class="no">Date</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">2015</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">15</span><span class="p">),</span> <span class="ss">to: </span><span class="no">Date</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">2015</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">21</span><span class="p">)</span> <span class="p">).</span>
+           <span class="nf">map</span><span class="p">(</span> <span class="o">&amp;</span><span class="ss">:close</span> <span class="p">).</span>
+           <span class="nf">join</span><span class="p">(</span> <span class="s2">" : "</span> <span class="p">)</span>
+ <span class="o">=&gt;</span> <span class="s2">"26.19 : 26.17 : 26.24 : 26.18"</span>
+</code></pre></div></div>
+
+<p>Get Overnight Gaps for the stock</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="n">yesterdays_close</span> <span class="o">=</span> <span class="kp">nil</span>
+ <span class="no">IB</span><span class="o">::</span><span class="no">Stock</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span> <span class="ss">symbol: </span><span class="s1">'GE'</span><span class="p">).</span>
+           <span class="nf">eod</span><span class="p">(</span> <span class="ss">start: </span><span class="no">Date</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">2010</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">15</span><span class="p">),</span> <span class="ss">duration: </span><span class="mi">10</span> <span class="p">)</span><span class="k">do</span> <span class="o">|</span><span class="n">r</span><span class="o">|</span>
+                  <span class="n">z</span><span class="o">=</span> <span class="k">if</span>  <span class="n">yesterdays_close</span><span class="p">.</span><span class="nf">nil?</span> 
+                         <span class="mi">0</span>
+                     <span class="k">else</span> 
+                         <span class="n">yesterdays_close</span> <span class="o">-</span> <span class="n">r</span><span class="p">.</span><span class="nf">open</span><span class="p">).</span><span class="nf">abs</span>
+                     <span class="k">end</span>
+                  <span class="n">yesterdays_close</span> <span class="o">=</span> <span class="n">r</span><span class="p">.</span><span class="nf">close</span> 
+                  <span class="n">z</span>
+          <span class="k">end</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span> <span class="s2">" : "</span> <span class="p">)</span>
+<span class="o">=&gt;</span> <span class="s2">"0 : 0.08 : 0.02 : 0.0 : 0.01 : 0.03 : 0.03 : 0.1 : 0.04 : 0.03"</span> 
+</code></pre></div></div>
+<p>We save the close of each day in <code class="language-plaintext highlighter-rouge">yesterdays_close</code> and pass it to the next iteration.</p>
 
 
 
     <div class="tags">
+        
+        <b>Tags: </b>
+        
+        
+        
+        
         
     </div>
 
@@ -337,7 +470,7 @@ $('#toc').on('click', 'a', function() {
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2020 ib-ruby. All rights reserved. <br />
- Site last generated: Oct 28, 2020 <br />
+<span>Page last updated:</span> October 28, 2020<br/> Site last generated: Oct 28, 2020 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>

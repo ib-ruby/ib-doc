@@ -247,6 +247,13 @@
           
           
           
+          <li><a title="Expiry vs. Last-Trading-Day" href="expiry_and_last_trading_day.html">Expiry vs. Last-Trading-Day</a></li>
+          
+          
+          
+          
+          
+          
           <li class="active"><a title="Verify" href="Verify_contracts.html">Verify</a></li>
           
           
@@ -255,6 +262,13 @@
           
           
           <li><a title="Market Price" href="market_price.html">Market Price</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Historical Data" href="Historical_data.html">Historical Data</a></li>
           
           
           
@@ -327,8 +341,6 @@
 <div class="post-content">
 
    
-    <div class="summary"></div>
-   
 
     
     
@@ -358,9 +370,16 @@ $('#toc').on('click', 'a', function() {
 
     
 
-   <div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> <b>::</b> 
-The <code class="language-plaintext highlighter-rouge">ib-extensions</code> Gem defines a few macros to ease the specification and verification of contracts.  <br />
-Include  * <code class="language-plaintext highlighter-rouge">require '}ib-api'</code>  and  * <code class="language-plaintext highlighter-rouge">require 'ib/verify'</code> in your scripts.
+   <div class="bs-callout bs-callout-info">
+The <em>ib-extensions</em> Gem defines macros to ease the specification and verification of contracts.    
+
+Include  
+<pre> 
+require 'ib-api' 
+require 'ib/verify' 
+</pre>
+
+in your scripts.
 </div>
 
 <h3 id="contractverify">Contract#verify</h3>
@@ -373,10 +392,9 @@ Include  * <code class="language-plaintext highlighter-rouge">require '}ib-api'<
 </code></pre></div></div>
 
 <p>In its basic form 
-<code class="language-plaintext highlighter-rouge">IB::Contract.verify</code> just sends a <code class="language-plaintext highlighter-rouge">:RequestContractData</code>-Message, extracts <code class="language-plaintext highlighter-rouge">IB::Contracts</code> 
-from the response and returns them as array.</p>
+<code class="language-plaintext highlighter-rouge">IB::Contract.verify</code> just sends a <code class="language-plaintext highlighter-rouge">:RequestContractData</code>-Message, fetches the response and extracts <code class="language-plaintext highlighter-rouge">IB::Contracts</code>.</p>
 
-<div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> <b>::</b>  <code class="language-plaintext highlighter-rouge">Contract#verify</code> queries the TWS for a valid contract and <strong>returns the response as new object</strong>.</div>
+<div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> <b>::</b> <code class="language-plaintext highlighter-rouge">Contract#verify</code> queries the TWS for a valid contract and <strong>returns the response as new object</strong>.</div>
 
 <h4 id="manipulations-of-the-response">Manipulations of the response</h4>
 
@@ -460,7 +478,7 @@ the block (as shown above).</p>
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2020 ib-ruby. All rights reserved. <br />
-<span>Page last updated:</span> October 27, 2020<br/> Site last generated: Oct 27, 2020 <br />
+<span>Page last updated:</span> October 27, 2020<br/> Site last generated: Oct 28, 2020 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>

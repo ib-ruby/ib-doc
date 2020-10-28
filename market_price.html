@@ -247,6 +247,13 @@
           
           
           
+          <li><a title="Expiry vs. Last-Trading-Day" href="expiry_and_last_trading_day.html">Expiry vs. Last-Trading-Day</a></li>
+          
+          
+          
+          
+          
+          
           <li><a title="Verify" href="Verify_contracts.html">Verify</a></li>
           
           
@@ -255,6 +262,13 @@
           
           
           <li class="active"><a title="Market Price" href="market_price.html">Market Price</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Historical Data" href="Historical_data.html">Historical Data</a></li>
           
           
           
@@ -327,8 +341,6 @@
 <div class="post-content">
 
    
-    <div class="summary"></div>
-   
 
     
     
@@ -358,7 +370,18 @@ $('#toc').on('click', 'a', function() {
 
     
 
-   <h3 id="market-price">Market-Price</h3>
+   <div class="bs-callout bs-callout-info">
+To use the <em>market_price</em> feature, include the <em>ib-extensions</em> Gem  in the Gemfile and use    
+
+<pre> 
+require 'ib-api' 
+require 'ib/market-price' 
+</pre>
+
+in your scripts.
+</div>
+
+<h3 id="market-price">Market-Price</h3>
 
 <p><code class="language-plaintext highlighter-rouge">ib-extensions</code> provides a handy <code class="language-plaintext highlighter-rouge">IB::Contract#market_price</code> method, easing the process of collecting marketprice
 data from the <em>TWS</em>.<br />
@@ -457,7 +480,7 @@ the fetched market-price is stored in <code class="language-plaintext highlighte
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2020 ib-ruby. All rights reserved. <br />
-<span>Page last updated:</span> October 26, 2020<br/> Site last generated: Oct 27, 2020 <br />
+<span>Page last updated:</span> October 26, 2020<br/> Site last generated: Oct 28, 2020 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>

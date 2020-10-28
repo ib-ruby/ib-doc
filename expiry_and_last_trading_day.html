@@ -4,9 +4,9 @@
     <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Contact me for any support issues.">
-<meta name="keywords" content="getting_startedtroubleshooting,  questions, troubleshooting, contact, support">
-<title>Support | ib-ruby documentation</title>
+<meta name="description" content="">
+<meta name="keywords" content="contract,  contracts, attributes, expiry">
+<title>Expiry vs. Last-Trading-Day | ib-ruby documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -144,7 +144,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Support">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Expiry vs. Last-Trading-Day">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -194,7 +194,7 @@
           
           
           
-          <li class="active"><a title="Support" href="ibruby_support.html">Support</a></li>
+          <li><a title="Support" href="ibruby_support.html">Support</a></li>
           
           
           
@@ -247,7 +247,7 @@
           
           
           
-          <li><a title="Expiry vs. Last-Trading-Day" href="expiry_and_last_trading_day.html">Expiry vs. Last-Trading-Day</a></li>
+          <li class="active"><a title="Expiry vs. Last-Trading-Day" href="expiry_and_last_trading_day.html">Expiry vs. Last-Trading-Day</a></li>
           
           
           
@@ -333,15 +333,13 @@
         <!-- Content Column -->
         <div class="col-md-9" id="tg-sb-content">
             <div class="post-header">
-   <h1 class="post-title-main">Support</h1>
+   <h1 class="post-title-main">Expiry vs. Last-Trading-Day</h1>
 </div>
 
 
 
 <div class="post-content">
 
-   
-    <div class="summary">Contact me for any support issues.</div>
    
 
     
@@ -372,7 +370,38 @@ $('#toc').on('click', 'a', function() {
 
     
 
-   <h3 id="support">support!</h3>
+   <p>Since TWS version 950 derivats are defined by <code class="language-plaintext highlighter-rouge">:last_trading_day</code> instead of <code class="language-plaintext highlighter-rouge">:expiry</code>.<br />
+<a href="https://www.interactivebrokers.com/en/index.php?f=13983">IB-Release Notes</a>. <br />
+<code class="language-plaintext highlighter-rouge">:real_expiration_date</code> was added to the list of <code class="language-plaintext highlighter-rouge">IB::Contract</code> attributes.</p>
+
+<p><strong><em>IB-Ruby</em></strong> still uses <code class="language-plaintext highlighter-rouge">:expiry</code> to query Options and Futures. However, the  <code class="language-plaintext highlighter-rouge">:last_trading_day</code> directive is supported as well. <code class="language-plaintext highlighter-rouge">:expiry</code> is addressed via <code class="language-plaintext highlighter-rouge">YYYYMMDD</code>, either as String or as Integer. <code class="language-plaintext highlighter-rouge">:last_trading_day</code> 
+uses the String-representation of a <code class="language-plaintext highlighter-rouge">Date</code>-Object: <code class="language-plaintext highlighter-rouge">"YYYY-MM-DD"</code>.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">the_contract</span> <span class="o">=</span> <span class="no">IB</span><span class="o">::</span><span class="no">Option</span><span class="p">.</span><span class="nf">new</span> <span class="ss">symbol: </span><span class="s1">'SPY'</span><span class="p">,</span> <span class="ss">right: :put</span><span class="p">,</span> <span class="ss">strike: </span><span class="mi">330</span><span class="p">,</span> <span class="ss">currency: </span><span class="s1">'USD'</span><span class="p">,</span> <span class="ss">expiry: </span><span class="mi">202012</span>
+<span class="o">&gt;</span> <span class="n">the_contract</span><span class="p">.</span><span class="nf">to_human</span>                    <span class="o">=&gt;</span> <span class="s2">"&lt;Option: SPY 202012 put 330.0 SMART USD&gt;"</span> 
+<span class="o">&gt;</span> <span class="n">the_contract</span><span class="p">.</span><span class="nf">last_trading_day</span>            <span class="o">=&gt;</span> <span class="s2">""</span> 
+<span class="o">&gt;</span> <span class="n">the_contract</span><span class="p">.</span><span class="nf">verify</span><span class="p">.</span><span class="nf">size</span>                 <span class="o">=&gt;</span> <span class="mi">68</span>                      
+<span class="o">&gt;</span> <span class="n">the_contract</span><span class="p">.</span><span class="nf">verify</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">last_trading_day</span> <span class="o">=&gt;</span> <span class="s2">"2020-12-18"</span>
+
+<span class="o">&gt;</span> <span class="n">spy</span> <span class="o">=</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Option</span><span class="p">.</span><span class="nf">new</span> <span class="ss">symbol: </span><span class="s1">'SPY'</span><span class="p">,</span> <span class="ss">last_trading_day: </span><span class="s2">"2020-12-18"</span><span class="p">,</span> <span class="ss">right: :put</span><span class="p">,</span> <span class="ss">strike: </span><span class="mi">330</span>
+<span class="o">&gt;</span> <span class="n">spy</span><span class="p">.</span><span class="nf">verify</span><span class="p">.</span><span class="nf">size</span>                          <span class="o">=&gt;</span> <span class="mi">1</span> 
+<span class="o">&gt;</span> <span class="n">spy</span><span class="p">.</span><span class="nf">to_human</span>                             <span class="o">=&gt;</span> <span class="s2">"&lt;Option: SPY 202018 put 330.0 SMART USD&gt;"</span> 
+</code></pre></div></div>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="no">IB</span><span class="o">::</span><span class="no">Option</span><span class="p">.</span><span class="nf">new</span> <span class="ss">symbol: </span><span class="s1">'GE'</span><span class="p">,</span> <span class="ss">strike: </span><span class="mi">7</span><span class="p">,</span> <span class="ss">expiry: </span><span class="mi">202101</span><span class="p">,</span> <span class="ss">exchange: </span><span class="s1">'SMART'</span>
+</code></pre></div></div>
+<p>covers all options expiring in January 2020. When requested (<a href="/Verify_contracts.html">Contract.verify</a> )
+ Call- and Put-options with a strike at 15$ are returned.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">&gt;</span>  <span class="n">ge_options</span> <span class="o">=</span> <span class="no">IB</span><span class="o">::</span><span class="no">Option</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span> <span class="ss">symbol: </span><span class="s1">'GE'</span><span class="p">,</span> <span class="ss">strike: </span><span class="mi">15</span><span class="p">,</span> <span class="ss">expiry: </span><span class="mi">202101</span><span class="p">,</span> <span class="ss">exchange: </span><span class="s1">'SMART'</span>  <span class="p">).</span><span class="nf">verify</span>
+ <span class="o">&gt;</span>  <span class="n">ge_options</span><span class="p">.</span><span class="nf">size</span>      <span class="o">=&gt;</span> <span class="mi">2</span>
+ <span class="o">&gt;</span>  <span class="n">ge_options</span><span class="p">.</span><span class="nf">map</span> <span class="o">&amp;</span><span class="ss">:to_human</span>  
+  <span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"&lt;Option: GE 20210115 call 15.0 SMART USD&gt;"</span><span class="p">,</span> <span class="s2">"&lt;Option: GE 20210115 put 15.0 SMART USD&gt;"</span><span class="p">]</span>
+ <span class="o">&gt;</span>  <span class="n">ge_options</span><span class="p">.</span><span class="nf">map</span> <span class="o">&amp;</span><span class="ss">:expiry</span>                 <span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"20210115"</span><span class="p">,</span> <span class="s2">"20210115"</span> <span class="p">]</span>
+ <span class="o">&gt;</span>  <span class="n">ge_</span> <span class="n">option</span><span class="p">.</span><span class="nf">map</span> <span class="o">&amp;</span><span class="ss">:last_trading_day</span>       <span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"2021-01-15"</span><span class="p">,</span> <span class="s2">"2021-01-15"</span><span class="p">]</span> 
+ <span class="o">&gt;</span> <span class="k">end</span> 
+</code></pre></div></div>
+
 
 
     <div class="tags">
@@ -380,12 +409,6 @@ $('#toc').on('click', 'a', function() {
         <b>Tags: </b>
         
         
-        
-        <a href="tag_getting_started.html" class="btn btn-default navbar-btn cursorNorm" role="button">getting_started</a>
-        
-        
-        
-        <a href="tag_troubleshooting.html" class="btn btn-default navbar-btn cursorNorm" role="button">troubleshooting</a>
         
         
         
@@ -402,7 +425,7 @@ $('#toc').on('click', 'a', function() {
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2020 ib-ruby. All rights reserved. <br />
-<span>Page last updated:</span> October 26, 2020<br/> Site last generated: Oct 28, 2020 <br />
+<span>Page last updated:</span> October 28, 2020<br/> Site last generated: Oct 28, 2020 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>

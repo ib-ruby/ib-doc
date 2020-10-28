@@ -26,6 +26,17 @@
 
 
 {
+"title": "Get Historical Data",
+"tags": "contract",
+"keywords": "contracts, historical-data, eod",
+"url": "Historical_data.html",
+"summary": ""
+}
+,
+
+
+
+{
 "title": "Get Marketprice",
 "tags": "contract",
 "keywords": "contracts, verify",
@@ -74,6 +85,17 @@
 "tags": "contract",
 "keywords": "contracts, verify",
 "url": "contract_merge_and_essential.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Expiry vs. Last-Trading-Day",
+"tags": "contract",
+"keywords": "contracts, attributes, expiry",
+"url": "expiry_and_last_trading_day.html",
 "summary": ""
 }
 ,
