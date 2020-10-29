@@ -4,9 +4,9 @@
     <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Version 6.0 of the Documentation theme for Jekyll, released July 4, 2016, implements relative links so you can view the files offline or on any server withou...">
-<meta name="keywords" content="getting_started,  release notes, announcements, what's new, new features">
-<title>Release notes ib-symbols Version 1.0 | ib-ruby documentation</title>
+<meta name="description" content="">
+<meta name="keywords" content="message,  messages">
+<title>List of Messages | ib-ruby documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -144,7 +144,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Release notes ib-symbols Version 1.0">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="List of Messages">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -263,7 +263,7 @@
           
           
           
-          <li><a title="List of Messages" href="message_correct_arguments.html">List of Messages</a></li>
+          <li class="active"><a title="List of Messages" href="message_correct_arguments.html">List of Messages</a></li>
           
           
           
@@ -359,7 +359,7 @@
           
           
           
-          <li class="active"><a title="ib-symbols 1.0" href="ibruby_release_notes_symbols_1.html">ib-symbols 1.0</a></li>
+          <li><a title="ib-symbols 1.0" href="ibruby_release_notes_symbols_1.html">ib-symbols 1.0</a></li>
           
           
           
@@ -386,15 +386,13 @@
         <!-- Content Column -->
         <div class="col-md-9" id="tg-sb-content">
             <div class="post-header">
-   <h1 class="post-title-main">Release notes ib-symbols Version 1.0</h1>
+   <h1 class="post-title-main">List of Messages</h1>
 </div>
 
 
 
 <div class="post-content">
 
-   
-    <div class="summary">Version 6.0 of the Documentation theme for Jekyll, released July 4, 2016, implements relative links so you can view the files offline or on any server without configuring urls and baseurls. Additionally, you can store pages in subdirectories. Templates for alerts and images are available.</div>
    
 
     
@@ -425,10 +423,68 @@ $('#toc').on('click', 'a', function() {
 
     
 
-   <h2 id="work--in-progress">Work  in progress</h2>
+   <p>The arguments required by outgoing messages mostly resemble the <a href="https://interactivebrokers.github.io/tws-api/index.html#gsc.tab=0">official api-documentation</a>. However, apart from using underscored (snake-case) properties names, sometimes slightly differ from those specified by <em>Interactive Brokers</em>.</p>
 
-<p>This will be filled in the near future</p>
+<p>The properties are referenced in the source-code (lib/ib/messages/outgoing.rb, lib/ib/messages/outgoing/*rb). 
+If just a clarification how to write properties is needed</p>
 
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Outgoing</span><span class="o">::</span><span class="p">{</span><span class="n">message</span><span class="o">-</span><span class="k">class</span><span class="p">}.</span><span class="nf">properties?</span>
+</code></pre></div></div>
+<p>is available</p>
+
+<p><strong>Example</strong></p>
+
+<p>In the <a href="/console">Console</a>, use the tab-completion to reveal the proper method-name</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="no">Messages</span><span class="o">::</span><span class="no">Outgoing</span><span class="o">::</span><span class="no">Req</span> <span class="p">[</span><span class="n">tab</span><span class="p">]</span>
+<span class="no">Messages</span><span class="o">::</span><span class="no">Outgoing</span><span class="o">::</span><span class="no">ReqSecDefOptParams</span>
+<span class="no">Messages</span><span class="o">::</span><span class="no">Outgoing</span><span class="o">::</span><span class="no">RequestAccountData</span>
+<span class="no">Messages</span><span class="o">::</span><span class="no">Outgoing</span><span class="o">::</span><span class="no">RequestAccountSummary</span>
+<span class="no">Messages</span><span class="o">::</span><span class="no">Outgoing</span><span class="o">::</span><span class="no">RequestAccountUpdates</span>
+<span class="no">Messages</span><span class="o">::</span><span class="no">Outgoing</span><span class="o">::</span><span class="no">RequestAccountUpdatesMulti</span>
+<span class="no">Messages</span><span class="o">::</span><span class="no">Outgoing</span><span class="o">::</span><span class="no">RequestAllOpenOrders</span>
+<span class="no">Messages</span><span class="o">::</span><span class="no">Outgoing</span><span class="o">::</span><span class="no">RequestAutoOpenOrders</span>
+<span class="no">Messages</span><span class="o">::</span><span class="no">Outgoing</span><span class="o">::</span><span class="no">RequestCalculateImpliedVolatility</span>
+<span class="no">Messages</span><span class="o">::</span><span class="no">Outgoing</span><span class="o">::</span><span class="no">RequestCalculateOptionPrice</span>
+<span class="no">Messages</span><span class="o">::</span><span class="no">Outgoing</span><span class="o">::</span><span class="no">RequestContractData</span>
+<span class="no">Messages</span><span class="o">::</span><span class="no">Outgoing</span><span class="o">::</span><span class="no">RequestContractDetails</span>
+<span class="no">Messages</span><span class="o">::</span><span class="no">Outgoing</span><span class="o">::</span><span class="no">RequestCurrentTime</span>
+<span class="no">Messages</span><span class="o">::</span><span class="no">Outgoing</span><span class="o">::</span><span class="no">RequestExecutions</span>
+<span class="no">Messages</span><span class="o">::</span><span class="no">Outgoing</span><span class="o">::</span><span class="no">RequestFA</span>
+<span class="no">Messages</span><span class="o">::</span><span class="no">Outgoing</span><span class="o">::</span><span class="no">RequestFundamentalData</span>
+<span class="no">Messages</span><span class="o">::</span><span class="no">Outgoing</span><span class="o">::</span><span class="no">RequestGlobalCancel</span>
+<span class="no">Messages</span><span class="o">::</span><span class="no">Outgoing</span><span class="o">::</span><span class="no">RequestHeadTimeStamp</span>
+<span class="no">Messages</span><span class="o">::</span><span class="no">Outgoing</span><span class="o">::</span><span class="no">RequestHistogramData</span>
+<span class="no">Messages</span><span class="o">::</span><span class="no">Outgoing</span><span class="o">::</span><span class="no">RequestHistoricalData</span>
+<span class="no">Messages</span><span class="o">::</span><span class="no">Outgoing</span><span class="o">::</span><span class="no">RequestIds</span>
+<span class="no">Messages</span><span class="o">::</span><span class="no">Outgoing</span><span class="o">::</span><span class="no">RequestImpliedVolatility</span>
+<span class="no">Messages</span><span class="o">::</span><span class="no">Outgoing</span><span class="o">::</span><span class="no">RequestManagedAccounts</span>
+<span class="no">Messages</span><span class="o">::</span><span class="no">Outgoing</span><span class="o">::</span><span class="no">RequestMarketData</span>
+<span class="no">Messages</span><span class="o">::</span><span class="no">Outgoing</span><span class="o">::</span><span class="no">RequestMarketDataType</span>
+<span class="no">Messages</span><span class="o">::</span><span class="no">Outgoing</span><span class="o">::</span><span class="no">RequestMarketDepth</span>
+<span class="no">Messages</span><span class="o">::</span><span class="no">Outgoing</span><span class="o">::</span><span class="no">RequestNewsBulletins</span>
+<span class="no">Messages</span><span class="o">::</span><span class="no">Outgoing</span><span class="o">::</span><span class="no">RequestOpenOrders</span>
+<span class="no">Messages</span><span class="o">::</span><span class="no">Outgoing</span><span class="o">::</span><span class="no">RequestOptionChainDefinition</span>
+<span class="no">Messages</span><span class="o">::</span><span class="no">Outgoing</span><span class="o">::</span><span class="no">RequestOptionPrice</span>
+<span class="no">Messages</span><span class="o">::</span><span class="no">Outgoing</span><span class="o">::</span><span class="no">RequestPositions</span>
+<span class="no">Messages</span><span class="o">::</span><span class="no">Outgoing</span><span class="o">::</span><span class="no">RequestPositionsMulti</span>
+<span class="no">Messages</span><span class="o">::</span><span class="no">Outgoing</span><span class="o">::</span><span class="no">RequestRealTimeBars</span>
+<span class="no">Messages</span><span class="o">::</span><span class="no">Outgoing</span><span class="o">::</span><span class="no">RequestScannerParameters</span>
+<span class="no">Messages</span><span class="o">::</span><span class="no">Outgoing</span><span class="o">::</span><span class="no">RequestScannerSubscription</span>
+<span class="no">Messages</span><span class="o">::</span><span class="no">Outgoing</span><span class="o">::</span><span class="no">RequestSecurityDefinitionOptionParameters</span>
+<span class="no">Messages</span><span class="o">::</span><span class="no">Outgoing</span><span class="o">::</span><span class="no">RequstMarketDepthExchanges</span>
+</code></pre></div></div>
+
+<p>Then we can call <code class="language-plaintext highlighter-rouge">:properties</code> on the specified message-class</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="no">Messages</span><span class="o">::</span><span class="no">Outgoing</span><span class="o">::</span><span class="no">RequestFA</span><span class="p">.</span><span class="nf">properties?</span>
+ <span class="o">=&gt;</span> <span class="p">[</span><span class="ss">:fa_data_type</span><span class="p">]</span> 
+
+ <span class="no">C</span><span class="p">.</span><span class="nf">send_message</span> <span class="ss">:RequestFA</span><span class="p">,</span> <span class="ss">fa_data_type: </span><span class="mi">3</span> <span class="c1"># Account-Aliases</span>
+
+
+<span class="o">&gt;</span>  <span class="no">Messages</span><span class="o">::</span><span class="no">Outgoing</span><span class="o">::</span><span class="no">RequestImpliedVolatility</span><span class="p">.</span><span class="nf">properties?</span>
+ <span class="o">=&gt;</span> <span class="p">[</span><span class="ss">:request_id</span><span class="p">,</span> <span class="ss">:contract</span><span class="p">,</span> <span class="ss">:option_price</span><span class="p">,</span> <span class="ss">:under_price</span><span class="p">,</span> <span class="ss">:implied_volatility_options_count</span><span class="p">,</span> <span class="ss">:implied_volatility_options_conditions</span><span class="p">]</span>
+</code></pre></div></div>
 
 
     <div class="tags">
@@ -436,8 +492,6 @@ $('#toc').on('click', 'a', function() {
         <b>Tags: </b>
         
         
-        
-        <a href="tag_getting_started.html" class="btn btn-default navbar-btn cursorNorm" role="button">getting_started</a>
         
         
         
@@ -454,7 +508,7 @@ $('#toc').on('click', 'a', function() {
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2020 ib-ruby. All rights reserved. <br />
-<span>Page last updated:</span> October 26, 2020<br/> Site last generated: Oct 29, 2020 <br />
+<span>Page last updated:</span> October 29, 2020<br/> Site last generated: Oct 29, 2020 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>

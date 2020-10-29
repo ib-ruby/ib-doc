@@ -4,9 +4,9 @@
     <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Version 6.0 of the Documentation theme for Jekyll, released July 4, 2016, implements relative links so you can view the files offline or on any server withou...">
-<meta name="keywords" content="getting_started,  release notes, announcements, what's new, new features">
-<title>Release notes ib-symbols Version 1.0 | ib-ruby documentation</title>
+<meta name="description" content="">
+<meta name="keywords" content="troubleshooting,  ">
+<title>IB-Ruby Console | ib-ruby documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -144,7 +144,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Release notes ib-symbols Version 1.0">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="IB-Ruby Console">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -247,7 +247,7 @@
           
           
           
-          <li><a title="IB-Ruby Console" href="console.html">IB-Ruby Console</a></li>
+          <li class="active"><a title="IB-Ruby Console" href="console.html">IB-Ruby Console</a></li>
           
           
           
@@ -359,7 +359,7 @@
           
           
           
-          <li class="active"><a title="ib-symbols 1.0" href="ibruby_release_notes_symbols_1.html">ib-symbols 1.0</a></li>
+          <li><a title="ib-symbols 1.0" href="ibruby_release_notes_symbols_1.html">ib-symbols 1.0</a></li>
           
           
           
@@ -386,15 +386,13 @@
         <!-- Content Column -->
         <div class="col-md-9" id="tg-sb-content">
             <div class="post-header">
-   <h1 class="post-title-main">Release notes ib-symbols Version 1.0</h1>
+   <h1 class="post-title-main">IB-Ruby Console</h1>
 </div>
 
 
 
 <div class="post-content">
 
-   
-    <div class="summary">Version 6.0 of the Documentation theme for Jekyll, released July 4, 2016, implements relative links so you can view the files offline or on any server without configuring urls and baseurls. Additionally, you can store pages in subdirectories. Templates for alerts and images are available.</div>
    
 
     
@@ -425,9 +423,61 @@ $('#toc').on('click', 'a', function() {
 
     
 
-   <h2 id="work--in-progress">Work  in progress</h2>
+   <p>To experiment with the API, a preconfigurated interactive irb-console is provided</p>
 
-<p>This will be filled in the near future</p>
+<blockquote>
+  <p>cd bin &amp;&amp; ./console.rb</p>
+</blockquote>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">---------------------------------------------</span>
+ <span class="no">Namespace</span> <span class="n">is</span> <span class="no">IB</span> <span class="o">!</span> 
+ <span class="o">---------------------------------------------</span>
+ <span class="mo">06</span><span class="p">:</span><span class="mi">44</span><span class="p">:</span><span class="mo">03</span><span class="o">.</span><span class="mi">998</span> <span class="no">Connected</span> <span class="n">to</span> <span class="n">server</span><span class="p">,</span> <span class="ss">version: </span><span class="mi">137</span><span class="p">,</span>
+ <span class="n">connection</span> <span class="ss">time: </span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">21</span> <span class="mo">06</span><span class="p">:</span><span class="mi">44</span><span class="p">:</span><span class="mo">03</span> <span class="o">+</span><span class="mo">0000</span> <span class="n">local</span><span class="p">,</span> <span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">21</span><span class="no">T06</span><span class="p">:</span><span class="mi">44</span><span class="p">:</span><span class="mo">03</span><span class="o">+</span><span class="mo">00</span><span class="p">:</span><span class="mo">00</span> <span class="n">remote</span><span class="o">.</span>
+
+ <span class="mo">06</span><span class="p">:</span><span class="mi">44</span><span class="p">:</span><span class="mo">03</span><span class="o">.</span><span class="mi">999</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">15</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ManagedAccounts</span><span class="p">)</span>
+ <span class="o">-------------------------------</span> <span class="no">Managed</span> <span class="no">Accounts</span> <span class="o">----------------------------------</span>
+ <span class="no">Detected</span> <span class="no">Accounts</span><span class="p">:</span> <span class="no">DF167347</span> <span class="o">--</span> <span class="no">DU167348</span> <span class="o">--</span> <span class="no">DU167349</span> 
+ <span class="o">----&gt;</span> <span class="no">C</span>    <span class="n">points</span> <span class="n">to</span> <span class="n">the</span> <span class="n">connection</span><span class="o">-</span><span class="n">instance</span>
+ <span class="n">some</span> <span class="n">basic</span> <span class="no">Messages</span> <span class="n">are</span> <span class="n">subscribed</span> <span class="n">and</span> <span class="n">accordingly</span> <span class="n">displayed</span>
+</code></pre></div></div>
+
+<p>Without parameters it connects to a running Gateway-Application on localhost. <br />
+The GUI-Version (TWS) is addressed through <code class="language-plaintext highlighter-rouge">./console.rb tws</code>.</p>
+
+<div class="alert alert-info" role="alert"><i class="fa fa-bars"></i> The IP of TWS/Gateway, Api-Ports and Client_id are read from <code class="language-plaintext highlighter-rouge">console.yml</code>.</div>
+
+<p>The <code class="language-plaintext highlighter-rouge">IB::Connection</code>-Object is accessed through <strong><code class="language-plaintext highlighter-rouge">C</code></strong>:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="no">C</span><span class="p">.</span><span class="nf">send_message</span> <span class="ss">:RequestContractDetails</span><span class="p">,</span> <span class="ss">contract: </span><span class="no">Stock</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span> <span class="ss">symbol: </span><span class="s1">'TAP'</span> <span class="p">)</span>
+  <span class="o">=&gt;</span> <span class="mi">5878</span> 
+	<span class="mo">07</span><span class="p">:</span><span class="mi">10</span><span class="p">:</span><span class="mf">13.389</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">10</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ContractData</span><span class="p">)</span>
+	<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">21</span><span class="no">T07</span><span class="p">:</span><span class="mi">10</span><span class="p">:</span><span class="mf">13.389943</span> <span class="c1">#22286]  INFO -- : &lt;Stock: TAP USD&gt;</span>
+	<span class="mo">07</span><span class="p">:</span><span class="mi">10</span><span class="p">:</span><span class="mf">13.390</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">52</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ContractDataEnd</span><span class="p">)</span>
+	<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">21</span><span class="no">T07</span><span class="p">:</span><span class="mi">10</span><span class="p">:</span><span class="mf">13.390092</span> <span class="c1">#22286]  INFO -- : &lt;ContractDataEnd: request_id 5878 &gt;</span>
+
+<span class="no">C</span><span class="p">.</span><span class="nf">received</span><span class="p">.</span><span class="nf">keys</span>
+	 <span class="o">=&gt;</span> <span class="p">[</span><span class="ss">:ManagedAccounts</span><span class="p">,</span> <span class="ss">:NextValidId</span><span class="p">,</span> <span class="ss">:Alert</span><span class="p">,</span> <span class="ss">:OpenOrder</span><span class="p">,</span> <span class="ss">:ContractData</span><span class="p">,</span> <span class="ss">:ContractDataEnd</span><span class="p">]</span> 
+
+<span class="no">C</span><span class="p">.</span><span class="nf">received</span><span class="p">[</span><span class="ss">:ContractData</span><span class="p">].</span><span class="nf">to_human</span>
+ <span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"&lt;ContractDetails  MOLSON COORS BEVERAGE CO - B, --&gt; TAP, /C/ Beverages, /I/ Consumer, Non-cyclical /SC/ Brewery, md_size_multiplier:100, min_tick:0.01, price_magnifier:1, valid exchanges: SMART,AMEX,NYSE,CBOE,PHLX,ISE,CHX,ARCA,ISLAND,DRCTEDGE,BEX,BATS,EDGEA,CSFBALGO,JEFFALGO,BYX,IEX,EDGX,FOXRIVER,PEARL,NYSENAT,LTSE,MEMX,PSX; order types: ACTIVETIM,AD,ADJUST,ALERT,ALGO,ALLOC,AVGCOST,BASKET,BENCHPX,COND,CONDORDER,DARKONLY,DARKPOLL,DAY,DEACT,DEACTDIS,DEACTEOD,DIS,GAT,GTC,GTD,GTT,HID,IBKRATS,ICE,IMB,IOC,LIT,LMT,LOC,MIT,MKT,MOC,MTL,NGCOMB,NODARK,NONALGO,OCA,OPG,OPGREROUT,PEGBENCH,POSTONLY,PREOPGRTH,REL,RPI,RTH,RTHIGNOPG,SCALE,SCALEODD,SCALERST,SNAPMID,SNAPMKT,SNAPREL,STP,STPLMT,SWEEP,TRAIL,TRAILLIT,TRAILLMT,TRAILMIT,WHATIF &gt;"</span><span class="p">]</span> 
+<span class="no">C</span><span class="p">.</span><span class="nf">received</span><span class="p">[</span><span class="ss">:ContractData</span><span class="p">].</span><span class="nf">contract</span><span class="p">.</span><span class="nf">to_human</span>
+ <span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"&lt;Stock: TAP USD&gt;"</span><span class="p">]</span> 
+</code></pre></div></div>
+
+<h2 id="array-expansion">Array Expansion</h2>
+<p>To simplify operations with received data, arbitrary operations may be applied to array’s.</p>
+
+<p><strong>Example:</strong> If you collect <a href="/Historical_data">End-of-Day historical data</a> for a <code class="language-plaintext highlighter-rouge">IB::Contract</code>,
+you can inspect the results directly in the Console:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">eod</span> <span class="o">=</span> <span class="no">IB</span><span class="o">::</span><span class="no">Stock</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span> <span class="ss">symbol: </span><span class="s1">'GE'</span><span class="p">).</span><span class="nf">eod</span><span class="p">(</span> <span class="ss">duration: </span><span class="mi">10</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="n">eod</span><span class="p">.</span><span class="nf">class</span>                  <span class="o">=&gt;</span> <span class="no">Array</span> 
+<span class="o">&gt;</span> <span class="n">eod</span><span class="p">.</span><span class="nf">size</span>                   <span class="o">=&gt;</span> <span class="mi">10</span> 
+<span class="o">&gt;</span> <span class="n">eod</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">class</span>            <span class="o">=&gt;</span> <span class="no">IB</span><span class="o">::</span><span class="no">Bar</span> 
+<span class="o">&gt;</span> <span class="n">eod</span><span class="p">.</span><span class="nf">close</span><span class="p">.</span><span class="nf">to_f</span>
+ <span class="o">=&gt;</span> <span class="p">[</span><span class="mf">6.89</span><span class="p">,</span> <span class="mf">7.3</span><span class="p">,</span> <span class="mf">7.32</span><span class="p">,</span> <span class="mf">7.35</span><span class="p">,</span> <span class="mf">7.31</span><span class="p">,</span> <span class="mf">7.86</span><span class="p">,</span> <span class="mf">7.66</span><span class="p">,</span> <span class="mf">7.36</span><span class="p">,</span> <span class="mf">7.13</span><span class="p">,</span> <span class="mf">7.54</span><span class="p">]</span> 
+</code></pre></div></div>
 
 
 
@@ -437,7 +487,7 @@ $('#toc').on('click', 'a', function() {
         
         
         
-        <a href="tag_getting_started.html" class="btn btn-default navbar-btn cursorNorm" role="button">getting_started</a>
+        <a href="tag_troubleshooting.html" class="btn btn-default navbar-btn cursorNorm" role="button">troubleshooting</a>
         
         
         
@@ -454,7 +504,7 @@ $('#toc').on('click', 'a', function() {
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2020 ib-ruby. All rights reserved. <br />
-<span>Page last updated:</span> October 26, 2020<br/> Site last generated: Oct 29, 2020 <br />
+ Site last generated: Oct 29, 2020 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>

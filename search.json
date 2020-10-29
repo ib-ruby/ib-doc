@@ -81,6 +81,28 @@
 
 
 {
+"title": "Connect to the TWS",
+"tags": "connection",
+"keywords": "",
+"url": "connect_to_tws.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "IB-Ruby Console",
+"tags": "troubleshooting",
+"keywords": "",
+"url": "console.html",
+"summary": ""
+}
+,
+
+
+
+{
 "title": "Merge and Essential",
 "tags": "contract",
 "keywords": "contracts, verify",
@@ -105,11 +127,11 @@
 
 
 {
-"title": "About the ib-ruby Project",
+"title": "About the IB-Ruby Project",
 "tags": "getting_started",
 "keywords": "authors",
 "url": "ibruby_about.html",
-"summary": "Why ib-ruby?."
+"summary": ""
 }
 ,
 
@@ -186,7 +208,29 @@
 "tags": "getting_started",
 "keywords": "sample homepage",
 "url": "index.html",
-"summary": "These documentation provides basic informations how to use ib-ruby in a productive way."
+"summary": ""
+}
+,
+
+
+
+{
+"title": "List of Messages",
+"tags": "message",
+"keywords": "messages",
+"url": "message_correct_arguments.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Usage of Request_ID",
+"tags": "message",
+"keywords": "messages",
+"url": "message_request_id.html",
+"summary": ""
 }
 ,
 
@@ -1094,6 +1138,17 @@
 
 
 
+
+
+
+{
+"title": "Watchlists",
+"tags": "symbols",
+"keywords": "",
+"url": "watchlists.html",
+"summary": ""
+}
+,
 
 
 

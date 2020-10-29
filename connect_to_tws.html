@@ -4,9 +4,9 @@
     <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="This page lists common errors and the steps needed to troubleshoot them.">
-<meta name="keywords" content="troubleshooting,  trouble, problems, support, error messages, problems, failure, error,">
-<title>Troubleshooting | ib-ruby documentation</title>
+<meta name="description" content="">
+<meta name="keywords" content="connection,  ">
+<title>Connect to the TWS | ib-ruby documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -144,7 +144,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Troubleshooting">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Connect to the TWS">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -170,8 +170,205 @@
                 
 
 <ul id="mysidebar" class="nav">
-  <li class="sidebarTitle"> </li>
+  <li class="sidebarTitle">ib-ruby </li>
   
+  
+  
+  <li>
+      <a title="Overview" href="#">Overview</a>
+      <ul>
+          
+          
+          
+          <li><a title="The IB-Ruby Project" href="index.html">The IB-Ruby Project</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Introduction" href="ibruby_introduction.html">Introduction</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Support" href="ibruby_support.html">Support</a></li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+  
+  <li>
+      <a title="Installation" href="#">Installation</a>
+      <ul>
+          
+          
+          
+          <li><a title="Setup Ruby and Install the Software." href="Setup_Ruby_and_Install_the_Software.html">Setup Ruby and Install the Software.</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Create a new Project" href="Create_a_new_project.html">Create a new Project</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Install on Windows" href="ibruby_install_on_windows.html">Install on Windows</a></li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+  
+  <li>
+      <a title="Connection / Gateway" href="#">Connection / Gateway</a>
+      <ul>
+          
+          
+          
+          <li class="active"><a title="Connect to the TWS" href="connect_to_tws.html">Connect to the TWS</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="IB-Ruby Console" href="console.html">IB-Ruby Console</a></li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+  
+  <li>
+      <a title="Messages" href="#">Messages</a>
+      <ul>
+          
+          
+          
+          <li><a title="List of Messages" href="message_correct_arguments.html">List of Messages</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Request-ID" href="message_request_id.html">Request-ID</a></li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+  
+  <li>
+      <a title="Contracts" href="#">Contracts</a>
+      <ul>
+          
+          
+          
+          <li><a title="Specify and Query" href="Specify_and_query_contracts.html">Specify and Query</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Expiry vs. Last-Trading-Day" href="expiry_and_last_trading_day.html">Expiry vs. Last-Trading-Day</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Watchlists" href="watchlists.html">Watchlists</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Verify" href="Verify_contracts.html">Verify</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Market Price" href="market_price.html">Market Price</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Historical Data" href="Historical_data.html">Historical Data</a></li>
+          
+          
+          
+          <li class="subfolders">
+              <a title="Tag archive pages" href="#">Tag archive pages</a>
+              <ul>
+                  
+                  
+                  
+                  <li><a title="Formatting pages" href="tag_formatting.html">Formatting pages</a></li>
+                  
+                  
+                  
+              </ul>
+          </li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+  
+  <li>
+      <a title="Release Notes" href="#">Release Notes</a>
+      <ul>
+          
+          
+          
+          <li><a title="ib-api 972 gem release" href="ibruby_release_notes_api_972_gem.html">ib-api 972 gem release</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="ib-symbols 1.0" href="ibruby_release_notes_symbols_1.html">ib-symbols 1.0</a></li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+      
       <!-- if you aren't using the accordion, uncomment this block:
          <p class="external">
              <a href="#" id="collapseAll">Collapse All</a> | <a href="#" id="expandAll">Expand All</a>
@@ -189,15 +386,13 @@
         <!-- Content Column -->
         <div class="col-md-9" id="tg-sb-content">
             <div class="post-header">
-   <h1 class="post-title-main">Troubleshooting</h1>
+   <h1 class="post-title-main">Connect to the TWS</h1>
 </div>
 
 
 
 <div class="post-content">
 
-   
-    <div class="summary">This page lists common errors and the steps needed to troubleshoot them.</div>
    
 
     
@@ -228,70 +423,60 @@ $('#toc').on('click', 'a', function() {
 
     
 
-   <h2 id="issues-building-the-site">Issues building the site</h2>
+   <p>In the WAN-World many things can go terribly wrong.<br />
+Even a super stable cable connection can suddenly vanish. Then a reconnection may be necessary.</p>
 
-<h3 id="address-already-in-use">Address already in use</h3>
-
-<p>When you try to build the site, you get this error in iTerm:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jekyll 2.5.3 | Error:  Address already in use - bind(2)
+<h2 id="ibconnection">IB::Connection</h2>
+<p>The connection to the TWS is performed in <code class="language-plaintext highlighter-rouge">IB::Connection.connect</code>, simply by opening a port</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>self.socket = IBSocket.open(@host, @port)  
 </code></pre></div></div>
-<p>This happens if a server is already in use. To fix this, edit your config file and change the port to a unique number.</p>
+<p><code class="language-plaintext highlighter-rouge">IBSocket</code> is in fact a specialized <code class="language-plaintext highlighter-rouge">TCPSocket</code>. It inherits  its complete error-handling repertoire.</p>
 
-<p>If the previous server wasn’t shut down properly, you can kill the server process using these commands:</p>
+<p>If the connection cannot be established,  <code class="language-plaintext highlighter-rouge">Errno::ECONNREFUSED</code>  is fired. Its up to the user 
+to handle this error.</p>
 
-<p><code class="language-plaintext highlighter-rouge">ps aux | grep jekyll</code></p>
+<h2 id="ibgateway">IB::Gateway</h2>
 
-<p>Find the PID (for example, it  looks like “22298”).</p>
+<div class="bs-callout bs-callout-info">
+The <em>ib-extensions</em> Gem includes the <em>Gateway</em> application.    
+<br />
+Include  
+<pre> 
+require 'ib-api' 
+require 'ib/gateway' 
+</pre>
 
-<p>Then type <code class="language-plaintext highlighter-rouge">kill -9 22298</code> where “22298” is the PID.</p>
+in your scripts.
+</div>
 
-<p>Alternatively, type the following to stop all Jekyll servers:</p>
+<p><code class="language-plaintext highlighter-rouge">IB::Gateway#Connect</code>  handles <code class="language-plaintext highlighter-rouge">Errno::ECONNREFUSED</code>, <code class="language-plaintext highlighter-rouge">Errno::EHOSTUNREACH</code> and  the unspecified <code class="language-plaintext highlighter-rouge">SocketError</code>. It’s designed to handle uncertain and often interrupted connections via DSL, WLAN or even GSM.</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kill -9 $(ps aux | grep '[j]ekyll' | awk '{print $2}')
+<p>If the Host is not reached, it tries to reconnect for at least one hour.</p>
+
+<div class="alert alert-info" role="alert"><i class="fa fa-bars"></i> 
+<b><code class="language-plaintext highlighter-rouge">IB::Gateway.check_connection:</code></b> Method to ensure a valid connection to the Interactive Brokers Data Centers. 
+</div>
+
+<p>If a Connection has been established, one cannot be sure, that its not interrupted by IB. 
+Then an error-message is transmitted:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>05:37:29 TWS System 1102: Connectivity between IB and Trader Workstation has been restored - data maintained.
 </code></pre></div></div>
-
-<h3 id="shell-file-not-executable">shell file not executable</h3>
-
-<p>If you run into permissions errors trying to run a shell script file (such as mydoc_multibuild_web.sh), you may need to change the file permissions to make the sh file executable. Browse to the directory containing the shell script and run the following:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>chmod +x build_writer.sh
+<p>The standard answer of the <code class="language-plaintext highlighter-rouge">IB::Gateway</code> is defined in the <code class="language-plaintext highlighter-rouge">Alert</code>-class</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="k">def</span> <span class="nf">IB</span><span class="o">::</span><span class="no">Alert</span><span class="p">.</span><span class="nf">alert_2102</span>
+       <span class="nb">sleep</span> <span class="mf">0.1</span>  <span class="c1">#  no need to wait too long.</span>
+       <span class="k">if</span> <span class="no">IB</span><span class="o">::</span><span class="no">Gateway</span><span class="p">.</span><span class="nf">current</span><span class="p">.</span><span class="nf">check_connection</span>
+          <span class="no">IB</span><span class="o">::</span><span class="no">Gateway</span><span class="p">.</span><span class="nf">logger</span><span class="p">.</span><span class="nf">debug</span> <span class="p">{</span> <span class="s2">"Alert 2102: Connection stable"</span>  <span class="p">}</span>
+       <span class="k">else</span>
+         <span class="no">IB</span><span class="o">::</span><span class="no">Gateway</span><span class="p">.</span><span class="nf">current</span><span class="p">.</span><span class="nf">reconnect</span>
+       <span class="k">end</span>
+    <span class="k">end</span>
 </code></pre></div></div>
+<p>Simple and efficient.</p>
 
-<h2 id="shell-file-not-runnable">shell file not runnable</h2>
+<p><code class="language-plaintext highlighter-rouge">IB::Gateway#CheckConnection</code> requests the current time. If this simple message is not answered properly, we disconnect the client and start from the beginning.</p>
 
-<p>If you’re using a PC, rename your shell files with a .bat extension.</p>
-
-<h3 id="page-0-cross-references-in-the-pdf">“page 0” cross references in the PDF</h3>
-
-<p>If you see “page 0” cross-references in the PDF, the URL doesn’t exist. Check to make sure you actually included this page in the build.</p>
-
-<p>If it’s not a page but rather a file, you need to add a <code class="language-plaintext highlighter-rouge">noCrossRef</code> class to the file so that your print stylesheet excludes the counter from it. Add <code class="language-plaintext highlighter-rouge">class="noCrossRef"</code> as an attribute to the link. In the css/printstyles.css file, there is a style that should remove the counter from anchor elements with this class.</p>
-
-<h3 id="the-pdf-is-blank">The PDF is blank</h3>
-
-<p>Check the prince-list.txt file in the output to see if it contains links. If not, you have something wrong with the logic in the prince-list.txt file. Check the conditions.html file in your _includes to see if the audience specified in your configuration file aligns with the buildAudience in the conditions.html file</p>
-
-<h3 id="sidebar-not-appearing">Sidebar not appearing</h3>
-
-<p>If you build your site but the sidebar doesn’t appear, check the following:</p>
-
-<p>Look in your PDF config file and make sure you have a sidebar property, such as this:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pdf_sidebar: product2_sidebar
-</code></pre></div></div>
-
-<p>Make sure each TOC item has an output property that specifies web or pdf.</p>
-
-<p>Understanding how the theme works can be helpful in troubleshooting. The _includes/sidebar.html file loops through the values in the _data/sidebar.yml file. There are <code class="language-plaintext highlighter-rouge">if</code> statements that check whether the conditions (as specified in the conditions.html file) are met. If the sidebar.yml item doesn’t have the right output, then it won’t get displayed in the sidebar. It would instead get skipped.</p>
-
-<h3 id="sidebar-isnt-collapsed">Sidebar isn’t collapsed</h3>
-
-<p>If the sidebar levels aren’t collapsed, usually your JavaScript is broken somewhere. Open the JavaScript Console and look to see where the problem is. If one script breaks, then other scripts will break too, so troubleshooting it is a little tricky.</p>
-
-<h3 id="search-isnt-working">Search isn’t working</h3>
-
-<p>If the search isn’t working, check the JSON validity in the search.json file in your output folder. Usually something is invalid. Identify the problematic line, fix the file, or put <code class="language-plaintext highlighter-rouge">search: exclude</code> in the frontmatter of the file to exclude it from search.</p>
+<p>Its safe to call <code class="language-plaintext highlighter-rouge">IB::Gateway#CheckConnection</code> prior to every critical message, as order-placement or contract-verification. It delays the process by approx. 7 ms.</p>
 
 
 
@@ -300,8 +485,6 @@ $('#toc').on('click', 'a', function() {
         <b>Tags: </b>
         
         
-        
-        <a href="tag_troubleshooting.html" class="btn btn-default navbar-btn cursorNorm" role="button">troubleshooting</a>
         
         
         
@@ -318,7 +501,7 @@ $('#toc').on('click', 'a', function() {
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2020 ib-ruby. All rights reserved. <br />
-<span>Page last updated:</span> July 3, 2016<br/> Site last generated: Oct 29, 2020 <br />
+ Site last generated: Oct 29, 2020 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>
