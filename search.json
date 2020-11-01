@@ -81,6 +81,17 @@
 
 
 {
+"title": "At the Money Options",
+"tags": "case-study",
+"keywords": "contract, option",
+"url": "atm_options.html",
+"summary": ""
+}
+,
+
+
+
+{
 "title": "Connect to the TWS",
 "tags": "connection",
 "keywords": "",
@@ -208,6 +219,17 @@
 "tags": "getting_started",
 "keywords": "sample homepage",
 "url": "index.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "Get Marketprice",
+"tags": "contract",
+"keywords": "contracts, verify",
+"url": "itm_otm_atm.html",
 "summary": ""
 }
 ,
@@ -1108,6 +1130,17 @@
 
 
 
+
+
+
+{
+"title": "Spread Prototypes",
+"tags": "spreads",
+"keywords": "spreads, strangle, straddle. vertical, butterfly",
+"url": "spreads.html",
+"summary": ""
+}
+,
 
 
 

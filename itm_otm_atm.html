@@ -4,9 +4,9 @@
     <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="You can apply syntax highlighting to your code. This theme uses pygments and applies color coding based on the lexer you specify.">
-<meta name="keywords" content="formatting,  rouge, pygments, prettify, color coding,">
-<title>Syntax highlighting | ib-ruby documentation</title>
+<meta name="description" content="">
+<meta name="keywords" content="contract,  contracts, verify">
+<title>Get Marketprice | ib-ruby documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -144,7 +144,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Syntax highlighting">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Get Marketprice">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -170,8 +170,219 @@
                 
 
 <ul id="mysidebar" class="nav">
-  <li class="sidebarTitle"> </li>
+  <li class="sidebarTitle">ib-ruby </li>
   
+  
+  
+  <li>
+      <a title="Overview" href="#">Overview</a>
+      <ul>
+          
+          
+          
+          <li><a title="The IB-Ruby Project" href="index.html">The IB-Ruby Project</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Introduction" href="ibruby_introduction.html">Introduction</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Support" href="ibruby_support.html">Support</a></li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+  
+  <li>
+      <a title="Installation" href="#">Installation</a>
+      <ul>
+          
+          
+          
+          <li><a title="Setup Ruby and Install the Software." href="Setup_Ruby_and_Install_the_Software.html">Setup Ruby and Install the Software.</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Create a new Project" href="Create_a_new_project.html">Create a new Project</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Install on Windows" href="ibruby_install_on_windows.html">Install on Windows</a></li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+  
+  <li>
+      <a title="Connection / Gateway" href="#">Connection / Gateway</a>
+      <ul>
+          
+          
+          
+          <li><a title="Connect to the TWS" href="connect_to_tws.html">Connect to the TWS</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="IB-Ruby Console" href="console.html">IB-Ruby Console</a></li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+  
+  <li>
+      <a title="Messages" href="#">Messages</a>
+      <ul>
+          
+          
+          
+          <li><a title="List of Messages" href="message_correct_arguments.html">List of Messages</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Request-ID" href="message_request_id.html">Request-ID</a></li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+  
+  <li>
+      <a title="Contracts" href="#">Contracts</a>
+      <ul>
+          
+          
+          
+          <li><a title="Specify and Query" href="Specify_and_query_contracts.html">Specify and Query</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Expiry vs. Last-Trading-Day" href="expiry_and_last_trading_day.html">Expiry vs. Last-Trading-Day</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Watchlists" href="watchlists.html">Watchlists</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Spread Prototypes" href="spreads.html">Spread Prototypes</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Verify" href="Verify_contracts.html">Verify</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Market Price" href="market_price.html">Market Price</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Historical Data" href="Historical_data.html">Historical Data</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Option properties" href="atm_options.html">Option properties</a></li>
+          
+          
+          
+          <li class="subfolders">
+              <a title="Tag archive pages" href="#">Tag archive pages</a>
+              <ul>
+                  
+                  
+                  
+                  <li><a title="Formatting pages" href="tag_formatting.html">Formatting pages</a></li>
+                  
+                  
+                  
+              </ul>
+          </li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+  
+  <li>
+      <a title="Release Notes" href="#">Release Notes</a>
+      <ul>
+          
+          
+          
+          <li><a title="ib-api 972 gem release" href="ibruby_release_notes_api_972_gem.html">ib-api 972 gem release</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="ib-symbols 1.0" href="ibruby_release_notes_symbols_1.html">ib-symbols 1.0</a></li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+      
       <!-- if you aren't using the accordion, uncomment this block:
          <p class="external">
              <a href="#" id="collapseAll">Collapse All</a> | <a href="#" id="expandAll">Expand All</a>
@@ -189,15 +400,13 @@
         <!-- Content Column -->
         <div class="col-md-9" id="tg-sb-content">
             <div class="post-header">
-   <h1 class="post-title-main">Syntax highlighting</h1>
+   <h1 class="post-title-main">Get Marketprice</h1>
 </div>
 
 
 
 <div class="post-content">
 
-   
-    <div class="summary">You can apply syntax highlighting to your code. This theme uses pygments and applies color coding based on the lexer you specify.</div>
    
 
     
@@ -228,103 +437,27 @@ $('#toc').on('click', 'a', function() {
 
     
 
-   <h2 id="about-syntax-highlighting">About syntax highlighting</h2>
-<p>For syntax highlighting, use fenced code blocks optionally followed by the language syntax you want:</p>
+   
+<div class="bs-callout bs-callout-info">
+To use the features described, include the <em>ib-extensions</em> Gem  in the Gemfile and use    
 
-<pre>
-```java
-import java.util.Scanner;
 
-public class ScannerAndKeyboard
-{
-
-	public static void main(String[] args)
-	{	Scanner s = new Scanner(System.in);
-		System.out.print( "Enter your name: "  );
-		String name = s.nextLine();
-		System.out.println( "Hello " + name + "!" );
-	}
-}
-```
+<pre> 
+require 'ib-api' 
+require 'ib/market-price' 
+require 'ib/eod'
+require 'ib/option-chain'
 </pre>
 
-<p>This looks as follows:</p>
+in your scripts.
+</div>
 
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.Scanner</span><span class="o">;</span>
+Its a most common request: 
 
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ScannerAndKeyboard</span>
-<span class="o">{</span>
+Display five in-the-money- and five out-of-the-money options and their properties.  
 
-	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span>
-	<span class="o">{</span>	<span class="nc">Scanner</span> <span class="n">s</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Scanner</span><span class="o">(</span><span class="nc">System</span><span class="o">.</span><span class="na">in</span><span class="o">);</span>
-		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span> <span class="s">"Enter your name: "</span>  <span class="o">);</span>
-		<span class="nc">String</span> <span class="n">name</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="na">nextLine</span><span class="o">();</span>
-		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span> <span class="s">"Hello "</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s">"!"</span> <span class="o">);</span>
-	<span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>
 
-<p>Fenced code blocks require a blank line before and after.</p>
-
-<p>If you’re using an HTML file, you can also use the <code class="language-plaintext highlighter-rouge">highlight</code> command with Liquid markup.</p>
-
-<pre>
-{% highlight java %}
-import java.util.Scanner;
-
-public class ScannerAndKeyboard
-{
-
-	public static void main(String[] args)
-	{	Scanner s = new Scanner(System.in);
-		System.out.print( "Enter your name: "  );
-		String name = s.nextLine();
-		System.out.println( "Hello " + name + "!" );
-	}
-}
-{% endhighlight %}
-</pre>
-
-<p>Result:</p>
-
-<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kn">import</span> <span class="nn">java.util.Scanner</span><span class="o">;</span>
-
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ScannerAndKeyboard</span>
-<span class="o">{</span>
-
-	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span>
-	<span class="o">{</span>	<span class="nc">Scanner</span> <span class="n">s</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Scanner</span><span class="o">(</span><span class="nc">System</span><span class="o">.</span><span class="na">in</span><span class="o">);</span>
-		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span> <span class="s">"Enter your name: "</span>  <span class="o">);</span>
-		<span class="nc">String</span> <span class="n">name</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="na">nextLine</span><span class="o">();</span>
-		<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span> <span class="s">"Hello "</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s">"!"</span> <span class="o">);</span>
-	<span class="o">}</span>
-<span class="o">}</span></code></pre></figure>
-
-<p>The theme has syntax highlighting specified in the configuration file as follows:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>highlighter: rouge
-</code></pre></div></div>
-
-<p>The syntax highlighting is done via the css/syntax.css file.</p>
-
-<h2 id="available-lexers">Available lexers</h2>
-
-<p>The keywords you must add to specify the highlighting (in the previous example, <code class="language-plaintext highlighter-rouge">ruby</code>) are called “lexers.” You can search for “lexers.” Here are some common ones I use:</p>
-
-<ul>
-  <li>js</li>
-  <li>html</li>
-  <li>yaml</li>
-  <li>css</li>
-  <li>json</li>
-  <li>php</li>
-  <li>java</li>
-  <li>cpp</li>
-  <li>dotnet</li>
-  <li>xml</li>
-  <li>http</li>
-</ul>
-
+To investigate further, take a look at the [volatility-research example](https://github.com/ib-ruby/ib-extensions/blob/master/example/volatility_research)
 
 
     <div class="tags">
@@ -332,8 +465,6 @@ public class ScannerAndKeyboard
         <b>Tags: </b>
         
         
-        
-        <a href="tag_formatting.html" class="btn btn-default navbar-btn cursorNorm" role="button">formatting</a>
         
         
         
@@ -350,7 +481,7 @@ public class ScannerAndKeyboard
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2020 ib-ruby. All rights reserved. <br />
-<span>Page last updated:</span> July 3, 2016<br/> Site last generated: Nov 1, 2020 <br />
+<span>Page last updated:</span> October 26, 2020<br/> Site last generated: Nov 1, 2020 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>
