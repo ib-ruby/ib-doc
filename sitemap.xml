@@ -160,6 +160,12 @@
   
   
   <url>
+    <loc>https://github.com/message_marketdata.html</loc>
+  </url>
+  
+  
+  
+  <url>
     <loc>https://github.com/message_request_id.html</loc>
   </url>
   
@@ -497,6 +503,24 @@
   
   <url>
     <loc>https://github.com/news_archive.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>https://github.com/order_placement.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>https://github.com/order_preview.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>https://github.com/order_prototypes.html</loc>
   </url>
   
   

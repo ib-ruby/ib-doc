@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="keywords" content="case-study,  contract, option">
-<title>At the Money Options | ib-ruby documentation</title>
+<title>Option-Chains | ib-ruby documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -144,7 +144,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="At the Money Options">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Option-Chains">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -275,6 +275,13 @@
           
           
           
+          
+          
+          <li><a title="Request Market-Data" href="message_marketdata.html">Request Market-Data</a></li>
+          
+          
+          
+          
       </ul>
    </li>
      
@@ -335,7 +342,37 @@
           
           
           
-          <li class="active"><a title="Option properties" href="atm_options.html">Option properties</a></li>
+          <li class="active"><a title="Option-Chains  and -Greeks" href="atm_options.html">Option-Chains  and -Greeks</a></li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+  
+  <li>
+      <a title="Orders" href="#">Orders</a>
+      <ul>
+          
+          
+          
+          <li><a title="Prototypes" href="order_prototypes.html">Prototypes</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Place, Modify and Cancel" href="order_placement.html">Place, Modify and Cancel</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Preview and Margin Impact" href="order_preview.html">Preview and Margin Impact</a></li>
           
           
           
@@ -343,11 +380,14 @@
               <a title="Tag archive pages" href="#">Tag archive pages</a>
               <ul>
                   
-                  
-                  
-                  <li><a title="Formatting pages" href="tag_formatting.html">Formatting pages</a></li>
-                  
-                  
+              </ul>
+          </li>
+          
+          
+          
+          <li class="subfolders">
+              <a title="Formatting pages" href="#">Formatting pages</a>
+              <ul>
                   
               </ul>
           </li>
@@ -400,7 +440,7 @@
         <!-- Content Column -->
         <div class="col-md-9" id="tg-sb-content">
             <div class="post-header">
-   <h1 class="post-title-main">At the Money Options</h1>
+   <h1 class="post-title-main">Option-Chains</h1>
 </div>
 
 
@@ -438,7 +478,7 @@ $('#toc').on('click', 'a', function() {
     
 
    <div class="bs-callout bs-callout-info">
-To use the features described, include the <em>ib-extensions</em> Gem  in the Gemfile and use    
+To use the features described below, include the <em>ib-extensions</em> Gem  in the Gemfile and use    
 
 
 <pre> 
@@ -459,13 +499,15 @@ Display five in-the-money- and five out-of-the-money options and their propertie
 
 <ul>
   <li>Define an underlying and verify it</li>
-  <li>Get <em>at-the-money</em> options of all expiries</li>
+  <li>Get the <em>at-the-money</em> option for all expiries</li>
+  <li>Get <em>in-the-money</em> options for all expiries</li>
+  <li>Get <em>out-of-the-money</em> options for all expiries</li>
   <li>Show Option-Greeks</li>
 </ul>
 
 <p>_</p>
 
-<h3 id="define-the-underlying">Define the Underlying</h3>
+<h2 id="define-the-underlying">Define the Underlying</h2>
 
 <p>We use a liquid US-Stock:  General Electric</p>
 
@@ -473,13 +515,13 @@ Display five in-the-money- and five out-of-the-money options and their propertie
 <span class="o">&gt;</span> <span class="n">ge</span><span class="p">.</span><span class="nf">con_id</span>                 <span class="o">=&gt;</span>  <span class="mi">7516</span>
 </code></pre></div></div>
 
-<h3 id="centerpiece-ibcontractoption_chain">Centerpiece: IB::Contract.option_chain</h3>
+<h2 id="centerpiece-ibcontractoption_chain">Centerpiece: IB::Contract.option_chain</h2>
 <p>The method <code class="language-plaintext highlighter-rouge">:option_chain</code> fires a <code class="language-plaintext highlighter-rouge">:RequestOptionChainDefinition</code>-message, waits for a
-<code class="language-plaintext highlighter-rouge">:OptionChainDefinition</code>-Response and returns it as hash, which is easily explored</p>
+<code class="language-plaintext highlighter-rouge">:OptionChainDefinition</code>-Response and returns it as hash, which is easily explored by:</p>
 
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">z</span><span class="o">=</span> <span class="n">ge</span><span class="p">.</span><span class="nf">option_chain</span> 
 <span class="o">&gt;</span> <span class="n">z</span><span class="p">.</span><span class="nf">keys</span><span class="p">.</span><span class="nf">to_f</span>
- <span class="o">=&gt;</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">,</span> <span class="mf">6.5</span><span class="p">,</span> <span class="mf">7.0</span><span class="p">,</span> <span class="mf">7.5</span><span class="p">,</span> <span class="mf">8.0</span><span class="p">,</span> <span class="mf">8.5</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">,</span> <span class="mf">9.5</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">,</span> <span class="mf">10.5</span><span class="p">,</span> <span class="mf">11.0</span><span class="p">,</span> <span class="mf">11.5</span><span class="p">,</span> <span class="mf">12.0</span><span class="p">,</span> <span class="mf">12.5</span><span class="p">,</span> <span class="mf">13.0</span><span class="p">,</span> <span class="mf">13.5</span><span class="p">,</span> <span class="mf">14.0</span><span class="p">,</span> <span class="mf">14.5</span><span class="p">,</span> <span class="mf">15.0</span><span class="p">,</span> <span class="mf">16.0</span><span class="p">,</span> <span class="mf">17.0</span><span class="p">,</span> <span class="mf">18.0</span><span class="p">,</span> <span class="mf">19.0</span><span class="p">,</span> <span class="mf">20.0</span><span class="p">,</span> <span class="mf">21.0</span><span class="p">,</span> <span class="mf">22.0</span><span class="p">,</span> <span class="mf">25.0</span><span class="p">]</span>  
+ <span class="o">=&gt;</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">,</span> <span class="mf">6.5</span><span class="p">,</span> <span class="mf">7.0</span><span class="p">,</span> <span class="mf">7.5</span><span class="p">,</span> <span class="mf">8.0</span><span class="p">,</span> <span class="mf">8.5</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">,</span> <span class="mf">9.5</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">,</span> <span class="mf">10.5</span><span class="p">,</span> <span class="mf">11.0</span><span class="p">,</span> <span class="mf">11.5</span><span class="p">,</span> <span class="mf">12.0</span><span class="p">,</span> <span class="mf">12.5</span><span class="p">,</span> <span class="mf">13.0</span><span class="p">,</span> <span class="mf">13.5</span><span class="p">,</span> <span class="mf">14.0</span><span class="p">,</span> <span class="mf">14.5</span><span class="p">,</span> <span class="mf">15.0</span><span class="p">,</span> <span class="mf">16.0</span><span class="p">,</span> <span class="mf">17.0</span><span class="p">,</span> <span class="mf">18.0</span><span class="p">,</span> <span class="mf">19.0</span><span class="p">,</span> <span class="mf">20.0</span><span class="p">,</span> <span class="mf">21.0</span><span class="p">,</span> <span class="mf">22.0</span><span class="p">,</span> <span class="mf">25.0</span><span class="p">]</span>  <span class="c1"># ==&gt; possible strikes </span>
  <span class="o">&gt;</span> <span class="nb">puts</span> <span class="n">z</span><span class="p">[</span><span class="mi">7</span><span class="p">.</span><span class="nf">to_d</span><span class="p">].</span><span class="nf">to_human</span>
 <span class="o">&lt;</span><span class="no">Option</span><span class="p">:</span> <span class="no">GE</span> <span class="mi">20201120</span> <span class="n">put</span> <span class="mf">7.0</span> <span class="no">SMART</span> <span class="no">USD</span><span class="o">&gt;</span>
 <span class="o">&lt;</span><span class="no">Option</span><span class="p">:</span> <span class="no">GE</span> <span class="mi">20201218</span> <span class="n">put</span> <span class="mf">7.0</span> <span class="no">SMART</span> <span class="no">USD</span><span class="o">&gt;</span>
@@ -492,7 +534,7 @@ Display five in-the-money- and five out-of-the-money options and their propertie
 
 <span class="o">&gt;</span> <span class="n">z</span><span class="o">=</span> <span class="n">ge</span><span class="p">.</span><span class="nf">option_chain</span> <span class="ss">sort: :expiry</span>
 <span class="o">&gt;</span> <span class="n">z</span><span class="p">.</span><span class="nf">keys</span>
- <span class="o">=&gt;</span> <span class="p">[</span><span class="mi">2011</span><span class="p">,</span> <span class="mi">2012</span><span class="p">,</span> <span class="mi">2101</span><span class="p">,</span> <span class="mi">2103</span><span class="p">,</span> <span class="mi">2106</span><span class="p">,</span> <span class="mi">2201</span><span class="p">,</span> <span class="mi">2301</span><span class="p">]</span> 
+ <span class="o">=&gt;</span> <span class="p">[</span><span class="mi">2011</span><span class="p">,</span> <span class="mi">2012</span><span class="p">,</span> <span class="mi">2101</span><span class="p">,</span> <span class="mi">2103</span><span class="p">,</span> <span class="mi">2106</span><span class="p">,</span> <span class="mi">2201</span><span class="p">,</span> <span class="mi">2301</span><span class="p">]</span>  <span class="c1">## =&gt; Expiry's in Year/Month notation</span>
 <span class="o">&gt;</span> <span class="nb">puts</span> <span class="n">z</span><span class="p">[</span><span class="mi">2012</span><span class="p">].</span><span class="nf">to_human</span>
 <span class="o">&lt;</span><span class="no">Option</span><span class="p">:</span> <span class="no">GE</span> <span class="mi">20201218</span> <span class="n">put</span> <span class="mf">0.5</span> <span class="no">SMART</span> <span class="no">USD</span><span class="o">&gt;</span>
 <span class="o">&lt;</span><span class="no">Option</span><span class="p">:</span> <span class="no">GE</span> <span class="mi">20201218</span> <span class="n">put</span> <span class="mf">1.0</span> <span class="no">SMART</span> <span class="no">USD</span><span class="o">&gt;</span>
@@ -504,26 +546,35 @@ Display five in-the-money- and five out-of-the-money options and their propertie
 <p>Call and Put Options are available through the <code class="language-plaintext highlighter-rouge">:right</code>- parameter: {:put, :call, :straddle}.</p>
 
 <p>To fetch ATM, ITM and OTM Options depending on the current market-price, parts of the result set
-has to be deleted.</p>
+have to be erased.</p>
 
-<h4 id="option-greeks">Option Greeks</h4>
+<h2 id="greeks">Greeks</h2>
 
-<p>If we ask for market-data of an IB::Option the TWS returns price data and  <em>Option Greeks</em>.  The API-call is analogous
+<p>If we ask for market-data of an IB::Option, the TWS returns price data and  <em>Option Greeks</em>.  The API-call is analogous
 to <a href="/market_data">IB::Contract.market_data</a>.<br />
 <code class="language-plaintext highlighter-rouge">IB::Option.greeks</code> returns <code class="language-plaintext highlighter-rouge">&lt;IB::Messages::Incoming::TickOption</code>
 objects. It accepts the parameter <code class="language-plaintext highlighter-rouge">:what</code>  { :model, :bid, :ask, :last, :bidask, :all }, default is <code class="language-plaintext highlighter-rouge">model</code>, 
 ie. the calculated Greeks.</p>
 
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="nb">puts</span> <span class="n">ge_options</span><span class="p">[</span><span class="mi">2011</span><span class="p">].</span><span class="nf">greeks</span><span class="p">.</span><span class="nf">to_human</span>
-  <span class="o">&lt;</span><span class="no">TickOption</span> <span class="n">model_option</span>  <span class="n">option</span> <span class="err">@</span>    <span class="mf">0.517</span><span class="p">,</span> 
-                            <span class="no">IV</span><span class="p">:</span> <span class="mf">0.557</span><span class="p">,</span>
-                            <span class="ss">delta: </span><span class="o">-</span><span class="mf">0.566</span><span class="p">,</span> <span class="ss">gamma: </span><span class="mf">0.4084</span><span class="p">,</span> <span class="ss">vega: </span><span class="mf">0.00673</span><span class="p">,</span> <span class="ss">theta: </span><span class="o">-</span><span class="mf">0.009176</span><span class="p">,</span> 
-                            <span class="ss">pv_dividend: </span><span class="mf">0.000</span><span class="p">,</span> 
-                            <span class="n">underlying</span> <span class="err">@</span>    <span class="mf">7.270</span><span class="o">&gt;</span>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; puts ge_options[2011].greeks.to_human
+  &lt;TickOption model_option  option @    0.517, 
+                            IV: 0.557,
+                            delta: -0.566, gamma: 0.4084, vega: 0.00673, theta: -0.009176, 
+                            pv_dividend: 0.000, 
+                            underlying @    7.270&gt;
 
 </code></pre></div></div>
 
-<h3 id="get-at-the-money-options">Get at-the-money Options</h3>
+<p>In <strong>Thread-Modus</strong> option properties are stored in <code class="language-plaintext highlighter-rouge">IB::Option.misc</code>.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">y</span> <span class="o">=</span> <span class="n">ge</span><span class="p">.</span><span class="nf">otm_options</span> <span class="ss">sort: :expiry</span>           <span class="c1"># see below</span>
+<span class="o">&gt;</span> <span class="n">y</span><span class="p">[</span><span class="mi">2012</span><span class="p">].</span><span class="nf">greeks</span><span class="p">(</span> <span class="ss">thread: </span><span class="kp">true</span><span class="p">).</span><span class="nf">join</span>         <span class="c1"># get greeks concurrently</span>
+<span class="o">&gt;</span> <span class="n">y</span><span class="p">[</span><span class="mi">2012</span><span class="p">].</span><span class="nf">misc</span> <span class="o">&amp;</span><span class="p">.</span><span class="nf">implied_volatility</span><span class="p">.</span><span class="nf">to_f</span><span class="p">.</span><span class="nf">round</span> <span class="mf">5.3</span>
+ <span class="o">=&gt;</span> <span class="p">[[],</span> <span class="mf">0.5782</span><span class="p">,</span> <span class="p">[],</span> <span class="mf">0.6186</span><span class="p">,</span> <span class="p">[],</span> <span class="mf">0.7023</span><span class="p">]</span>     <span class="c1"># some contracts are not populated</span>
+
+</code></pre></div></div>
+
+<h2 id="get-at-the-money-options">Get at-the-money Options</h2>
 <p>Lets start simple: Get <em>At The Money</em>-Options and their properties.</p>
 
 <p><code class="language-plaintext highlighter-rouge">IB::Contract.atm_options</code> takes two optional parameters:</p>
@@ -563,13 +614,13 @@ Therefore</p>
   <span class="o">&lt;</span><span class="no">Option</span><span class="p">:</span> <span class="no">GE</span> <span class="mi">20201120</span> <span class="n">put</span> <span class="mf">10.0</span> <span class="no">SMART</span> <span class="no">USD</span><span class="o">&gt;</span> 
 
 <span class="o">&gt;</span> <span class="n">ge_greeks</span> <span class="o">=</span>  <span class="n">ge_options</span><span class="p">[</span><span class="mi">2011</span><span class="p">].</span><span class="nf">map</span><span class="p">{</span><span class="o">|</span><span class="n">o</span><span class="o">|</span> <span class="n">o</span><span class="p">.</span><span class="nf">greeks</span> <span class="p">}</span>
-<span class="o">&gt;</span> <span class="nb">puts</span> <span class="n">ge_greeks</span><span class="p">.</span><span class="nf">implied_volatility</span> 
- <span class="mf">0.5574837184641465</span>
- <span class="mf">0.570039319712135</span>
- <span class="mf">0.5928093464783889</span>
- <span class="mf">0.6208308408187335</span>
- <span class="mf">0.6208308408187335</span>
- <span class="mf">0.6208308408187335</span>
+<span class="o">&gt;</span> <span class="nb">puts</span> <span class="n">ge_greeks</span><span class="p">.</span><span class="nf">implied_volatility</span><span class="p">.</span><span class="nf">round</span><span class="p">(</span><span class="mf">6.4</span><span class="p">)</span>
+ <span class="mf">0.5574</span>
+ <span class="mf">0.5700</span>
+ <span class="mf">0.5928</span>
+ <span class="mf">0.6208</span>
+ <span class="mf">0.6208</span>
+ <span class="mf">0.6208</span>
 
 </code></pre></div></div>
 
@@ -609,7 +660,7 @@ Therefore</p>
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2020 ib-ruby. All rights reserved. <br />
-<span>Page last updated:</span> October 29, 2020<br/> Site last generated: Nov 1, 2020 <br />
+<span>Page last updated:</span> October 29, 2020<br/> Site last generated: Nov 2, 2020 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>
