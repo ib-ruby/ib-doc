@@ -252,6 +252,13 @@
           
           
           
+          
+          
+          <li><a title="IB-Gateway" href="gateway.html">IB-Gateway</a></li>
+          
+          
+          
+          
       </ul>
    </li>
      
@@ -376,6 +383,13 @@
           
           
           
+          
+          
+          
+          <li><a title="Workflow" href="order_workflow.html">Workflow</a></li>
+          
+          
+          
           <li class="subfolders">
               <a title="Tag archive pages" href="#">Tag archive pages</a>
               <ul>
@@ -391,6 +405,22 @@
                   
               </ul>
           </li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+  
+  <li>
+      <a title="Accounts" href="#">Accounts</a>
+      <ul>
+          
+          
+          
+          <li><a title="Overview" href="account_overview.html">Overview</a></li>
           
           
           
@@ -485,23 +515,27 @@ To use the features described, include the <em>ib-extensions</em> Gem  in the Ge
 require 'ib-api' 
 require 'ib/symbols' 
 require 'ib/order-prototypes' 
-require 'ib/gateway' 
 </pre>
 
 in your scripts.
 </div>
+
+<div class="alert alert-info" role="alert"><i class="fa fa-bars"></i> This page covers order placement using B::Connection. <br />
+ The approach using IB::Gateway is described in <a href="/order_workflow">workflow</a></div>
+
 <h2 id="place-by-sending-a-message">Place by sending a Message</h2>
-<p>To place an order, basicly a <code class="language-plaintext highlighter-rouge">:PlaceOrder</code>- Message has to be transmitted</p>
+<p>To place an order, basically a <code class="language-plaintext highlighter-rouge">:PlaceOrder</code>- Message has to be transmitted</p>
 
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">ib</span> <span class="o">=</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Connection</span><span class="p">.</span><span class="nf">current</span>
 <span class="o">&gt;</span> <span class="n">ib</span><span class="p">.</span><span class="nf">send_message</span> <span class="ss">:PlaceOrder</span><span class="p">,</span> <span class="ss">contract: </span><span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Stocks</span><span class="p">.</span><span class="nf">wfc</span> <span class="p">,</span> 
-                   <span class="ss">order: </span><span class="no">Limit</span><span class="p">.</span><span class="nf">order</span><span class="p">(</span> <span class="ss">action: :buy</span><span class="p">,</span> <span class="ss">size: </span><span class="mi">100</span><span class="p">,</span> <span class="ss">price: </span><span class="mi">50</span>  <span class="p">),</span>
+                   <span class="ss">order: </span><span class="no">Limit</span><span class="p">.</span><span class="nf">order</span><span class="p">(</span> <span class="ss">action: :buy</span><span class="p">,</span> <span class="ss">size: </span><span class="mi">100</span><span class="p">,</span> <span class="ss">price: </span><span class="mi">22</span>  <span class="p">),</span>
                    <span class="ss">local_id: </span><span class="n">ib</span><span class="p">.</span><span class="nf">next_local_id</span>
 </code></pre></div></div>
 
 <p>TWS responses with <code class="language-plaintext highlighter-rouge">:OpenOrder</code> and <code class="language-plaintext highlighter-rouge">OrderStatus</code> messages.</p>
 
-<p>The <code class="language-plaintext highlighter-rouge">PlaceOrder</code> message is also used  to modify orders. A new order requires an incremented <code class="language-plaintext highlighter-rouge">:local_id</code>.
+<p>The <code class="language-plaintext highlighter-rouge">PlaceOrder</code> message is also used  to modify orders. <br />
+A new order requires an incremented <code class="language-plaintext highlighter-rouge">:local_id</code>.
 By transmitting a  <code class="language-plaintext highlighter-rouge">:PlaceOrder</code>-Message with an unchanged  <code class="language-plaintext highlighter-rouge">:local_id</code> the order is modified (without warning).</p>
 
 <h2 id="place-with-ibconnection-methods">Place with IB::Connection-methods</h2>
@@ -522,116 +556,38 @@ By transmitting a  <code class="language-plaintext highlighter-rouge">:PlaceOrde
 </code></pre></div></div>
 <p>The response is stored in <code class="language-plaintext highlighter-rouge">IB::Connection.received</code>.</p>
 
-<h2 id="preview-and-place-with-ibgateway">Preview and Place with IB::Gateway</h2>
+<h2 id="preview-and-place">Preview and Place</h2>
 
-<p><code class="language-plaintext highlighter-rouge">IB::Gateway</code>  handles orders at the account-level. Thus orders are explicitly directed to a specific account.</p>
+<p>To preview the impact of an order, <code class="language-plaintext highlighter-rouge">what_if=true</code> is added to the <code class="language-plaintext highlighter-rouge">:PlaceOrder</code>- Message</p>
 
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="no">IB</span><span class="o">::</span><span class="no">Account</span><span class="p">.</span><span class="nf">preview</span> <span class="ss">contract: </span><span class="p">{</span><span class="n">an</span> <span class="no">IB</span><span class="o">::</span><span class="no">Contract</span><span class="p">}</span> <span class="p">,</span> <span class="ss">order: </span><span class="p">{</span> <span class="n">a</span> <span class="no">IB</span><span class="o">::</span><span class="no">Order</span>  <span class="p">}</span> 
-	<span class="o">&gt;&gt;</span> <span class="n">returns</span> <span class="n">a</span> <span class="n">forcast</span> <span class="k">for</span> <span class="n">the</span> <span class="n">action</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">ib</span> <span class="o">=</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Connection</span><span class="p">.</span><span class="nf">current</span>
+<span class="o">&gt;</span> <span class="n">ib</span><span class="p">.</span><span class="nf">send_message</span> <span class="ss">:PlaceOrder</span><span class="p">,</span> <span class="ss">contract: </span><span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Stocks</span><span class="p">.</span><span class="nf">wfc</span> <span class="p">,</span> 
+                   <span class="ss">order: </span><span class="no">Limit</span><span class="p">.</span><span class="nf">order</span><span class="p">(</span> <span class="ss">action: :buy</span><span class="p">,</span> <span class="ss">size: </span><span class="mi">100</span><span class="p">,</span> <span class="ss">price: </span><span class="mi">22</span> <span class="p">,</span> 
+                                       <span class="ss">what_if: </span><span class="kp">true</span><span class="p">,</span> <span class="ss">account: </span><span class="s1">'DU1111222'</span><span class="p">),</span>
+                   <span class="ss">local_id: </span><span class="n">ib</span><span class="p">.</span><span class="nf">next_local_id</span>
 
-<span class="o">&gt;</span> <span class="no">IB</span><span class="o">::</span><span class="no">Account</span><span class="p">.</span><span class="nf">place</span> <span class="ss">contract: </span><span class="p">{</span><span class="n">an</span> <span class="no">IB</span><span class="o">::</span><span class="no">Contract</span><span class="p">}</span> <span class="p">,</span> <span class="ss">order: </span><span class="p">{</span> <span class="n">a</span> <span class="no">IB</span><span class="o">::</span><span class="no">Order</span>  <span class="p">}</span> 
-	<span class="o">&gt;&gt;</span> <span class="n">places</span> <span class="n">the</span> <span class="n">order</span> <span class="n">and</span> <span class="n">returns</span> <span class="n">the</span> <span class="sb">`local_id'   
-</span></code></pre></div></div>
-<p>Order-Objects can establish a link to a contract. Then only one argument is required to initiate the process.
-<code class="language-plaintext highlighter-rouge">IB::Account</code> defineds two methods that ease the process:</p>
+<span class="o">&gt;</span> <span class="n">ib</span><span class="p">.</span><span class="nf">received</span><span class="p">[</span><span class="ss">:OpenOrder</span><span class="p">].</span><span class="nf">to_human</span>
+ <span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"&lt;OpenOrder: &lt;Stock: WFC USD NYSE&gt; &lt;Order: LMT GTC buy 100.0  @ 21.0 PreSubmitted #22/1729171652 from 0/DU167349 fee 1.0&gt;&gt;"</span><span class="p">]</span> 
+<span class="o">&gt;</span> <span class="n">ib</span><span class="p">.</span><span class="nf">received</span><span class="p">[</span><span class="ss">:OpenOrder</span><span class="p">].</span><span class="nf">first</span><span class="p">.</span><span class="nf">order</span><span class="p">.</span><span class="nf">init_margin</span><span class="p">.</span><span class="nf">to_f</span>              <span class="o">=&gt;</span>  <span class="mf">54164.28</span> 
+<span class="o">&gt;</span> <span class="n">ib</span><span class="p">.</span><span class="nf">received</span><span class="p">[</span><span class="ss">:OpenOrder</span><span class="p">].</span><span class="nf">first</span><span class="p">.</span><span class="nf">order</span><span class="p">.</span><span class="nf">equity_with_loan</span><span class="p">.</span><span class="nf">to_f</span>          <span class="o">=&gt;</span> <span class="mf">894806.34</span> 
 
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="no">G</span> <span class="o">=</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Gateway</span><span class="p">.</span><span class="nf">current</span>
-<span class="o">&gt;</span> <span class="n">the_order</span> <span class="o">=</span>  <span class="no">Limit</span><span class="p">.</span><span class="nf">order</span> <span class="ss">action: :buy</span><span class="p">,</span> <span class="ss">size: </span><span class="mi">100</span><span class="p">,</span> <span class="ss">price: </span><span class="mi">45</span><span class="p">,</span> 
-                           <span class="ss">contract: </span><span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Stocks</span><span class="p">.</span><span class="nf">wfc</span>
-<span class="o">&gt;</span> <span class="no">G</span><span class="p">.</span><span class="nf">active_accounts</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nf">preview</span> <span class="ss">order: </span><span class="n">the_order</span> 
-  <span class="o">=&gt;</span> <span class="p">{</span><span class="ss">:init_margin</span><span class="o">=&gt;</span><span class="mf">0.9383838e5</span><span class="p">,</span> <span class="ss">:maint_margin</span><span class="o">=&gt;</span><span class="mf">0.8545908e5</span><span class="p">,</span> 
-      <span class="ss">:equity_with_loan</span><span class="o">=&gt;</span><span class="mf">0.98950817e6</span><span class="p">,</span> <span class="ss">:commission</span><span class="o">=&gt;</span><span class="mf">0.1e1</span><span class="p">,</span>    
-      <span class="ss">:commission_currency</span><span class="o">=&gt;</span><span class="s2">"USD"</span><span class="p">,</span> <span class="ss">:warning</span><span class="o">=&gt;</span><span class="s2">""</span><span class="p">}</span> 
-<span class="o">&gt;</span> <span class="no">G</span><span class="p">.</span><span class="nf">active_accounts</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nf">place</span> <span class="ss">order: </span><span class="n">the_order</span>   
-  <span class="o">=&gt;</span> <span class="mi">123</span>   <span class="c1"># local_id</span>
+
+<span class="o">&gt;</span> <span class="n">ib</span><span class="p">.</span><span class="nf">send_message</span> <span class="ss">:PlaceOrder</span><span class="p">,</span> <span class="ss">contract: </span><span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Stocks</span><span class="p">.</span><span class="nf">wfc</span> <span class="p">,</span> 
+                   <span class="ss">order: </span><span class="no">Limit</span><span class="p">.</span><span class="nf">order</span><span class="p">(</span> <span class="ss">action: :buy</span><span class="p">,</span> <span class="ss">size: </span><span class="mi">100</span><span class="p">,</span> <span class="ss">price: </span><span class="mi">22</span> <span class="p">,</span> 
+                                       <span class="ss">what_if: </span><span class="kp">false</span><span class="p">,</span> <span class="ss">account: </span><span class="s1">'DU1111222'</span><span class="p">),</span>
+                   <span class="ss">local_id: </span><span class="n">ib</span><span class="p">.</span><span class="nf">next_local_id</span>
+  <span class="o">&lt;</span><span class="no">OrderState</span><span class="p">:</span> <span class="no">Submitted</span> <span class="c1">#24/1729171653 from 2000 filled 0.0/100.0 at 0.0/0.0 why_held &gt;  # log entry</span>
+
+<span class="o">&gt;</span> <span class="n">ib</span><span class="p">.</span><span class="nf">received</span><span class="p">[</span><span class="ss">:OpenOrder</span><span class="p">].</span><span class="nf">to_human</span>
+ <span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"&lt;OpenOrder: &lt;Stock: WFC USD NYSE&gt; &lt;Order: LMT GTC buy 100.0  @ 21.0 PreSubmitted #22/1729171652 from 0/DU167349 fee 1.0&gt;&gt;"</span><span class="p">,</span>
+     <span class="s2">"&lt;OpenOrder: &lt;Stock: WFC USD NYSE&gt; &lt;Order: LMT GTC buy 100.0  @ 21.0 Submitted #24/1729171653 from 2000/DU167349&gt;&gt;"</span><span class="p">]</span> 
+
+
+ 
 </code></pre></div></div>
+
 <div class="alert alert-info" role="alert"><i class="fa fa-bars"></i> More details on reviewing  orders: <a href="/order_preview">preview</a></div>
 
-<p>If specified as part of an Order (as in the upper example), <code class="language-plaintext highlighter-rouge">IB::Contracts</code> are transmitted without any modification . If specified separately, the <code class="language-plaintext highlighter-rouge">IB::Contract</code> is proper verified and the price is adjusted to the <code class="language-plaintext highlighter-rouge">min_tick</code> requirements. The transmitted <code class="language-plaintext highlighter-rouge">IB::Contract</code> is kept in <code class="language-plaintext highlighter-rouge">Order.contract</code> and thus available for a later inspection.</p>
-
-<h3 id="locate-order">Locate Order</h3>
-
-<p>After placing the Order, <code class="language-plaintext highlighter-rouge">OrderState</code>-Messages are received  and then linked to the <code class="language-plaintext highlighter-rouge">IB::Order</code>-object. This is stored in <code class="language-plaintext highlighter-rouge">IB::Account.orders</code> and can easily accessed via <code class="language-plaintext highlighter-rouge">IB::Account.locate_order</code>.</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; IB::Account.locate_order local_id:, perm_id:, con_id:, status: /ubmitted/ 
- &gt;&gt; Gets the first order matching the criteria  
-</code></pre></div></div>
-
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="no">G</span><span class="p">.</span><span class="nf">active_accounts</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nf">orders</span><span class="p">.</span><span class="nf">to_human</span>
-<span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"&lt;Order: LMT GTC buy 100 45.0 New #1/ from 3000/DU167349&gt;"</span><span class="p">,</span>
-  <span class="s2">"&lt;Order: LMT GTC buy 100.0 45.0 Submitted #1/693213230 from 3000/DU167349&gt;"</span><span class="p">]</span>
-<span class="o">&gt;</span> <span class="no">G</span><span class="p">.</span><span class="nf">active_accounts</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nf">locate_order</span><span class="p">(</span> <span class="ss">local_id: </span><span class="p">{</span><span class="n">local_id</span><span class="p">}</span>  <span class="p">)</span> <span class="o">&amp;</span><span class="p">.</span><span class="nf">limit_price</span>
-  <span class="o">=&gt;</span> <span class="mf">0.45e2</span>
-<span class="o">&gt;</span> <span class="no">G</span><span class="p">.</span><span class="nf">active_accounts</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nf">locate_order</span><span class="p">(</span> <span class="ss">con_id: </span><span class="p">{</span><span class="n">contract</span><span class="p">.</span><span class="nf">con_id</span><span class="p">}</span>  <span class="p">)</span> <span class="o">&amp;</span><span class="p">.</span><span class="nf">limit_price</span>
-  <span class="o">=&gt;</span> <span class="mf">0.45e2</span>
-</code></pre></div></div>
-
-<h3 id="modify">Modify</h3>
-<p><code class="language-plaintext highlighter-rouge">IB::Account.place</code> updates the <code class="language-plaintext highlighter-rouge">local_id</code> attribute of the transmitted <code class="language-plaintext highlighter-rouge">IB::Order</code>-object.<br />
-To modify the order, just change the desired attributes and call <code class="language-plaintext highlighter-rouge">IB::Account.modify</code></p>
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">the_order</span><span class="p">.</span><span class="nf">total_quantity</span> <span class="o">=</span> <span class="mi">600</span>
-  <span class="o">=&gt;</span> <span class="mi">600</span> 
-<span class="o">&gt;</span> <span class="no">G</span><span class="p">.</span><span class="nf">active_accounts</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nf">modify_order</span> <span class="ss">order: </span><span class="n">the_order</span>
-  <span class="o">=&gt;</span> <span class="mi">1</span> 
-<span class="o">&gt;</span> <span class="no">G</span><span class="p">.</span><span class="nf">active_accounts</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nf">orders</span><span class="p">.</span><span class="nf">to_human</span>
-  <span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"&lt;Order: LMT GTC buy 600 45.0 New #1/ from 3000/DU167349&gt;"</span><span class="p">,</span> 
-      <span class="s2">"&lt;Order: LMT GTC buy 600.0 45.0 Submitted #1/693213230 from 3000/DU167349&gt;"</span><span class="p">]</span> 
-</code></pre></div></div>
-
-<h3 id="impossible-modification">Impossible Modification</h3>
-
-<p>If the TWS cannot process the desired modification, an <code class="language-plaintext highlighter-rouge">:Alert</code>-Message is fired</p>
-
-<p><strong><em>Notice:</em></strong> According to the <a href="https://interactivebrokers.github.io/tws-api/modifying_orders.html">Interactive Brokers Documentation</a>, “<em>it is not generally recommended to try to change order fields aside from order price, size, and tif (for DAY -&gt; IOC modifications). To change other parameters, it might be preferable to instead cancel the open order, and create a new one.</em>”</p>
-
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">the_order</span><span class="p">.</span><span class="nf">action</span> <span class="o">=</span>  <span class="ss">:sell</span>
-<span class="o">&gt;</span> <span class="no">G</span><span class="p">.</span><span class="nf">active_accounts</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nf">modify_order</span> <span class="ss">order: </span><span class="n">the_order</span> 
-<span class="o">&gt;</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">4</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">Alert</span><span class="p">)</span>
- <span class="o">----------------</span><span class="mi">105</span><span class="o">-----</span>
- <span class="no">TWS</span> <span class="no">Error</span> <span class="mi">105</span><span class="p">:</span> <span class="no">Order</span> <span class="n">being</span> <span class="n">modified</span> <span class="n">does</span> <span class="n">not</span> <span class="n">match</span> <span class="n">original</span> <span class="n">order</span>
-<span class="o">&gt;</span> <span class="no">G</span><span class="p">.</span><span class="nf">active_accounts</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nf">orders</span><span class="p">.</span><span class="nf">to_human</span>
-<span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"&lt;Order: LMT GTC sell 600 45.0 New #1/ from 3000/DU167349&gt;"</span><span class="p">,</span> 
-	 <span class="s2">"&lt;Order: LMT GTC buy 600.0 45.0 Rejected #1/693213230 from 3000/DU167349&gt;"</span><span class="p">]</span>  
-</code></pre></div></div>
-
-<p>The <code class="language-plaintext highlighter-rouge">Account.orders</code>-Array is updated, the last status (Rejected) is noticed, as the still active Order (buy).</p>
-
-<h3 id="canceling-orders">Canceling Orders</h3>
-
-<p>It is sufficient to transmit a <code class="language-plaintext highlighter-rouge">:CancelOrder</code>-Message with  <code class="language-plaintext highlighter-rouge">IB::Order.local_id</code> as parameter.<br />
-TWS responses with an <code class="language-plaintext highlighter-rouge">OrderStatus</code> combined with an <code class="language-plaintext highlighter-rouge">:Alert</code>-Message</p>
-
-<p>The Gateway-Application updates the <code class="language-plaintext highlighter-rouge">Account.orders</code>-Array accordingly</p>
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="no">G</span><span class="p">.</span><span class="nf">cancel_order</span> <span class="n">the_order</span><span class="p">.</span><span class="nf">local_id</span>
-  <span class="no">Got</span> <span class="n">message</span> <span class="mi">3</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">OrderStatus</span><span class="p">)</span>
-  <span class="no">Got</span> <span class="n">message</span> <span class="mi">4</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">Alert</span><span class="p">)</span>
-  <span class="o">---------------</span><span class="mi">202</span><span class="o">-----</span>
-							
-<span class="o">&gt;</span> <span class="no">G</span><span class="p">.</span><span class="nf">active_accounts</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nf">orders</span><span class="p">.</span><span class="nf">to_human</span>
-<span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"&lt;Order: LMT GTC sell 600 45.0 New #1/ from 3000/DU167349&gt;"</span><span class="p">,</span> 
-    <span class="s2">"&lt;Order: LMT GTC buy 600.0 45.0 Cancelled #1/693213230 from 3000/DU167349&gt;"</span><span class="p">]</span> 
-</code></pre></div></div>
-<p>Now the order-record informs about the successfully canceled order.</p>
-
-<h3 id="the-orderstate-history">The OrderState-History</h3>
-<p>The Gateway Application does some bookkeeping of <code class="language-plaintext highlighter-rouge">:OrderState</code>-Messages.</p>
-
-<p><em><strong>note:</strong> for details look into <a href="https://github.com/ib-ruby/ib-extensions/blob/master/lib/ib/order-handling.rb">orderhandling.rb</a>  –&gt; IB::Alert#AddOrderstateAlert</em></p>
-
-<p>The history of the order-process is stored in <code class="language-plaintext highlighter-rouge">Account.orders.order_states</code></p>
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">puts</span> <span class="no">G</span><span class="p">.</span><span class="nf">active_accounts</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nf">orders</span><span class="p">.</span><span class="nf">order_states</span><span class="p">.</span><span class="nf">to_human</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
-  <span class="o">&lt;</span><span class="no">OrderState</span><span class="p">:</span> <span class="no">New</span> <span class="c1">#/ from  filled 0/0 at 0/0&gt;</span>
-  <span class="o">&lt;</span><span class="no">OrderState</span><span class="p">:</span> <span class="no">Submitted</span> <span class="c1">#1/693213230 from 3000 filled 0.0/600.0 at 0.0/0.0 why_held &gt;</span>
-  <span class="o">&lt;</span><span class="no">OrderState</span><span class="p">:</span> <span class="no">Rejected</span> <span class="c1">#1/693213230 from  warning 105: Order being modified does not match original order&gt;</span>
-  <span class="o">&lt;</span><span class="no">OrderState</span><span class="p">:</span> <span class="no">Cancelled</span> <span class="c1">#1/693213230 from 3000 filled 0.0/600.0 at 0.0/0.0 why_held &gt;</span>
-</code></pre></div></div>
-<p>The <code class="language-plaintext highlighter-rouge">Account.orders</code>-Array is fragile. Once an order is executed or canceled, its contents are outdated. 
-<code class="language-plaintext highlighter-rouge">Gateway#update_orders</code> synchronizes the <code class="language-plaintext highlighter-rouge">Account.orders</code>-array</p>
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="no">G</span><span class="p">.</span><span class="nf">update_orders</span>
-<span class="o">&gt;</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">53</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">OpenOrderEnd</span><span class="p">)</span>
-<span class="o">&gt;</span> <span class="nb">puts</span> <span class="no">G</span><span class="p">.</span><span class="nf">active_accounts</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nf">orders</span><span class="p">.</span><span class="nf">order_states</span><span class="p">.</span><span class="nf">to_human</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
-  <span class="o">=&gt;</span> <span class="kp">nil</span> 
-				
-</code></pre></div></div>
 
 
     <div class="tags">
@@ -655,7 +611,7 @@ TWS responses with an <code class="language-plaintext highlighter-rouge">OrderSt
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2020 ib-ruby. All rights reserved. <br />
-<span>Page last updated:</span> November 1, 2020<br/> Site last generated: Nov 2, 2020 <br />
+<span>Page last updated:</span> November 1, 2020<br/> Site last generated: Nov 3, 2020 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>

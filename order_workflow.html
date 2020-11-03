@@ -4,9 +4,9 @@
     <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Contact me for any support issues.">
-<meta name="keywords" content="getting_startedtroubleshooting,  questions, troubleshooting, contact, support">
-<title>Support | ib-ruby documentation</title>
+<meta name="description" content="">
+<meta name="keywords" content="orders,  orders, messages">
+<title>Workflow | ib-ruby documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -144,7 +144,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Support">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Workflow">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -194,7 +194,7 @@
           
           
           
-          <li class="active"><a title="Support" href="ibruby_support.html">Support</a></li>
+          <li><a title="Support" href="ibruby_support.html">Support</a></li>
           
           
           
@@ -386,7 +386,7 @@
           
           
           
-          <li><a title="Workflow" href="order_workflow.html">Workflow</a></li>
+          <li class="active"><a title="Workflow" href="order_workflow.html">Workflow</a></li>
           
           
           
@@ -470,15 +470,13 @@
         <!-- Content Column -->
         <div class="col-md-9" id="tg-sb-content">
             <div class="post-header">
-   <h1 class="post-title-main">Support</h1>
+   <h1 class="post-title-main">Workflow</h1>
 </div>
 
 
 
 <div class="post-content">
 
-   
-    <div class="summary">Contact me for any support issues.</div>
    
 
     
@@ -510,12 +508,82 @@ $('#toc').on('click', 'a', function() {
     
 
    <div class="bs-callout bs-callout-info">
-General support is provided through <b><em>IB-Ruby</em></b> Github-pages.
-<br />
+To use the features described, include the <em>ib-extensions</em> Gem  in the Gemfile and use    
 
-Limited Individual Support is provided by the maintainer of the project. 
-( topofocus (at) gmail.com ) 
+
+<pre> 
+require 'ib-api' 
+require 'ib/symbols' 
+require 'ib/order-prototypes' 
+require 'ib/gateway' 
+</pre>
+
+in your scripts.
 </div>
+<p>The <code class="language-plaintext highlighter-rouge">IB::Gateway</code> aims to provide an intuitive interface for order-placement and -management</p>
+
+<h4 id="step-1-create-an-order-object">Step 1: Create an order-object</h4>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="no">G</span> <span class="o">=</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Gateway</span><span class="p">.</span><span class="nf">new</span>                      <span class="c1"># initialize with default parameter </span>
+                                            <span class="c1"># omit this step in the interactive gateway-console</span>
+<span class="o">&gt;</span> <span class="n">the_contract</span> <span class="o">=</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Stocks</span><span class="p">.</span><span class="nf">msft</span>  <span class="c1"># Microsoft</span>
+<span class="o">&gt;</span> <span class="n">the_order</span> <span class="o">=</span> <span class="no">Limit</span><span class="p">.</span><span class="nf">order</span> <span class="ss">size: </span><span class="mi">100</span><span class="p">,</span> <span class="ss">price: </span><span class="n">the_contract</span><span class="p">.</span><span class="nf">market_price</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">,</span>
+<span class="o">&gt;</span> <span class="n">the_order</span><span class="p">.</span><span class="nf">to_human</span>
+ <span class="o">=&gt;</span> <span class="s2">"&lt;Order: LMT GTC buy 100  @ 201.33 New #/ from &gt;"</span> 
+</code></pre></div></div>
+
+<p><strong>notice:</strong> The fetched (and modified) market price is included. The account to deal with is missing.</p>
+
+<h4 id="step-2-select-an-account-and-get-the-margin-requirements">Step 2: Select an account and get the margin requirements</h4>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">the_account</span>  <span class="o">=</span>  <span class="no">G</span><span class="p">.</span><span class="nf">clients</span><span class="p">.</span><span class="nf">first</span>
+
+<span class="o">&gt;</span> <span class="n">z</span><span class="o">=</span> <span class="n">the_account</span><span class="p">.</span><span class="nf">preview</span> <span class="ss">order: </span><span class="n">the_order</span><span class="p">,</span> <span class="ss">contract: </span><span class="n">the_contract</span>
+  <span class="o">=&gt;</span> <span class="p">{</span><span class="ss">:init_margin</span><span class="o">=&gt;</span><span class="mf">0.1344327e5</span><span class="p">,</span> <span class="ss">:maint_margin</span><span class="o">=&gt;</span><span class="mf">0.1168288e5</span><span class="p">,</span> <span class="ss">:equity_with_loan</span><span class="o">=&gt;</span><span class="mf">0.118936284e7</span><span class="p">,</span> <span class="ss">:commission</span><span class="o">=&gt;</span><span class="kp">nil</span><span class="p">,</span> <span class="ss">:commission_currency</span><span class="o">=&gt;</span><span class="s2">"USD"</span><span class="p">,</span> <span class="ss">:warning</span><span class="o">=&gt;</span><span class="s2">""</span><span class="p">}</span> 
+
+<span class="o">&gt;</span> <span class="n">z</span><span class="p">[</span><span class="ss">:init_margin</span><span class="p">].</span><span class="nf">to_f</span>                        <span class="o">=&gt;</span> <span class="mf">13443.27</span> 
+<span class="o">&gt;</span> <span class="c1"># compare to available net liquidity</span>
+<span class="o">&gt;</span> <span class="n">the_account</span><span class="p">.</span><span class="nf">account_data_scan</span><span class="p">(</span> <span class="sr">/^NetLiquidation$/</span><span class="p">).</span><span class="nf">value</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">to_f</span> <span class="o">-</span> 
+      <span class="n">the_account</span><span class="p">.</span><span class="nf">account_data_scan</span><span class="p">(</span><span class="sr">/InitMarginReq$/</span><span class="p">).</span><span class="nf">value</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">to_f</span>
+ <span class="o">=&gt;</span> <span class="mf">1180035.98</span>
+
+</code></pre></div></div>
+
+<p>see also <a href="/order_preview">Preview Orders</a></p>
+
+<p><code class="language-plaintext highlighter-rouge">IB::Account.preview</code>  transmits a <em>What-if</em> message. To determine, if its possible to place the
+order, just  subtract the <em>margin impact</em> from <em>NetLiquidation</em>.</p>
+
+<h4 id="step-3-place-and-modify-the-order">Step 3: Place and modify the order</h4>
+
+<p>After an order is previewed or placed, the contract is associated and does not have to be specified anymore.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">the_account</span><span class="p">.</span><span class="nf">place</span> <span class="ss">order: </span><span class="n">the_order</span>            <span class="o">=&gt;</span> <span class="mi">19</span>  <span class="c1">#  local_id, identifies the order</span>
+<span class="o">&gt;</span> <span class="n">the_order</span><span class="p">.</span><span class="nf">to_human</span>
+ <span class="o">=&gt;</span> <span class="s2">"&lt;Order: LMT GTC buy 100  @ 201.33 New #19/ from 2000/DU167348&gt;"</span> 
+
+<span class="o">&gt;</span> <span class="n">the_account</span><span class="p">.</span><span class="nf">orders</span><span class="p">.</span><span class="nf">to_human</span>
+ <span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"&lt;Order: LMT GTC buy 100.0  @ 201.33 PreSubmitted #18/1729171645 from 0/DU167348&gt;"</span><span class="p">,</span>    <span class="c1"># preview</span>
+     <span class="s2">"&lt;Order: LMT GTC buy 100.0  @ 201.33 PreSubmitted #19/1729171646 from 2000/DU167348&gt;"</span><span class="p">]</span> <span class="c1"># placed</span>
+
+<span class="o">&gt;</span> <span class="n">the_order</span><span class="p">.</span><span class="nf">limit_price</span> <span class="o">=</span> <span class="mi">198</span>                   <span class="c1"># set a new price</span>
+<span class="o">&gt;</span> <span class="n">the_account</span><span class="p">.</span><span class="nf">modify</span> <span class="ss">order: </span><span class="n">the_order</span>           <span class="o">=&gt;</span> <span class="mi">19</span> 
+<span class="o">&gt;</span> <span class="n">the_account</span><span class="p">.</span><span class="nf">orders</span><span class="p">.</span><span class="nf">to_human</span>
+ <span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"&lt;Order: LMT GTC buy 100.0  @ 201.33 PreSubmitted #18/1729171645 from 0/DU167348&gt;"</span><span class="p">,</span> 
+     <span class="s2">"&lt;Order: LMT GTC buy 100.0  @ 198.0 PreSubmitted #19/1729171646 from 2000/DU167348&gt;"</span><span class="p">]</span>  <span class="c1"># modified</span>
+
+</code></pre></div></div>
+
+<h4 id="step-4-cancel-the-order">Step 4: Cancel the order</h4>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">the_account</span><span class="p">.</span><span class="nf">cancel</span>  <span class="n">the_order</span>
+<span class="o">&gt;</span> <span class="n">the_account</span><span class="p">.</span><span class="nf">orders</span><span class="p">.</span><span class="nf">to_human</span>
+ <span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"&lt;Order: LMT GTC buy 100.0  @ 201.33 PreSubmitted #18/1729171645 from 0/DU167348&gt;"</span><span class="p">,</span> 
+ <span class="s2">"&lt;Order: LMT GTC buy 100.0  @ 198.0 Cancelled #19/1729171646 from 2000/DU167348&gt;"</span><span class="p">]</span>         <span class="c1"># cancelled</span>
+
+</code></pre></div></div>
+
+<p><strong>Notice:</strong>  The order-object is updated in the process. It’s OK to use the same order-object for each step. Then the history is kept in <code class="language-plaintext highlighter-rouge">OrderState</code>-Objects. <strong>But <em>never</em> use the same order object for different users.</strong></p>
 
 
 
@@ -524,12 +592,6 @@ Limited Individual Support is provided by the maintainer of the project.
         <b>Tags: </b>
         
         
-        
-        <a href="tag_getting_started.html" class="btn btn-default navbar-btn cursorNorm" role="button">getting_started</a>
-        
-        
-        
-        <a href="tag_troubleshooting.html" class="btn btn-default navbar-btn cursorNorm" role="button">troubleshooting</a>
         
         
         
@@ -546,7 +608,7 @@ Limited Individual Support is provided by the maintainer of the project.
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2020 ib-ruby. All rights reserved. <br />
-<span>Page last updated:</span> October 26, 2020<br/> Site last generated: Nov 3, 2020 <br />
+<span>Page last updated:</span> November 3, 2020<br/> Site last generated: Nov 3, 2020 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>

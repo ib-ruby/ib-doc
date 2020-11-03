@@ -252,6 +252,13 @@
           
           
           
+          
+          
+          <li><a title="IB-Gateway" href="gateway.html">IB-Gateway</a></li>
+          
+          
+          
+          
       </ul>
    </li>
      
@@ -376,6 +383,13 @@
           
           
           
+          
+          
+          
+          <li><a title="Workflow" href="order_workflow.html">Workflow</a></li>
+          
+          
+          
           <li class="subfolders">
               <a title="Tag archive pages" href="#">Tag archive pages</a>
               <ul>
@@ -391,6 +405,22 @@
                   
               </ul>
           </li>
+          
+          
+          
+          
+      </ul>
+   </li>
+     
+      
+  
+  <li>
+      <a title="Accounts" href="#">Accounts</a>
+      <ul>
+          
+          
+          
+          <li><a title="Overview" href="account_overview.html">Overview</a></li>
           
           
           
@@ -491,16 +521,20 @@ require 'ib/gateway'
 in your scripts.
 </div>
 
-<p>In the GUI-Version, the margin-impact of an order is displayed via »Order -&gt; Preview«.</p>
+<h2 id="ibaccountpreview">IB::Account.preview</h2>
+
+<p>The TWS displays the margin-impact of an order  via »Order -&gt; Preview«.</p>
 
 <p><code class="language-plaintext highlighter-rouge">IB::Gateway</code> keeps this methodology.</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> Account.preview order: {IB::Order} , contract: {IB::Contract}
-  ==&gt; Hash: { :init_margin , :maint_margin, :equity_with_loan, :commission, :commission_currency, :warning  }
+  ==&gt; Hash: { :init_margin , :maint_margin, :equity_with_loan, 
+              :commission, :commission_currency, :warning  }
 </code></pre></div></div>
 
 <p>Behind the scene, the <code class="language-plaintext highlighter-rouge">what_if</code>-Flag on the <code class="language-plaintext highlighter-rouge">Limit.order</code> is set. Then the order is placed the usual way.
-The response from the TWS is recognized through the <code class="language-plaintext highlighter-rouge">OpenOrder</code>-Message. Part of the Order-State-Model is returned.</p>
+The response from the TWS is recognized through the <code class="language-plaintext highlighter-rouge">OpenOrder</code>-Message. Parts of the Order-State-Response 
+are returned.</p>
 
 <h2 id="use-the-tws-to-validate-and-inspect-complex-orders">Use the TWS to validate and inspect Complex Orders</h2>
 
@@ -508,31 +542,44 @@ The response from the TWS is recognized through the <code class="language-plaint
 
 <h2 id="margin-impact">Margin Impact</h2>
 
-<p>Lets estimate the margin-impact of a limit-order for a S&amp;P 500 Mini-Future</p>
+<p>Lets estimate the margin-impact of a limit-order for a S&amp;P 500 Mini-Future.
+For convenience we use the <code class="language-plaintext highlighter-rouge">IB::Gateway</code> variant.</p>
 
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="no">G</span> <span class="o">=</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Gateway</span><span class="p">.</span><span class="nf">current</span>
-<span class="o">&gt;</span> <span class="n">the_order</span> <span class="o">=</span>  <span class="no">Limit</span><span class="p">.</span><span class="nf">order</span> <span class="ss">action: :buy</span><span class="p">,</span> <span class="ss">size: </span><span class="mi">100</span><span class="p">,</span> <span class="ss">price: </span><span class="mi">45</span><span class="p">,</span> 
-                           <span class="ss">contract: </span><span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Futures</span><span class="p">.</span><span class="nf">es</span>
-<span class="o">&gt;</span> <span class="no">G</span><span class="p">.</span><span class="nf">active_accounts</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nf">preview</span> <span class="ss">order: </span><span class="n">the_order</span> 
-  <span class="o">=&gt;</span> <span class="p">{</span><span class="ss">:init_margin</span><span class="o">=&gt;</span><span class="mf">0.5427889e5</span><span class="p">,</span> <span class="ss">:maint_margin</span><span class="o">=&gt;</span><span class="mf">0.475841e5</span><span class="p">,</span> 
-      <span class="ss">:equity_with_loan</span><span class="o">=&gt;</span><span class="mf">0.91701458e6</span><span class="p">,</span> 
-      <span class="ss">:commission</span><span class="o">=&gt;</span><span class="mf">0.41e1</span><span class="p">,</span> <span class="ss">:commission_currency</span><span class="o">=&gt;</span><span class="s2">"USD"</span><span class="p">,</span> <span class="ss">:warning</span><span class="o">=&gt;</span><span class="s2">""</span><span class="p">}</span> 
+<span class="o">&gt;</span> <span class="n">the_order</span> <span class="o">=</span>  <span class="no">Limit</span><span class="p">.</span><span class="nf">order</span> <span class="ss">action: :buy</span><span class="p">,</span> <span class="ss">size: </span><span class="mi">1</span><span class="p">,</span> <span class="ss">price: </span><span class="mi">3500</span><span class="p">,</span>
+                           <span class="ss">contract: </span><span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Futures</span><span class="p">.</span><span class="nf">es</span><span class="p">.</span><span class="nf">verify</span><span class="p">.</span><span class="nf">first</span>
+<span class="o">&gt;</span> <span class="no">G</span><span class="p">.</span><span class="nf">clients</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">preview</span> <span class="ss">order: </span><span class="n">the_order</span> 
+ <span class="o">=&gt;</span> <span class="p">{</span><span class="ss">:init_margin</span><span class="o">=&gt;</span><span class="mf">0.23887e5</span><span class="p">,</span> <span class="ss">:maint_margin</span><span class="o">=&gt;</span><span class="mf">0.2079412e5</span><span class="p">,</span> 
+     <span class="ss">:equity_with_loan</span><span class="o">=&gt;</span><span class="mf">0.119007517e7</span><span class="p">,</span> <span class="ss">:commission</span><span class="o">=&gt;</span><span class="mf">0.21e1</span><span class="p">,</span> 
+		<span class="ss">:commission_currency</span><span class="o">=&gt;</span><span class="s2">"USD"</span><span class="p">,</span> <span class="ss">:warning</span><span class="o">=&gt;</span><span class="s2">""</span><span class="p">}</span> 
 <span class="o">&gt;</span> <span class="no">G</span><span class="p">.</span><span class="nf">active_accounts</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nf">place</span> <span class="ss">order: </span><span class="n">the_order</span>   
   <span class="o">=&gt;</span> <span class="mi">123</span>   <span class="c1"># local_id</span>
 </code></pre></div></div>
 
-<p>To estimate the impact of the order, just add the margin-requirements to the <code class="language-plaintext highlighter-rouge">AccountValue</code>-item
-<code class="language-plaintext highlighter-rouge">IB::AccountValue-Objects provide  </code>key<code class="language-plaintext highlighter-rouge">,  </code>value<code class="language-plaintext highlighter-rouge"> and  </code>currency` attributes)</p>
+<p>The <em>TWS</em> offers a comparison of current and projected values. This can be achieved through</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">z</span><span class="o">=</span> <span class="no">G</span><span class="p">.</span><span class="nf">clients</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">preview</span> <span class="ss">order: </span><span class="no">Limit</span><span class="p">.</span><span class="nf">order</span><span class="p">(</span> <span class="ss">total_quantity: </span><span class="mi">1</span><span class="p">,</span> <span class="ss">price: </span><span class="mi">3500</span><span class="p">,</span> <span class="ss">action: :sell</span><span class="p">,</span> <span class="ss">contract: </span><span class="no">Symbols</span><span class="o">::</span><span class="no">Futures</span><span class="p">.</span><span class="nf">es</span><span class="p">.</span><span class="nf">verify</span><span class="p">.</span><span class="nf">first</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="n">d</span><span class="o">=</span><span class="p">{}</span>
+<span class="o">&gt;</span> <span class="no">G</span><span class="p">.</span><span class="nf">clients</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">account_data_scan</span><span class="p">(</span> <span class="s1">'^Equity'</span> <span class="p">).</span><span class="nf">key</span> 
+  <span class="o">=&gt;</span> <span class="p">[</span><span class="ss">:EquityWithLoanValue</span><span class="p">,</span> <span class="ss">:"EquityWithLoanValue-C"</span><span class="p">,</span> <span class="ss">:"EquityWithLoanValue-S"</span><span class="p">]</span> 
+<span class="o">&gt;</span> <span class="n">e</span><span class="o">=</span> <span class="no">G</span><span class="p">.</span><span class="nf">clients</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">account_data_scan</span><span class="p">(</span> <span class="s1">'^Equity'</span> <span class="p">).</span><span class="nf">value</span>
+   <span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"1190427.52"</span><span class="p">,</span> <span class="s2">"99960.00"</span><span class="p">,</span> <span class="s2">"1090467.52"</span><span class="p">]</span>    <span class="c1">#  compare the first value with z</span>
+<span class="o">&gt;</span> <span class="n">f</span> <span class="o">=</span> <span class="no">G</span><span class="p">.</span><span class="nf">clients</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">account_data_scan</span><span class="p">(</span> <span class="s1">'^FullMaintMargin'</span> <span class="p">).</span><span class="nf">value</span>
+ <span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"7331.49"</span><span class="p">,</span> <span class="s2">"0.00"</span><span class="p">,</span> <span class="s2">"7331.49"</span><span class="p">]</span>      <span class="c1"># complete, commodity account, securities account</span>
+<span class="o">&gt;</span> <span class="n">g</span> <span class="o">=</span> <span class="no">G</span><span class="p">.</span><span class="nf">clients</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">account_data_scan</span><span class="p">(</span> <span class="s1">'^FullInitMargin'</span> <span class="p">).</span><span class="nf">value</span>
+ <span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"9092.67"</span><span class="p">,</span> <span class="s2">"0.00"</span><span class="p">,</span> <span class="s2">"9092.67"</span><span class="p">]</span>      <span class="c1"># complete, commodity account, securities account</span>
 
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># (list available keys containing "margin")</span>
-<span class="o">&gt;</span> <span class="n">the_user</span><span class="p">.</span><span class="nf">account_values</span><span class="p">.</span><span class="nf">simple_account_data_scan</span><span class="p">(</span> <span class="s1">'Margin'</span> <span class="p">).</span><span class="nf">key</span>
-  <span class="o">=&gt;</span> <span class="p">[</span><span class="ss">:NLVAndMarginInReview</span><span class="p">,</span> <span class="ss">:FullInitMarginReq</span><span class="p">,</span> <span class="ss">:"FullInitMarginReq-C"</span><span class="p">,</span> <span class="ss">:"FullInitMarginReq-S"</span><span class="p">,</span> <span class="ss">:FullMaintMarginReq</span><span class="p">,</span> <span class="ss">:"FullMaintMarginReq-C"</span><span class="p">,</span> <span class="ss">:"FullMaintMarginReq-S"</span><span class="p">,</span> <span class="ss">:InitMarginReq</span><span class="p">,</span> <span class="ss">:"InitMarginReq-C"</span><span class="p">,</span> <span class="ss">:"InitMarginReq-S"</span><span class="p">,</span> <span class="ss">:LookAheadInitMarginReq</span><span class="p">,</span> <span class="ss">:"LookAheadInitMarginReq-C"</span><span class="p">,</span> <span class="ss">:"LookAheadInitMarginReq-S"</span><span class="p">,</span> <span class="ss">:LookAheadMaintMarginReq</span><span class="p">,</span> <span class="ss">:"LookAheadMaintMarginReq-C"</span><span class="p">,</span> <span class="ss">:"LookAheadMaintMarginReq-S"</span><span class="p">,</span> <span class="ss">:MaintMarginReq</span><span class="p">,</span> <span class="ss">:"MaintMarginReq-C"</span><span class="p">,</span> <span class="ss">:"MaintMarginReq-S"</span><span class="p">,</span> <span class="ss">:PostExpirationMargin</span><span class="p">,</span> <span class="ss">:"PostExpirationMargin-C"</span><span class="p">,</span> <span class="ss">:"PostExpirationMargin-S"</span><span class="p">,</span> <span class="ss">:RegTMargin</span><span class="p">,</span> <span class="ss">:"RegTMargin-S"</span><span class="p">]</span>
 
-<span class="c1"># we are interested in Initial margin requirements</span>
-<span class="o">&gt;</span> <span class="n">the_user</span><span class="p">.</span><span class="nf">simple_account_data_scan</span><span class="p">(</span> <span class="s1">'InitMargin'</span> <span class="p">).</span><span class="nf">key</span>
-  <span class="o">=&gt;</span> <span class="p">[</span><span class="ss">:FullInitMarginReq</span><span class="p">,</span> <span class="ss">:"FullInitMarginReq-C"</span><span class="p">,</span> <span class="ss">:"FullInitMarginReq-S"</span><span class="p">]</span> 
-<span class="o">&gt;</span> <span class="n">margin</span> <span class="o">=</span> <span class="n">the_user</span><span class="p">.</span><span class="nf">simple_account_data_scan</span><span class="p">(</span> <span class="s1">'InitMargin'</span> <span class="p">).</span><span class="nf">first</span><span class="p">.</span><span class="nf">value</span><span class="p">.</span><span class="nf">to_f</span>
-  <span class="o">=&gt;</span> <span class="mf">36343.95</span> 
+<span class="o">&gt;</span> <span class="n">d</span><span class="p">[</span><span class="ss">:equity_with_loan</span><span class="p">]</span><span class="o">=</span><span class="p">[</span><span class="n">e</span><span class="p">.</span><span class="nf">first</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">to_f</span> <span class="o">-</span> <span class="n">z</span><span class="p">[</span><span class="ss">:equity_with_loan</span><span class="p">].</span><span class="nf">to_f</span> <span class="p">,</span> <span class="n">z</span><span class="p">[</span><span class="ss">:equity_with_loan</span><span class="p">]]</span>              
+<span class="o">&gt;</span> <span class="n">d</span><span class="p">[</span><span class="ss">:maint_margin</span> <span class="p">]</span><span class="o">=</span>   <span class="p">[</span><span class="n">f</span><span class="p">.</span><span class="nf">first</span><span class="p">,</span> <span class="n">f</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">to_f</span> <span class="o">-</span> <span class="n">z</span><span class="p">[</span><span class="ss">:maint_margin</span><span class="p">].</span><span class="nf">to_f</span><span class="p">,</span> <span class="n">z</span><span class="p">[</span><span class="ss">:maint_margin</span><span class="p">]</span> <span class="p">]</span>                  
+<span class="o">&gt;</span> <span class="n">d</span><span class="p">[</span><span class="ss">:init_margin</span>  <span class="p">]</span><span class="o">=</span>   <span class="p">[</span><span class="n">g</span><span class="p">.</span><span class="nf">first</span><span class="p">,</span> <span class="n">g</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">to_f</span> <span class="o">-</span> <span class="n">z</span><span class="p">[</span><span class="ss">:init_margin</span><span class="p">].</span><span class="nf">to_f</span> <span class="p">,</span> <span class="n">z</span><span class="p">[</span><span class="ss">:init_margin</span><span class="p">]</span> <span class="p">]</span>
+<span class="o">&gt;</span> <span class="n">d</span><span class="p">.</span><span class="nf">each</span><span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="o">|</span> <span class="nb">puts</span> <span class="s2">"</span><span class="si">#{</span><span class="n">x</span><span class="si">}</span><span class="s2"> : </span><span class="se">\t</span><span class="s2"> </span><span class="si">#{</span> <span class="n">y</span><span class="p">.</span><span class="nf">map</span><span class="p">{</span><span class="o">|</span><span class="n">z</span><span class="o">|</span> <span class="n">z</span><span class="p">.</span><span class="nf">to_f</span><span class="p">.</span><span class="nf">round</span><span class="p">(</span><span class="mf">10.2</span><span class="p">)</span><span class="si">}</span><span class="s2">.join("</span> <span class="p">:</span> <span class="s2">")} "</span><span class="p">}</span>
+ <span class="o">--------------------</span> <span class="n">current</span>    <span class="o">---</span> <span class="n">change</span>  <span class="o">----</span> <span class="n">projection</span>
+ <span class="n">equity_with_loan</span> <span class="p">:</span> 	 <span class="mf">1190427.52</span> <span class="p">:</span> <span class="mf">352.3500000001</span> <span class="p">:</span> <span class="mf">1190075.17</span> 
+ <span class="n">maint_margin</span>     <span class="p">:</span> 	 <span class="mf">7331.49</span> <span class="p">:</span> <span class="o">-</span><span class="mf">13462.63</span> <span class="p">:</span> <span class="mf">20794.12</span> 
+ <span class="n">init_margin</span>      <span class="p">:</span> 	 <span class="mf">9092.67</span> <span class="p">:</span> <span class="o">-</span><span class="mf">14794.33</span> <span class="p">:</span> <span class="mf">23887.0</span> 
+
+
+
 </code></pre></div></div>
 
 
@@ -557,7 +604,7 @@ The response from the TWS is recognized through the <code class="language-plaint
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2020 ib-ruby. All rights reserved. <br />
-<span>Page last updated:</span> November 1, 2020<br/> Site last generated: Nov 2, 2020 <br />
+<span>Page last updated:</span> November 1, 2020<br/> Site last generated: Nov 3, 2020 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>

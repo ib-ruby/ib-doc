@@ -4,9 +4,9 @@
     <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Contact me for any support issues.">
-<meta name="keywords" content="getting_startedtroubleshooting,  questions, troubleshooting, contact, support">
-<title>Support | ib-ruby documentation</title>
+<meta name="description" content="">
+<meta name="keywords" content="account,  accounts">
+<title>Overview | ib-ruby documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -144,7 +144,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Support">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Overview">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -194,7 +194,7 @@
           
           
           
-          <li class="active"><a title="Support" href="ibruby_support.html">Support</a></li>
+          <li><a title="Support" href="ibruby_support.html">Support</a></li>
           
           
           
@@ -420,7 +420,7 @@
           
           
           
-          <li><a title="Overview" href="account_overview.html">Overview</a></li>
+          <li class="active"><a title="Overview" href="account_overview.html">Overview</a></li>
           
           
           
@@ -470,15 +470,13 @@
         <!-- Content Column -->
         <div class="col-md-9" id="tg-sb-content">
             <div class="post-header">
-   <h1 class="post-title-main">Support</h1>
+   <h1 class="post-title-main">Overview</h1>
 </div>
 
 
 
 <div class="post-content">
 
-   
-    <div class="summary">Contact me for any support issues.</div>
    
 
     
@@ -510,12 +508,69 @@ $('#toc').on('click', 'a', function() {
     
 
    <div class="bs-callout bs-callout-info">
-General support is provided through <b><em>IB-Ruby</em></b> Github-pages.
-<br />
+To use the features described, include the <em>ib-extensions</em> Gem  in the Gemfile and use    
 
-Limited Individual Support is provided by the maintainer of the project. 
-( topofocus (at) gmail.com ) 
+
+<pre> 
+require 'ib-api' 
+require 'ib/gateway' 
+</pre>
+
+in your scripts.
 </div>
+
+<p>The current status of the Account is available through the <code class="language-plaintext highlighter-rouge">:RequestAccountSummary</code>-Message.
+The <em>TWS</em> responds with <code class="language-plaintext highlighter-rouge">:AccountSummary</code>-Messages.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">ib</span> <span class="o">=</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Connection</span><span class="p">.</span><span class="nf">current</span>
+<span class="o">&gt;</span> <span class="n">ags</span> <span class="o">=</span> <span class="sx">%w( NetLiquidation InitMarginReq DayTradesRemaining  )</span>   
+  <span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"NetLiquidation"</span><span class="p">,</span> <span class="s2">"InitMarginReq"</span><span class="p">,</span> <span class="s2">"DayTradesRemaining"</span><span class="p">]</span> 
+<span class="o">&gt;</span> <span class="n">ib</span><span class="p">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="ss">:Alert</span><span class="p">,</span> <span class="ss">:AccountSummary</span><span class="p">){</span> <span class="o">|</span><span class="n">msg</span><span class="o">|</span> <span class="nb">puts</span> <span class="n">msg</span><span class="p">.</span><span class="nf">to_human</span>  <span class="p">}</span>   <span class="o">=&gt;</span> <span class="mi">135899964</span> 
+<span class="o">&gt;</span> <span class="n">request_id</span> <span class="o">=</span> <span class="no">C</span><span class="p">.</span><span class="nf">send_message</span> <span class="ss">:RequestAccountSummary</span><span class="p">,</span> <span class="ss">tags: </span><span class="n">ags</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s1">','</span><span class="p">)</span>  <span class="o">=&gt;</span> <span class="mi">5775</span> 
+ <span class="o">&lt;</span><span class="no">AccountValue</span><span class="p">:</span> <span class="no">DF167347</span><span class="p">,</span> <span class="o">&lt;</span><span class="no">InitMarginReq</span><span class="o">=</span><span class="mf">0.00</span> <span class="no">EUR</span><span class="o">&gt;</span>
+ <span class="o">&lt;</span><span class="no">AccountValue</span><span class="p">:</span> <span class="no">DF167347</span><span class="p">,</span> <span class="o">&lt;</span><span class="no">NetLiquidation</span><span class="o">=</span><span class="mf">0.00</span> <span class="no">EUR</span><span class="o">&gt;</span>
+ <span class="o">&lt;</span><span class="no">AccountValue</span><span class="p">:</span> <span class="no">DU167348</span><span class="p">,</span> <span class="o">&lt;</span><span class="no">DayTradesRemaining</span><span class="o">=-</span><span class="mi">1</span> <span class="no">USD</span><span class="o">&gt;</span>
+ <span class="o">&lt;</span><span class="no">AccountValue</span><span class="p">:</span> <span class="no">DU167348</span><span class="p">,</span> <span class="o">&lt;</span><span class="no">InitMarginReq</span><span class="o">=</span><span class="mf">49838.14</span> <span class="no">EUR</span><span class="o">&gt;</span>
+ <span class="o">&lt;</span><span class="no">AccountValue</span><span class="p">:</span> <span class="no">DU167348</span><span class="p">,</span> <span class="o">&lt;</span><span class="no">NetLiquidation</span><span class="o">=</span><span class="mf">926441.24</span> <span class="no">EUR</span><span class="o">&gt;</span>
+ <span class="o">&lt;</span><span class="no">AccountValue</span><span class="p">:</span> <span class="no">DU167349</span><span class="p">,</span> <span class="o">&lt;</span><span class="no">DayTradesRemaining</span><span class="o">=-</span><span class="mi">1</span> <span class="no">USD</span><span class="o">&gt;</span>
+ <span class="o">&lt;</span><span class="no">AccountValue</span><span class="p">:</span> <span class="no">DU167349</span><span class="p">,</span> <span class="o">&lt;</span><span class="no">InitMarginReq</span><span class="o">=</span><span class="mf">90168.53</span> <span class="no">EUR</span><span class="o">&gt;</span>
+ <span class="o">&lt;</span><span class="no">AccountValue</span><span class="p">:</span> <span class="no">DU167349</span><span class="p">,</span> <span class="o">&lt;</span><span class="no">NetLiquidation</span><span class="o">=</span><span class="mf">958049.83</span> <span class="no">EUR</span><span class="o">&gt;</span>
+<span class="o">&gt;</span> <span class="n">ib</span><span class="p">.</span><span class="nf">send_message</span> <span class="ss">:CancelAccountSummary</span><span class="p">,</span> <span class="ss">id: </span><span class="n">request_id</span>               <span class="o">=&gt;</span> <span class="kp">true</span> 
+</code></pre></div></div>
+<p>If the <code class="language-plaintext highlighter-rouge">IB::Gateway</code> is used, the method <code class="language-plaintext highlighter-rouge">:get_account_data</code> requests the data from the <em>TWS</em> and
+assigns  <code class="language-plaintext highlighter-rouge">:AccountValues</code> and <code class="language-plaintext highlighter-rouge">:PortfolioValues</code>  to the  <code class="language-plaintext highlighter-rouge">IB::Account</code>.</p>
+
+<p>In the Gateway-Console (bin/gateway.rb)</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">u</span><span class="o">=</span> <span class="no">G</span><span class="p">.</span><span class="nf">clients</span><span class="p">.</span><span class="nf">first</span>
+<span class="o">&gt;</span> <span class="no">G</span><span class="p">.</span><span class="nf">get_account_data</span> <span class="n">u</span>
+  <span class="mi">11</span><span class="p">:</span><span class="mi">13</span><span class="p">:</span><span class="mi">52</span> <span class="no">DU167348</span> <span class="o">=&gt;</span> <span class="no">Count</span> <span class="n">of</span> <span class="no">AccountValues</span><span class="p">:</span> <span class="mi">243</span>   <span class="o">&lt;---</span> <span class="no">Logger</span> <span class="n">output</span>
+<span class="o">&gt;</span> <span class="n">u</span><span class="p">.</span><span class="nf">account_values</span><span class="p">.</span><span class="nf">size</span>         <span class="o">=&gt;</span> <span class="mi">234</span>
+<span class="o">&gt;</span> <span class="n">u</span><span class="p">.</span><span class="nf">account_values</span><span class="p">.</span><span class="nf">keys</span>
+ <span class="o">=&gt;</span> <span class="p">[</span><span class="ss">:AccountType</span><span class="p">,</span> <span class="ss">:AccountCode</span><span class="p">,</span> <span class="ss">:AccountReady</span><span class="p">,</span> <span class="ss">:Cushion</span><span class="p">,</span> <span class="ss">:DayTradesRemaining</span><span class="p">,</span>
+ <span class="ss">:"DayTradesRemainingT+1"</span><span class="p">,</span> <span class="ss">:"DayTradesRemainingT+2"</span><span class="p">,</span> <span class="ss">:"DayTradesRemainingT+3"</span><span class="p">,</span>
+ <span class="ss">:"DayTradesRemainingT+4"</span><span class="p">,</span> <span class="ss">:"Leverage-S"</span><span class="p">,</span> <span class="ss">:LookAheadNextChange</span><span class="p">,</span>
+ <span class="ss">:NLVAndMarginInReview</span><span class="p">,</span> <span class="ss">:"SegmentTitle-C"</span><span class="p">,</span> <span class="ss">:"SegmentTitle-S"</span><span class="p">,</span> <span class="ss">:"TradingType-S"</span><span class="p">,</span>
+ <span class="ss">:WhatIfPMEnabled</span><span class="p">,</span> <span class="ss">:AccruedCash</span><span class="p">,</span> <span class="ss">:"AccruedCash-C"</span><span class="p">,</span> <span class="ss">:"AccruedCash-S"</span><span class="p">,</span>
+ <span class="ss">:AccruedDividend</span><span class="p">,</span> <span class="ss">:"AccruedDividend-C"</span><span class="p">,</span> <span class="ss">:"AccruedDividend-S"</span><span class="p">,</span> <span class="ss">:AvailableFunds</span><span class="p">,</span>
+ <span class="ss">:"AvailableFunds-C"</span><span class="p">,</span> <span class="ss">:"AvailableFunds-S"</span><span class="p">,</span> <span class="ss">:Billable</span><span class="p">,</span> <span class="ss">:"Billable-C"</span><span class="p">,</span>
+ <span class="ss">:"Billable-S"</span><span class="p">,</span> <span class="ss">:BuyingPower</span><span class="p">,</span> <span class="ss">:EquityWithLoanValue</span><span class="p">,</span> <span class="ss">:"EquityWithLoanValue-C"</span><span class="p">,</span>
+ <span class="ss">:"EquityWithLoanValue-S"</span><span class="p">,</span> <span class="ss">:ExcessLiquidity</span><span class="p">,</span> <span class="ss">:"ExcessLiquidity-C"</span><span class="p">,</span>
+ <span class="ss">:"ExcessLiquidity-S"</span><span class="p">,</span> <span class="ss">:FullAvailableFunds</span><span class="p">,</span> <span class="ss">:"FullAvailableFunds-C"</span><span class="p">,</span>
+ <span class="ss">:"FullAvailableFunds-S"</span><span class="p">,</span> <span class="ss">:FullExcessLiquidity</span><span class="p">,</span> <span class="ss">:"FullExcessLiquidity-C"</span><span class="p">,</span>
+ <span class="ss">:"FullExcessLiquidity-S"</span><span class="p">,</span> <span class="ss">:FullInitMarginReq</span><span class="p">,</span> <span class="ss">:"FullInitMarginReq-C"</span><span class="p">,</span>
+ <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+ <span class="ss">:StockMarketValue</span><span class="p">,</span> <span class="ss">:OptionMarketValue</span><span class="p">,</span> <span class="ss">:FutureOptionValue</span><span class="p">,</span> <span class="ss">:FuturesPNL</span><span class="p">,</span>
+ <span class="ss">:NetLiquidationByCurrency</span><span class="p">,</span> <span class="ss">:UnrealizedPnL</span><span class="p">,</span> <span class="ss">:RealizedPnL</span><span class="p">,</span> <span class="ss">:ExchangeRate</span><span class="p">,</span>
+ <span class="ss">:FundValue</span><span class="p">,</span> <span class="ss">:NetDividend</span><span class="p">,</span> <span class="ss">:MutualFundValue</span><span class="p">,</span> <span class="ss">:MoneyMarketFundValue</span><span class="p">,</span>
+ <span class="ss">:CorporateBondValue</span><span class="p">,</span> <span class="ss">:TBondValue</span><span class="p">,</span> <span class="ss">:TBillValue</span><span class="p">,</span> <span class="ss">:WarrantValue</span><span class="p">,</span> <span class="ss">:FxCashBalance</span><span class="p">,</span>
+ <span class="ss">:AccountOrGroup</span><span class="p">,</span> <span class="ss">:RealCurrency</span><span class="p">,</span> <span class="ss">:IssuerOptionValue</span><span class="p">]</span> 
+</code></pre></div></div>
+
+<p>To access specific entries, <code class="language-plaintext highlighter-rouge">Account.simple_account_data_scan</code> is available. It takes a regular expression as argument:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">u</span><span class="p">.</span><span class="nf">simple_account_data_scan</span><span class="p">(</span> <span class="sr">/MaintMarginReq$/</span>  <span class="p">).</span><span class="nf">to_human</span>
+  <span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"&lt;FullMaintMarginReq=44052.56 EUR&gt;"</span><span class="p">,</span> <span class="s2">"&lt;LookAheadMaintMarginReq=44052.56 EUR&gt;"</span><span class="p">,</span> <span class="s2">"&lt;MaintMarginReq=44052.56 EUR&gt;"</span><span class="p">]</span> 
+</code></pre></div></div>
 
 
 
@@ -524,12 +579,6 @@ Limited Individual Support is provided by the maintainer of the project.
         <b>Tags: </b>
         
         
-        
-        <a href="tag_getting_started.html" class="btn btn-default navbar-btn cursorNorm" role="button">getting_started</a>
-        
-        
-        
-        <a href="tag_troubleshooting.html" class="btn btn-default navbar-btn cursorNorm" role="button">troubleshooting</a>
         
         
         
@@ -546,7 +595,7 @@ Limited Individual Support is provided by the maintainer of the project.
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2020 ib-ruby. All rights reserved. <br />
-<span>Page last updated:</span> October 26, 2020<br/> Site last generated: Nov 3, 2020 <br />
+<span>Page last updated:</span> November 1, 2020<br/> Site last generated: Nov 3, 2020 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>

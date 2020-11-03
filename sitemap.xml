@@ -68,6 +68,12 @@
   
   
   <url>
+    <loc>https://github.com/account_overview.html</loc>
+  </url>
+  
+  
+  
+  <url>
     <loc>https://github.com/atm_options.html</loc>
   </url>
   
@@ -96,6 +102,12 @@
   </url>
   
   
+  
+  
+  
+  <url>
+    <loc>https://github.com/gateway.html</loc>
+  </url>
   
   
   
@@ -521,6 +533,12 @@
   
   <url>
     <loc>https://github.com/order_prototypes.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>https://github.com/order_workflow.html</loc>
   </url>
   
   
