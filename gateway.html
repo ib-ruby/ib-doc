@@ -523,14 +523,22 @@ in your scripts.
 
 <p>Upon initialization, it detects present accounts and reads available data from the <em>TWS</em>.</p>
 
-<h2 id="workflow">Workflow</h2>
-
-<p>The Gateway aims to provide an intuitive interface for placement and managing Orders.</p>
+<p>Secondly, it  aims to provide an intuitive interface for order-placement and -management</p>
 
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="no">G</span> <span class="o">=</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Gateway</span><span class="p">.</span><span class="nf">new</span>   <span class="c1"># initialize with default parameter</span>
 <span class="o">&gt;</span> <span class="n">the_contract</span> <span class="o">=</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Stocks</span><span class="p">.</span><span class="nf">msft</span>  <span class="c1"># Microsoft</span>
-<span class="o">&gt;</span> <span class="n">the_order</span>    <span class="o">=</span>  <span class="no">Limit</span><span class="p">.</span><span class="nf">order</span> <span class="ss">size: </span><span class="mi">100</span><span class="p">,</span> <span class="ss">price: </span><span class="n">the_contract</span><span class="p">.</span><span class="nf">market_price</span> <span class="o">-</span> <span class="mi">1</span> 
+<span class="o">&gt;</span> <span class="n">the_order</span> <span class="o">=</span> <span class="no">Limit</span><span class="p">.</span><span class="nf">order</span> <span class="ss">size: </span><span class="mi">100</span><span class="p">,</span> <span class="ss">price: </span><span class="n">the_contract</span><span class="p">.</span><span class="nf">market_price</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">,</span>
+                          <span class="ss">contract:  </span><span class="n">the_contract</span>
+<span class="o">&gt;</span> <span class="n">the_order</span><span class="p">.</span><span class="nf">to_human</span>
+ <span class="o">=&gt;</span> <span class="s2">"&lt;Order: LMT GTC buy 100  @ 201.33 New #/ from &gt;"</span> 
+
 <span class="o">&gt;</span> <span class="n">the_account</span>  <span class="o">=</span>  <span class="no">G</span><span class="p">.</span><span class="nf">clients</span><span class="p">.</span><span class="nf">first</span>
+
+<span class="o">&gt;</span> <span class="n">the_account</span><span class="p">.</span><span class="nf">preview</span> <span class="ss">order: </span><span class="n">the_order</span><span class="p">,</span> <span class="ss">contract: </span><span class="n">the_contract</span>
+  <span class="o">=&gt;</span> <span class="p">{</span><span class="ss">:init_margin</span><span class="o">=&gt;</span><span class="mf">0.1344327e5</span><span class="p">,</span> <span class="ss">:maint_margin</span><span class="o">=&gt;</span><span class="mf">0.1168288e5</span><span class="p">,</span> <span class="ss">:equity_with_loan</span><span class="o">=&gt;</span><span class="mf">0.118936284e7</span><span class="p">,</span> <span class="ss">:commission</span><span class="o">=&gt;</span><span class="kp">nil</span><span class="p">,</span> <span class="ss">:commission_currency</span><span class="o">=&gt;</span><span class="s2">"USD"</span><span class="p">,</span> <span class="ss">:warning</span><span class="o">=&gt;</span><span class="s2">""</span><span class="p">}</span> 
+
+<span class="o">&gt;</span> <span class="n">the_account</span><span class="p">.</span><span class="nf">place</span> <span class="ss">order: </span><span class="n">the_order</span>
+
 </code></pre></div></div>
 <p>The general procedure for order-tasks:</p>
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">the_account</span><span class="o">.</span><span class="p">{</span> <span class="n">preview</span> <span class="o">|</span> <span class="n">place</span> <span class="o">|</span> <span class="n">modify</span> <span class="o">|</span> <span class="n">reverse</span> <span class="o">|</span> <span class="n">close</span>  <span class="p">}</span> <span class="ss">order: </span><span class="n">the_order</span><span class="p">,</span> 
@@ -649,7 +657,7 @@ Analogous to the [console](console) script that enables experiments with `</span
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2020 ib-ruby. All rights reserved. <br />
- Site last generated: Nov 3, 2020 <br />
+ Site last generated: Nov 9, 2020 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>

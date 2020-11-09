@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
-<meta name="keywords" content="getting_started,  sample homepage">
+<meta name="keywords" content="getting_started,  homepage">
 <title>The IB-Ruby Project | ib-ruby documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
@@ -508,26 +508,62 @@ $('#toc').on('click', 'a', function() {
     
 
    
-<p><strong><code class="language-plaintext highlighter-rouge">IB-Ruby</code></strong> aims to provide a ready-to-go solution for everyday aspects of serious trading of stocks and derivates through <a href="https://www.interactivebrokers.com">Interactive Brokers</a>. Additional tools are covered in this documentation as well as best practice examples.</p>
+<div class="alert alert-info" role="alert"><i class="fa fa-bars"></i> This is a pure Ruby implementation of <code class="language-plaintext highlighter-rouge">Interactive Brokers API</code>.</div>
 
-<p><a href="Setup_Ruby_and_Install_the_Software">Setup</a>  describes how to setup the environment, to install <strong><code class="language-plaintext highlighter-rouge">IB-Ruby</code></strong> locally and start a project that has access to the <a href="https://www.interactivebrokers.com/en/index.php?f=14099">TWS</a>.</p>
+<p><strong><em>IB-Ruby</em></strong> aims to provide a ready-to-go solution for everyday aspects of serious trading of stocks and derivates through <a href="https://www.interactivebrokers.com">Interactive Brokers</a>. Additional tools are covered in this documentation as well as best practice examples.</p>
+
+<p><a href="Setup_Ruby_and_Install_the_Software">Setup</a>  describes how to setup the environment, to install <strong><em>IB-Ruby</em></strong> locally and start a project that has access to the <a href="https://www.interactivebrokers.com/en/index.php?f=14099">TWS</a>.</p>
 
 <p><a href="console">Console</a> guides through first experiments with the software.</p>
 
 <p><strong>Modular Approach</strong></p>
 
-<p>The <strong><em>ib-ruby</em></strong>-Project consists of several ruby-gems. The modular architecture provides a flexible and 
-recource-minimized setup.</p>
+<p>The <strong><em>IB-Ruby</em></strong>-Project consists of several ruby-gems. Its modular architecture provides a flexible and 
+resource-minimized setup.</p>
 
 <ul>
   <li>
-    <p><a href="https://github.com/ib-ruby/ib-api">ib-api</a> provides a low-level interface to the tws- or gateway-api. Basicly the user sends messages to
-  the tws and subscribes to expected responses. <a href="https://github.com/ib-ruby/ib-api">ib-api</a>  translates them 
-  to ruby objects.</p>
+    <p><a href="https://github.com/ib-ruby/ib-api">ib-api</a> provides a low-level interface to the tws- or gateway-api. Basically the user sends messages to
+  the tws and subscribes to expected responses. <a href="https://github.com/ib-ruby/ib-api">ib-api</a>  provides them 
+  as ruby objects.</p>
   </li>
-  <li><a href="https://github.com/ib-ruby/ib-symbols">ib-symbols</a></li>
-  <li><a href="https://github.com/ib-ruby/ib-extensions">ib-extensions</a></li>
+  <li>
+    <p><a href="https://github.com/ib-ruby/ib-symbols">ib-symbols</a> offers shortcuts to most used contracts and provides a file based management of watchlists.</p>
+  </li>
+  <li>
+    <p><a href="https://github.com/ib-ruby/ib-extensions">ib-extensions</a>  is a collection of useful tools</p>
+
+    <ul>
+      <li>
+        <p><a href="/Verify_contracts">verify</a> queries the TWS and validates the input for contracts</p>
+      </li>
+      <li>
+        <p><a href="/market_price">market-price</a> manages the query for most recent market-data,<br />
+  <a href="/Historical_data">eod</a> fetches historical (end of day) data.</p>
+      </li>
+      <li>
+        <p><a href="/order_prototypes">order-prototypes</a> ease the process of  trading contracts</p>
+      </li>
+      <li>
+        <p><a href="/spreads">spread-prototypes</a> offer a user friendly way to engage most common spreads</p>
+      </li>
+      <li>
+        <p><a href="/atm_options">option-chains</a> fetch at- in- and out-of-the-money options with just one command</p>
+      </li>
+      <li>
+        <p><a href="/gateway">gateway</a> provides a simple management of accounts for financial advisors</p>
+      </li>
+    </ul>
+  </li>
 </ul>
+
+<p><strong>Status</strong></p>
+
+<p><code class="language-plaintext highlighter-rouge">ib-api</code>  and <code class="language-plaintext highlighter-rouge">ib_symbols</code>  are released as stable gem.</p>
+
+<p><code class="language-plaintext highlighter-rouge">ib-extensions</code> is just prepared for a gem release.</p>
+
+<p>(Last update: Nov.8, 2020)</p>
 
 
 
@@ -554,7 +590,7 @@ recource-minimized setup.</p>
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2020 ib-ruby. All rights reserved. <br />
- Site last generated: Nov 3, 2020 <br />
+ Site last generated: Nov 9, 2020 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>
