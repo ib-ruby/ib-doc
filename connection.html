@@ -5,8 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
-<meta name="keywords" content="contract,  contracts, verify">
-<title>Get Marketprice | IB-Ruby documentation</title>
+<meta name="keywords" content="connection,  ">
+<title>IB-Connection | IB-Ruby documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -144,7 +144,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Get Marketprice">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="IB-Connection">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -247,7 +247,7 @@
           
           
           
-          <li><a title="IB-Connection" href="connection.html">IB-Connection</a></li>
+          <li class="active"><a title="IB-Connection" href="connection.html">IB-Connection</a></li>
           
           
           
@@ -477,7 +477,7 @@
         <!-- Content Column -->
         <div class="col-md-9" id="tg-sb-content">
             <div class="post-header">
-   <h1 class="post-title-main">Get Marketprice</h1>
+   <h1 class="post-title-main">IB-Connection</h1>
 </div>
 
 
@@ -514,27 +514,59 @@ $('#toc').on('click', 'a', function() {
 
     
 
-   
-<div class="bs-callout bs-callout-info">
-To use the features described, include the <em>ib-extensions</em> Gem  in the Gemfile and use    
+   <div class="bs-callout bs-callout-info">
+<em>IB::Connection</em> is part of <em>ib-api</em>.    
 
-
+Include  
 <pre> 
 require 'ib-api' 
-require 'ib/market-price' 
-require 'ib/eod'
-require 'ib/option-chain'
 </pre>
 
 in your scripts.
 </div>
 
-Its a most common request: 
+<h2 id="typical-setup">Typical setup</h2>
 
-Display five in-the-money- and five out-of-the-money options and their properties.  
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">require</span> <span class="s1">'bundler/setup'</span>
+<span class="nb">require</span> <span class="s1">'ib-api'</span>
+
+<span class="no">TWS</span><span class="o">=</span> <span class="s1">'tws:7496'</span> <span class="c1"># or 'localhost'  </span>
+
+<span class="no">IB</span><span class="o">::</span><span class="no">Connection</span><span class="p">.</span><span class="nf">new</span> <span class="ss">host: </span><span class="s1">'127.0.0'</span> <span class="p">,</span> <span class="ss">port: </span><span class="mi">7496</span><span class="p">,</span>  <span class="n">client_id</span><span class="p">:</span><span class="mi">1134</span>
+
+<span class="k">if</span> <span class="p">(</span> <span class="n">ib</span> <span class="o">=</span> <span class="no">IB</span><span class="o">::</span><span class="no">Connection</span><span class="p">.</span><span class="nf">current</span> <span class="p">).</span><span class="nf">present?</span>
+    <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+  <span class="k">else</span>
+   <span class="nb">puts</span> <span class="s1">'No TWS'</span>
+  <span class="k">end</span>
+</code></pre></div></div>
+
+<p>To prevent losses of messages transmitted by the <em>TWS</em> before establishing the connection itself,
+the message-management is initialized  prior to the connect-attempt. Incoming messages
+are stored in <code class="language-plaintext highlighter-rouge">IB::Connection.received</code>. The response can further customized  through a provided block</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">ib</span> <span class="o">=</span> <span class="no">IB</span><span class="o">::</span><span class="no">Connection</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span> <span class="ss">client_id: </span><span class="mi">1112</span><span class="p">,</span>  <span class="ss">port: </span><span class="mi">7496</span> <span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">gw</span><span class="o">|</span>
+<span class="o">&gt;</span>  <span class="c1">## Subcribe to forseable events before the connection is completed</span>
+<span class="o">&gt;</span>  <span class="c1">## Subscribe to TWS alerts/errors</span>
+<span class="o">&gt;</span>  <span class="n">gw</span><span class="p">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="ss">:Alert</span><span class="p">,</span> <span class="ss">:AccountSummary</span><span class="p">){</span> <span class="o">|</span><span class="n">msg</span><span class="o">|</span> <span class="nb">puts</span> <span class="n">msg</span><span class="p">.</span><span class="nf">to_human</span> <span class="p">}</span>
+<span class="o">&gt;</span>  <span class="c1">## set logging level</span>
+<span class="o">&gt;</span>  <span class="n">gw</span><span class="p">.</span><span class="nf">logger</span><span class="p">.</span><span class="nf">level</span> <span class="o">=</span> <span class="no">Logger</span><span class="o">::</span><span class="no">ERROR</span>
+<span class="o">&gt;</span> <span class="k">end</span>
 
 
-To investigate further, take a look at the [volatility-research example](https://github.com/ib-ruby/ib-extensions/blob/master/example/volatility_research)
+</code></pre></div></div>
+
+<p>The main purpose of <code class="language-plaintext highlighter-rouge">IB::Connection</code> is to submit <code class="language-plaintext highlighter-rouge">IB::Messages</code> to the <em>TWS-Api</em> and to receive 
+the response.
+Thus the centerpiece is its <code class="language-plaintext highlighter-rouge">send_message</code> method.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">c</span> <span class="o">=</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Connection</span><span class="p">.</span><span class="nf">current</span>
+<span class="o">&gt;</span> <span class="n">c</span><span class="p">.</span><span class="nf">send_message</span> <span class="p">{</span><span class="n">message</span> <span class="n">symbol</span> <span class="p">},</span> <span class="p">[</span> <span class="n">optional</span> <span class="n">arguments</span> <span class="p">]</span>
+
+</code></pre></div></div>
+
+<p>Visit <a href="/message_correct_arguments">this page</a> for an overview of available messages and their arguments.</p>
+
 
 
     <div class="tags">
@@ -558,7 +590,7 @@ To investigate further, take a look at the [volatility-research example](https:/
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2020 IB-Ruby. All rights reserved. <br />
-<span>Page last updated:</span> October 26, 2020<br/> Site last generated: Nov 10, 2020 <br />
+ Site last generated: Nov 10, 2020 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>
