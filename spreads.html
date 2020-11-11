@@ -525,7 +525,7 @@ require 'ib/spread-prototypes'
 in your scripts.
 </div>
 
-<p>As for <a href="Order-Prototypes">Order-Prototypes</a> <code class="language-plaintext highlighter-rouge">Spread-Prototypes</code> are provided to ease the definition of <em>complex-positions</em>. <code class="language-plaintext highlighter-rouge">Spread-Prototypes</code>automate the creation of <code class="language-plaintext highlighter-rouge">IB::Spread</code>-Contracts.</p>
+<p>As for <a href="order-prototypes">Order-Prototypes</a> <code class="language-plaintext highlighter-rouge">Spread-Prototypes</code> are provided to ease the definition of <em>complex-positions</em>. <code class="language-plaintext highlighter-rouge">Spread-Prototypes</code>automate the creation of <code class="language-plaintext highlighter-rouge">IB::Spread</code>-Contracts.</p>
 
 <h2 id="spreads">Spreads</h2>
 
@@ -633,6 +633,33 @@ Compared to <code class="language-plaintext highlighter-rouge">IB::Straddles</co
   <span class="o">=&gt;</span> <span class="s2">"&lt;Vertical ESTX50 put(-1 :3200.0 |+|1 :2400.0  )[Dec 2018]&gt;"</span>
 </code></pre></div></div>
 
+<h2 id="stock-spreads">Stock Spreads</h2>
+
+<p>Stock Spreads are combined <em>buy</em> and <em>sell</em> orders with us-stocks as unterlyings.</p>
+
+<p>They can only be fabricated:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">the_bag</span> <span class="o">=</span> <span class="no">IB</span><span class="o">::</span><span class="no">StockSpread</span><span class="p">.</span><span class="nf">fabricate</span> <span class="s1">'MSFT'</span><span class="p">,</span> <span class="s1">'WFC'</span><span class="p">,</span> <span class="ss">ratio: </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">8</span><span class="p">]</span>  
+<span class="c1">#or</span>
+<span class="o">&gt;</span> <span class="n">msft</span> <span class="o">=</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Stock</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span> <span class="ss">symbol: :msft</span> <span class="p">)</span>
+<span class="o">&gt;</span> <span class="n">wfc</span> <span class="o">=</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Stock</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span> <span class="ss">symbol: :wfc</span> <span class="p">)</span>
+<span class="o">&gt;</span> <span class="n">the_bag</span> <span class="o">=</span> <span class="no">IB</span><span class="o">::</span><span class="no">StockSpread</span><span class="p">.</span><span class="nf">fabricate</span> <span class="err">'</span><span class="p">,</span> <span class="n">msft</span><span class="p">,</span> <span class="n">wfc</span> <span class="ss">ratio: </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">8</span><span class="p">]</span>  
+
+
+<span class="o">&gt;</span> <span class="n">the_bag</span><span class="p">.</span><span class="nf">to_human</span>
+ <span class="s2">"&lt;StockSpread MSFT:1 , WFC:-8 (USD )&gt;"</span> 
+
+<span class="o">&gt;</span> <span class="n">the_bag</span><span class="p">.</span><span class="nf">market_price</span>    <span class="o">=&gt;</span> <span class="mf">21.56</span>
+<span class="o">&gt;</span> <span class="n">the_bag</span><span class="p">.</span><span class="nf">symbol</span>          <span class="o">=&gt;</span> <span class="s2">"MSFT,WFC"</span> 
+
+</code></pre></div></div>
+
+<p>Additional attributes can be added through the fabrication process. Thus, <code class="language-plaintext highlighter-rouge">IB::StockSpread.fabricate 'MSFT', 'WFC', ratio: [1, -8], exchange: 'NYSE' </code> sets the exchange for the combo.</p>
+
+<p>Stock-Spreads must be ordered with the <code class="language-plaintext highlighter-rouge">NonGuaranteed</code> flag set. Use the <code class="language-plaintext highlighter-rouge">IB::Combo</code> prototype for this
+purpose.</p>
+
+
 
     <div class="tags">
         
@@ -655,7 +682,7 @@ Compared to <code class="language-plaintext highlighter-rouge">IB::Straddles</co
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2020 IB-Ruby. All rights reserved. <br />
-<span>Page last updated:</span> October 29, 2020<br/> Site last generated: Nov 10, 2020 <br />
+<span>Page last updated:</span> November 11, 2020<br/> Site last generated: Nov 11, 2020 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>

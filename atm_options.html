@@ -571,7 +571,7 @@ Display five in-the-money- and five out-of-the-money options and their propertie
 
 <span class="o">&gt;</span> <span class="n">z</span><span class="o">=</span> <span class="n">ge</span><span class="p">.</span><span class="nf">option_chain</span> <span class="ss">sort: :expiry</span>
 <span class="o">&gt;</span> <span class="n">z</span><span class="p">.</span><span class="nf">keys</span>
- <span class="o">=&gt;</span> <span class="p">[</span><span class="mi">2011</span><span class="p">,</span> <span class="mi">2012</span><span class="p">,</span> <span class="mi">2101</span><span class="p">,</span> <span class="mi">2103</span><span class="p">,</span> <span class="mi">2106</span><span class="p">,</span> <span class="mi">2201</span><span class="p">,</span> <span class="mi">2301</span><span class="p">]</span>  <span class="c1">## =&gt; Expiry's in Year/Month notation</span>
+ <span class="o">=&gt;</span> <span class="p">[</span><span class="mi">2011</span><span class="p">,</span> <span class="mi">2012</span><span class="p">,</span> <span class="mi">2101</span><span class="p">,</span> <span class="mi">2103</span><span class="p">,</span> <span class="mi">2106</span><span class="p">,</span> <span class="mi">2201</span><span class="p">,</span> <span class="mi">2301</span><span class="p">]</span>  <span class="c1">## =&gt; Expiry in Year/Month notation</span>
 <span class="o">&gt;</span> <span class="nb">puts</span> <span class="n">z</span><span class="p">[</span><span class="mi">2012</span><span class="p">].</span><span class="nf">to_human</span>
 <span class="o">&lt;</span><span class="no">Option</span><span class="p">:</span> <span class="no">GE</span> <span class="mi">20201218</span> <span class="n">put</span> <span class="mf">0.5</span> <span class="no">SMART</span> <span class="no">USD</span><span class="o">&gt;</span>
 <span class="o">&lt;</span><span class="no">Option</span><span class="p">:</span> <span class="no">GE</span> <span class="mi">20201218</span> <span class="n">put</span> <span class="mf">1.0</span> <span class="no">SMART</span> <span class="no">USD</span><span class="o">&gt;</span>
@@ -618,7 +618,7 @@ ie. the calculated Greeks.</p>
 
 <ul>
   <li>
-    <p><code class="language-plaintext highlighter-rouge">:ref_price</code> – if set it selects the options with strike next to the specified vaalue. Otherwise it
+    <p><code class="language-plaintext highlighter-rouge">:ref_price</code> – if set it selects the options with strike next to the specified value. Otherwise it
 performs a <code class="language-plaintext highlighter-rouge">IB::Contract.market_price</code>-request and sets the <code class="language-plaintext highlighter-rouge">:ref_price</code> accordingly.</p>
   </li>
   <li>
@@ -632,10 +632,8 @@ performs a <code class="language-plaintext highlighter-rouge">IB::Contract.marke
 <span class="o">&gt;</span> <span class="n">ge_options</span><span class="p">[</span><span class="mi">2011</span><span class="p">].</span><span class="nf">to_human</span>
   <span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"&lt;Option: GE 20201120 put 7.5 SMART USD&gt;"</span><span class="p">]</span> 
 </code></pre></div></div>
-<div class="bs-callout bs-callout-info">
-The method sometimes returns not valid options. Then the  `:RequestOptionChainDefinition` message  provides
-a possible, but not (yet) released option. <br />Solution: Repeat the method-call and specify `ref_price` manually.
-</div>
+<div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> <b>::</b> Sometimes  the  <code class="language-plaintext highlighter-rouge">:RequestOptionChainDefinition</code> message  provides
+a possible, but not (yet) released option. <code class="language-plaintext highlighter-rouge">atm_options</code><br />Solution: Repeat the method-call and specify <code class="language-plaintext highlighter-rouge">ref_price</code> manually, as noted above. </div>
 
 <h2 id="in-the-money-and-out-of-the-money-options">In-the-Money and Out-of-the-Money Options</h2>
 
@@ -663,7 +661,7 @@ Therefore</p>
 
 <p>Out-of-the-money Options work too:</p>
 
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">ge_options</span><span class="o">=</span> <span class="n">ge</span><span class="p">.</span><span class="nf">itm_options</span><span class="p">(</span><span class="ss">sort: :expiry</span><span class="p">)</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">ge_options</span><span class="o">=</span> <span class="n">ge</span><span class="p">.</span><span class="nf">otm_options</span><span class="p">(</span><span class="ss">sort: :expiry</span><span class="p">)</span>
 <span class="o">&gt;</span> <span class="nb">puts</span> <span class="n">ge_options</span><span class="p">[</span><span class="mi">2011</span><span class="p">].</span><span class="nf">to_human</span>
 <span class="o">&lt;</span><span class="no">Option</span><span class="p">:</span> <span class="no">GE</span> <span class="mi">20201120</span> <span class="n">put</span> <span class="mf">12.5</span> <span class="no">SMART</span> <span class="no">USD</span><span class="o">&gt;</span>
 <span class="o">&lt;</span><span class="no">Option</span><span class="p">:</span> <span class="no">GE</span> <span class="mi">20201120</span> <span class="n">put</span> <span class="mf">12.0</span> <span class="no">SMART</span> <span class="no">USD</span><span class="o">&gt;</span>
@@ -697,7 +695,7 @@ Therefore</p>
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2020 IB-Ruby. All rights reserved. <br />
-<span>Page last updated:</span> October 29, 2020<br/> Site last generated: Nov 10, 2020 <br />
+<span>Page last updated:</span> October 29, 2020<br/> Site last generated: Nov 11, 2020 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>
