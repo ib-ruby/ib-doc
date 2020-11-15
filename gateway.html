@@ -532,7 +532,8 @@ in your scripts.
 <span class="nb">require</span> <span class="s1">'ib-api'</span>
 <span class="nb">require</span> <span class="s1">'ib-gateway'</span>
 
-<span class="no">TWS</span><span class="o">=</span> <span class="s1">'tws:7496'</span> <span class="c1"># or 'localhost'  </span>
+<span class="no">TWS</span><span class="o">=</span> <span class="s1">'tws:7496'</span> <span class="c1"># or 'localhost:7496'  </span>
+<span class="no">GATEWAY</span><span class="o">=</span> <span class="s1">'127.0.0.1:4002'</span>  
 
 <span class="no">IB</span><span class="o">::</span><span class="no">Gateway</span><span class="p">.</span><span class="nf">new</span> <span class="ss">host: </span><span class="no">TWS</span> <span class="p">,</span> <span class="n">client_id</span><span class="p">:</span><span class="mi">1134</span>
 
@@ -548,7 +549,8 @@ and provides account-based trading tools.</div>
 
 <p>Upon initialization, it detects accounts and reads available data from the <em>TWS</em>.</p>
 
-<p>Secondly, it  aims to provide an intuitive interface for order-placement and -management</p>
+<p>Secondly, it  aims to provide an intuitive interface for order-placement and -management.</p>
+
 <h3 id="accounts">Accounts</h3>
 
 <p>In a financial advisor environment, after initialization <code class="language-plaintext highlighter-rouge">IB::Gateway</code> the accounts are present  through</p>
@@ -583,7 +585,14 @@ and provides account-based trading tools.</div>
 
 <h3 id="order-management">Order Management</h3>
 
-<p>A simplified order management process is defined</p>
+<p>A simplified order management process is included.</p>
+
+<p>Anything starts with an  <code class="language-plaintext highlighter-rouge">IB::Order</code>. The object is then reused and updated through the process. It keeps the history and current status.</p>
+
+<p>ithe process is initiated by calling    <code class="language-plaintext highlighter-rouge">IB::Account.preview</code> or
+<code class="language-plaintext highlighter-rouge">IB::Account.place</code> with  <code class="language-plaintext highlighter-rouge">IB::Contract</code> and <code class="language-plaintext highlighter-rouge">IB::Order_Prototype</code> as arguments. 
+Other steps ( <code class="language-plaintext highlighter-rouge">modify</code>, <code class="language-plaintext highlighter-rouge">reverse</code>, <code class="language-plaintext highlighter-rouge">close</code> or <code class="language-plaintext highlighter-rouge">cancel</code> )  just 
+require the <code class="language-plaintext highlighter-rouge">IB-Order</code> object as argument.</p>
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="no">G</span> <span class="o">=</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Gateway</span><span class="p">.</span><span class="nf">new</span>   <span class="c1"># initialize with default parameter</span>
 <span class="o">&gt;</span> <span class="n">the_contract</span> <span class="o">=</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Stocks</span><span class="p">.</span><span class="nf">msft</span>  <span class="c1"># Microsoft</span>
 <span class="o">&gt;</span> <span class="n">the_order</span> <span class="o">=</span> <span class="no">Limit</span><span class="p">.</span><span class="nf">order</span> <span class="ss">size: </span><span class="mi">100</span><span class="p">,</span> 
@@ -596,11 +605,15 @@ and provides account-based trading tools.</div>
 
 <span class="o">&gt;</span> <span class="n">the_account</span><span class="p">.</span><span class="nf">preview</span> <span class="ss">order: </span><span class="n">the_order</span><span class="p">,</span> 
                       <span class="ss">contract: </span><span class="n">the_contract</span>
+  <span class="c1"># returns an array with projected what-if values											</span>
   <span class="o">=&gt;</span> <span class="p">{</span><span class="ss">:init_margin</span><span class="o">=&gt;</span><span class="mf">0.1344327e5</span><span class="p">,</span> <span class="ss">:maint_margin</span><span class="o">=&gt;</span><span class="mf">0.1168288e5</span><span class="p">,</span> 
       <span class="ss">:equity_with_loan</span><span class="o">=&gt;</span><span class="mf">0.118936284e7</span><span class="p">,</span> <span class="ss">:commission</span><span class="o">=&gt;</span><span class="kp">nil</span><span class="p">,</span> 
       <span class="ss">:commission_currency</span><span class="o">=&gt;</span><span class="s2">"USD"</span><span class="p">,</span> <span class="ss">:warning</span><span class="o">=&gt;</span><span class="s2">""</span><span class="p">}</span> 
 
 <span class="o">&gt;</span> <span class="n">the_account</span><span class="p">.</span><span class="nf">place</span> <span class="ss">order: </span><span class="n">the_order</span>
+
+<span class="o">&gt;</span> <span class="no">G</span><span class="p">.</span><span class="nf">cancel_order</span> <span class="n">the_order</span>              <span class="c1"># general order cancelling facility</span>
+<span class="o">&gt;</span> <span class="n">the_account</span><span class="p">.</span><span class="nf">cancel</span> <span class="ss">order: </span><span class="n">the_order</span>   <span class="c1"># identical</span>
 
 </code></pre></div></div>
 <p>The general procedure for order-tasks:</p>
@@ -609,6 +622,8 @@ and provides account-based trading tools.</div>
 </code></pre></div></div>
 <div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> <b>::</b> The order-object is updated in the process. It’s OK to use the same order-object for each step. Then the history is kept in <code class="language-plaintext highlighter-rouge">OrderState</code>-Objects. <strong>But <em>never</em> use the same order object for different users.</strong>
 </div>
+
+<h3 id="order-objects-and-history">Order Objects and History</h3>
 
 <h2 id="interactive-shell">Interactive Shell</h2>
 
@@ -694,7 +709,7 @@ and provides account-based trading tools.</div>
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2020 IB-Ruby. All rights reserved. <br />
- Site last generated: Nov 11, 2020 <br />
+ Site last generated: Nov 15, 2020 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>

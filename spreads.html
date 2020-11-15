@@ -608,14 +608,16 @@ Compared to <code class="language-plaintext highlighter-rouge">IB::Straddles</co
 
 <p>In <strong>Fabricate-Mode</strong> the Calendar-Spread can be used to roll Futures:</p>
 
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">calendar</span> <span class="o">=</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Calendar</span><span class="p">.</span><span class="nf">fabricate</span> <span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Futures</span><span class="p">.</span><span class="nf">zn</span><span class="p">,</span> <span class="s1">'3m'</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">calendar</span> <span class="o">=</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Calendar</span><span class="p">.</span><span class="nf">fabricate</span> <span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Futures</span><span class="p">.</span><span class="nf">es</span><span class="p">,</span> <span class="s1">'3m'</span>
 <span class="o">&gt;</span> <span class="n">calendar</span><span class="p">.</span><span class="nf">to_human</span> 
-  <span class="o">=&gt;</span> <span class="s2">"&lt;Calendar ZN none(0.0)[-1 :Dec 2018 |+|1 :Mar 2019  &gt;"</span> 
-<span class="c1"># or</span>
-<span class="o">&gt;</span> <span class="n">zn</span> <span class="o">=</span> <span class="no">Symbols</span><span class="o">::</span><span class="no">Futures</span><span class="p">.</span><span class="nf">zn</span><span class="p">.</span> <span class="nf">merge</span> <span class="ss">expiry: </span><span class="mi">201906</span>
-<span class="o">&gt;</span> <span class="no">IB</span><span class="o">::</span><span class="no">Calendar</span><span class="p">.</span><span class="nf">fabricate</span><span class="p">(</span> <span class="n">zn</span><span class="p">,</span> <span class="s1">'-3m'</span><span class="p">).</span><span class="nf">to_human</span>
-  <span class="o">=&gt;</span> <span class="s2">"&lt;Calendar ZN none(0.0)[1 :Jun 2019 |+|-1 :Mar 2019  &gt;"</span> 
-			 
+ <span class="o">=&gt;</span> <span class="s2">"&lt;Calendar ES none(0.0)[1 :Dec 2020 |+|-1 :Mar 2021  &gt;"</span> 
+<span class="o">&gt;</span> <span class="n">calendar</span><span class="p">.</span><span class="nf">market_price</span>                    <span class="o">==&gt;</span>  <span class="mf">9.75</span>
+
+<span class="c1"># or to roll a short future</span>
+<span class="o">&gt;</span> <span class="n">es</span> <span class="o">=</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Calendar</span><span class="p">.</span><span class="nf">fabricate</span> <span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Futures</span><span class="p">.</span><span class="nf">es</span><span class="p">.</span><span class="nf">merge</span><span class="p">(</span><span class="ss">expiry: </span><span class="mi">202106</span><span class="p">),</span> <span class="s1">'-3m'</span>
+<span class="o">&gt;</span> <span class="n">es</span><span class="p">.</span><span class="nf">to_human</span>
+ <span class="o">=&gt;</span> <span class="s2">"&lt;Calendar ES none(0.0)[1 :Jun 2021 |+|-1 :Mar 2021  &gt;"</span> 
+<span class="o">&gt;</span> <span class="n">es</span><span class="p">.</span><span class="nf">market_price</span>                         <span class="o">==&gt;</span> <span class="o">-</span><span class="mf">10.0</span>
 			 
 </code></pre></div></div>
 
@@ -682,7 +684,7 @@ purpose.</p>
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2020 IB-Ruby. All rights reserved. <br />
-<span>Page last updated:</span> November 11, 2020<br/> Site last generated: Nov 11, 2020 <br />
+<span>Page last updated:</span> November 11, 2020<br/> Site last generated: Nov 15, 2020 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>
