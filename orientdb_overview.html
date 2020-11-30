@@ -5,8 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
-<meta name="keywords" content="contract,  contracts, verify">
-<title>Verify Contracts | IB-Ruby documentation</title>
+<meta name="keywords" content="dborientdb,  database">
+<title>Overview | IB-Ruby documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -144,7 +144,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Verify Contracts">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Overview">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -335,7 +335,7 @@
           
           
           
-          <li class="active"><a title="Verify" href="Verify_contracts.html">Verify</a></li>
+          <li><a title="Verify" href="Verify_contracts.html">Verify</a></li>
           
           
           
@@ -443,7 +443,7 @@
           
           
           
-          <li><a title="OrientDB" href="orientdb_overview.html">OrientDB</a></li>
+          <li class="active"><a title="OrientDB" href="orientdb_overview.html">OrientDB</a></li>
           
           
           
@@ -493,7 +493,7 @@
         <!-- Content Column -->
         <div class="col-md-9" id="tg-sb-content">
             <div class="post-header">
-   <h1 class="post-title-main">Verify Contracts</h1>
+   <h1 class="post-title-main">Overview</h1>
 </div>
 
 
@@ -531,95 +531,67 @@ $('#toc').on('click', 'a', function() {
     
 
    <div class="bs-callout bs-callout-info">
-The <em>ib-extensions</em> Gem defines macros to ease the specification and verification of contracts.    
+To use the features described, include the <em>ib-orientdb</em> Gem  in the Gemfile.
 
-Include  
-<pre> 
-require 'ib-api' 
-require 'ib/verify' 
-</pre>
-
-in your scripts.
 </div>
 
-<h3 id="contractverify">Contract#verify</h3>
-<p>To ease the process of verification of given contract-attributes, a handy <code class="language-plaintext highlighter-rouge">verify</code> method is provided.</p>
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">&gt;</span> <span class="n">w</span> <span class="o">=</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Stocks</span><span class="p">.</span><span class="nf">wfc</span>
- <span class="o">&gt;</span> <span class="n">w</span><span class="p">.</span><span class="nf">con_id</span>                     <span class="o">=&gt;</span> <span class="mi">0</span> 
- <span class="o">&gt;</span> <span class="n">ww</span> <span class="o">=</span> <span class="n">w</span><span class="p">.</span><span class="nf">verify</span><span class="p">.</span><span class="nf">first</span>
- <span class="o">&gt;</span> <span class="n">ww</span><span class="p">.</span><span class="nf">con_id</span>                    <span class="o">=&gt;</span> <span class="mi">10375</span> 
- <span class="o">&gt;</span> <span class="n">ww</span><span class="p">.</span><span class="nf">contract_detail</span><span class="p">.</span><span class="nf">long_name</span>   <span class="o">=&gt;</span> <span class="s2">"WELLS FARGO &amp; CO"</span> 
+<p><strong><em>OrientDB</em></strong> is a <strong>N</strong>ot <strong>O</strong>nly <strong>SQL</strong> Database owned and maintained by <em>SAP</em>.</p>
+
+<p>It aims to be “the first Multi-Model Open Source NOSQL DBMS that brings together the power of graphs and the flexibility of documents into one scalable high-performance operational database.”</p>
+
+<p>The <strong><em>IB-OrientDB</em></strong>-Gem  connects a running <strong><em>IB-api</em></strong>-client to a running OrientDB-Database-Server 
+and provides methods to store data provided by the Interactive Brokers TWS into the database.</p>
+
+<div class="alert alert-info" role="alert"><i class="fa fa-bars"></i> The Database is initialized through the <code class="language-plaintext highlighter-rouge">Setup.init_database</code> script. Upon initialisation, <em><strong>IB-OrientDB</strong></em> 
+ fetches all database classes and assigns them to ruby classes. As a consequence, objects received from the TWS
+ are in fact unsaved database-entries and objects read from the database are suitable for tws-queries.</div>
+
+<p>This is shown in the following example. We create a <code class="language-plaintext highlighter-rouge">IB::Stock</code>-object, verify it through the <code class="language-plaintext highlighter-rouge">TWS</code> and 
+subsequently store
+it in the database. Secondly we use the database-entry to fetch some historical data.</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Create a new Contract</span>
+<span class="o">&gt;</span> <span class="n">f</span> <span class="o">=</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Stock</span><span class="p">.</span><span class="nf">new</span> <span class="ss">symbol: </span><span class="s1">'F'</span>
+<span class="c1"># Inspect its class hierarchy</span>
+<span class="o">&gt;</span> <span class="n">f</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">ancestors</span>
+ <span class="o">=&gt;</span> <span class="p">[</span><span class="no">IB</span><span class="o">::</span><span class="no">Stock</span><span class="p">,</span> <span class="no">IB</span><span class="o">::</span><span class="no">Contract</span><span class="p">,</span> <span class="no">IB</span><span class="o">::</span><span class="no">BaseProperties</span><span class="p">,</span> <span class="no">V</span><span class="p">,</span> <span class="no">ActiveOrient</span><span class="o">::</span><span class="no">Model</span><span class="p">,</span> <span class="no">ModelRecord</span><span class="p">,</span> <span class="no">ActiveOrient</span><span class="o">::</span><span class="no">BaseProperties</span><span class="p">,</span> <span class="no">ActiveOrient</span><span class="o">::</span><span class="no">Base</span><span class="p">,</span> <span class="no">Conversions</span><span class="p">,</span> <span class="p">(</span><span class="o">...</span><span class="p">)</span> <span class="p">]</span>
+<span class="c1"># Note the class hierarchy IB::Stock -- IB::Contract --V :: The Stock-Object is </span>
+<span class="c1"># indeed Child of a OrientDB Vertex-Class. </span>
+
+<span class="c1"># Now store it in the database and check its presence in the database </span>
+<span class="o">&gt;</span> <span class="n">f</span><span class="p">.</span><span class="nf">rid</span>              <span class="o">=&gt;</span> <span class="s2">":"</span>    <span class="c1">#  its not saved jet</span>
+<span class="o">&gt;</span> <span class="n">f</span><span class="p">.</span><span class="nf">save</span>             <span class="o">=&gt;</span> <span class="kp">false</span>  <span class="c1">#  it cannot be saved, because its not verified</span>
+                               <span class="c1">#  ( no con_id is present  )</span>
+<span class="o">&gt;</span> <span class="n">verified_f</span> <span class="o">=</span> <span class="n">f</span><span class="p">.</span><span class="nf">verify</span><span class="p">.</span><span class="nf">first</span>
+<span class="o">&gt;</span> <span class="n">verified_f</span><span class="p">.</span><span class="nf">save</span>
+<span class="o">&gt;</span> <span class="n">verified_f</span><span class="p">.</span><span class="nf">rid</span>    <span class="o">=&gt;</span> <span class="s2">"59:0"</span> <span class="c1"># the object is updated </span>
+
+<span class="o">&gt;</span> <span class="n">new_f</span> <span class="o">=</span>  <span class="no">V</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"59:0"</span>       <span class="c1"># retrieve from the database. Note that we do not </span>
+                              <span class="c1"># have to specify the appropriate class. </span>
+<span class="o">&gt;</span> <span class="n">new_f</span><span class="p">.</span><span class="nf">class</span>       <span class="o">=&gt;</span> <span class="no">IB</span><span class="o">::</span><span class="no">Stock</span> 
+<span class="o">&gt;</span> <span class="n">new_f</span> <span class="o">==</span> <span class="n">verified_f</span>  <span class="o">=&gt;</span> <span class="kp">true</span> <span class="c1">#  its a copy of the original</span>
+<span class="c1"># Query the database and ask the TWS for historical data</span>
+<span class="o">&gt;</span> <span class="nb">puts</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Stock</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span> <span class="ss">symbol: </span><span class="s1">'F'</span> <span class="p">).</span><span class="nf">first</span><span class="p">.</span><span class="nf">eod</span><span class="p">(</span> <span class="ss">duration: </span><span class="s1">'10 d'</span> <span class="p">).</span><span class="nf">to_human</span>
+<span class="c1"># INFO-&gt;MATCH {class: ib_stock, as: ib_stocks, where: ( symbol = 'F') } </span>
+<span class="o">&lt;</span><span class="no">Bar</span><span class="p">:</span> <span class="mi">2020</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">13</span> <span class="n">wap</span> <span class="mf">8.452</span> <span class="no">OHLC</span> <span class="mf">8.31</span> <span class="mf">8.57</span> <span class="mf">8.16</span> <span class="mf">8.52</span> <span class="n">trades</span> <span class="mi">79407</span> <span class="n">vol</span> <span class="mi">764141</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="no">Bar</span><span class="p">:</span> <span class="mi">2020</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">16</span> <span class="n">wap</span> <span class="mf">8.761</span> <span class="no">OHLC</span> <span class="mf">8.65</span> <span class="mf">8.91</span> <span class="mf">8.57</span> <span class="mf">8.8</span> <span class="n">trades</span> <span class="mi">90727</span> <span class="n">vol</span> <span class="mi">826969</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="no">Bar</span><span class="p">:</span> <span class="mi">2020</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">17</span> <span class="n">wap</span> <span class="mf">8.739</span> <span class="no">OHLC</span> <span class="mf">8.75</span> <span class="mf">8.85</span> <span class="mf">8.63</span> <span class="mf">8.73</span> <span class="n">trades</span> <span class="mi">54007</span> <span class="n">vol</span> <span class="mi">455313</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="no">Bar</span><span class="p">:</span> <span class="mi">2020</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">18</span> <span class="n">wap</span> <span class="mf">8.951</span> <span class="no">OHLC</span> <span class="mf">8.76</span> <span class="mf">9.05</span> <span class="mf">8.74</span> <span class="mf">8.9</span> <span class="n">trades</span> <span class="mi">75730</span> <span class="n">vol</span> <span class="mi">724330</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="no">Bar</span><span class="p">:</span> <span class="mi">2020</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">19</span> <span class="n">wap</span> <span class="mf">8.802</span> <span class="no">OHLC</span> <span class="mf">8.87</span> <span class="mf">8.94</span> <span class="mf">8.74</span> <span class="mf">8.77</span> <span class="n">trades</span> <span class="mi">54895</span> <span class="n">vol</span> <span class="mi">545472</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="no">Bar</span><span class="p">:</span> <span class="mi">2020</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">20</span> <span class="n">wap</span> <span class="mf">8.742</span> <span class="no">OHLC</span> <span class="mf">8.73</span> <span class="mf">8.87</span> <span class="mf">8.68</span> <span class="mf">8.76</span> <span class="n">trades</span> <span class="mi">66661</span> <span class="n">vol</span> <span class="mi">550186</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="no">Bar</span><span class="p">:</span> <span class="mi">2020</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">23</span> <span class="n">wap</span> <span class="mf">8.885</span> <span class="no">OHLC</span> <span class="mf">8.76</span> <span class="mf">8.98</span> <span class="mf">8.75</span> <span class="mf">8.93</span> <span class="n">trades</span> <span class="mi">75533</span> <span class="n">vol</span> <span class="mi">662582</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="no">Bar</span><span class="p">:</span> <span class="mi">2020</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">24</span> <span class="n">wap</span> <span class="mf">9.386</span> <span class="no">OHLC</span> <span class="mf">8.92</span> <span class="mf">9.56</span> <span class="mf">8.91</span> <span class="mf">9.56</span> <span class="n">trades</span> <span class="mi">110795</span> <span class="n">vol</span> <span class="mi">959114</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="no">Bar</span><span class="p">:</span> <span class="mi">2020</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">25</span> <span class="n">wap</span> <span class="mf">9.089</span> <span class="no">OHLC</span> <span class="mf">9.33</span> <span class="mf">9.41</span> <span class="mf">9.0</span> <span class="mf">9.12</span> <span class="n">trades</span> <span class="mi">98761</span> <span class="n">vol</span> <span class="mi">925084</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="no">Bar</span><span class="p">:</span> <span class="mi">2020</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">27</span> <span class="n">wap</span> <span class="mf">9.078</span> <span class="no">OHLC</span> <span class="mf">9.13</span> <span class="mf">9.15</span> <span class="mf">9.03</span> <span class="mf">9.1</span> <span class="n">trades</span> <span class="mi">32327</span> <span class="n">vol</span> <span class="mi">270936</span><span class="o">&gt;</span>
+
 </code></pre></div></div>
-
-<p>In its basic form 
-<code class="language-plaintext highlighter-rouge">IB::Contract.verify</code> just sends a <code class="language-plaintext highlighter-rouge">:RequestContractData</code>-Message, fetches the response and extracts <code class="language-plaintext highlighter-rouge">IB::Contracts</code>.</p>
-
-<div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> <b>::</b> <code class="language-plaintext highlighter-rouge">Contract#verify</code> queries the TWS for a valid contract and <strong>returns the response as new object</strong>.</div>
-
-<h4 id="manipulations-of-the-response">Manipulations of the response</h4>
-
-<p><code class="language-plaintext highlighter-rouge">Contract#verify</code> accepts a block to to manipulate the returned contract.  The block has access to any returned 
-<code class="language-plaintext highlighter-rouge">IB::Contract</code>-object.</p>
-
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="o">&gt;</span> <span class="n">f</span> <span class="o">=</span>  <span class="no">Future</span><span class="p">.</span><span class="nf">new</span> <span class="ss">symbol: </span><span class="s1">'DAX'</span><span class="p">,</span> <span class="ss">expiry: </span><span class="mi">2021</span><span class="p">,</span> <span class="ss">exchange: </span><span class="s1">'DTB'</span><span class="p">,</span> <span class="ss">currency: </span><span class="s1">'EUR'</span><span class="p">,</span> <span class="ss">multiplier: </span><span class="mi">5</span>
-<span class="o">&gt;</span> <span class="n">dax_con_ids</span> <span class="o">=</span>  <span class="n">f</span><span class="p">.</span><span class="nf">verify</span><span class="p">{</span><span class="o">|</span><span class="n">c</span><span class="o">|</span> <span class="p">{</span><span class="n">c</span><span class="p">.</span><span class="nf">expiry</span> <span class="o">=&gt;</span> <span class="n">c</span><span class="p">.</span><span class="nf">con_id</span> <span class="p">}}</span>
- <span class="o">=&gt;</span>  <span class="p">[{</span><span class="s2">"20201218"</span><span class="o">=&gt;</span><span class="mi">413140771</span><span class="p">},</span> <span class="p">{</span><span class="s2">"20210319"</span><span class="o">=&gt;</span><span class="mi">428741696</span><span class="p">},</span> <span class="p">{</span><span class="s2">"20210618"</span><span class="o">=&gt;</span><span class="mi">446220391</span><span class="p">}]</span>
-</code></pre></div></div>
-<p>or – if you want to store the returned contracts</p>
-
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="o">&gt;</span> <span class="n">f</span> <span class="o">=</span>  <span class="no">Future</span><span class="p">.</span><span class="nf">new</span> <span class="ss">symbol: </span><span class="s1">'DAX'</span><span class="p">,</span> <span class="ss">expiry: </span><span class="mi">2021</span><span class="p">,</span> <span class="ss">exchange: </span><span class="s1">'DTB'</span><span class="p">,</span> <span class="ss">currency: </span><span class="s1">'EUR'</span><span class="p">,</span> <span class="ss">multiplier: </span><span class="mi">5</span>
-<span class="o">&gt;</span> <span class="n">dax_contracts</span> <span class="o">=</span>  <span class="n">f</span><span class="p">.</span><span class="nf">verify</span><span class="p">{</span><span class="o">|</span><span class="n">c</span><span class="o">|</span> <span class="n">c</span><span class="p">.</span><span class="nf">essential</span><span class="p">.</span><span class="nf">to_yaml</span> <span class="p">}</span>
-<span class="o">&gt;</span> <span class="n">pp</span><span class="p">.</span><span class="nf">dax_contracts</span><span class="p">.</span><span class="nf">last</span>
-  <span class="s2">"--- !ruby/object:IB::Future</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span>
-  <span class="s2">"attributes:</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span>
-  <span class="s2">"  :symbol: DAX</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span>
-  <span class="s2">"  :con_id: 446220391</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span>
-  <span class="s2">"  :exchange: DTB</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span>
-  <span class="s2">"  :right: ''</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span>
-  <span class="s2">"  :currency: EUR</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span>
-  <span class="s2">"  :expiry: '20210618'</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span>
-  <span class="s2">"  :strike: 0.0</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span>
-  <span class="s2">"  :local_symbol: FDXM JUN 21</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span>
-  <span class="s2">"  :last_trading_day: '2021-06-18'</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span>
-  <span class="s2">"  :multiplier: 5</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span>
-  <span class="s2">"  :trading_class: FDXM</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span>
-  <span class="s2">"  :sec_type: FUT</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span>
-  <span class="s2">"  :created_at: 2020-10-27 07:41:52.297145470 +00:00</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span>
-  <span class="s2">"  :include_expired: false</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span>
-  <span class="s2">"description: DAX 30 Index (Deutsche Aktien Xchange 30)</span><span class="se">\n</span><span class="s2">"</span>
-
-
-</code></pre></div></div>
-<h4 id="asynchronous-verification">Asynchronous Verification</h4>
-
-<p>If a bunch of <code class="language-plaintext highlighter-rouge">IB::Contracts</code> should be verified, <code class="language-plaintext highlighter-rouge">verify</code> can be called for each.
-The entries are processed sequentially, which is slow.</p>
-
-<p><code class="language-plaintext highlighter-rouge">Contract.verify( thread: true  )</code> just submits requests. It returns the receiver-thread and performs the
-query asynchron.</p>
-
-<p>Assuming, a <a href="Watchlists">watchlist</a> was setup. (You can do this by running  <code class="language-plaintext highlighter-rouge">ruby input.rb</code> in the examples
-directory of <code class="language-plaintext highlighter-rouge">ib-extensions</code>), then</p>
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="no">Symbols</span><span class="p">.</span><span class="nf">allocate_collection</span> <span class="ss">:W500</span>
-<span class="o">&gt;</span> <span class="nb">puts</span> <span class="no">Symbols</span><span class="o">::</span><span class="no">W500</span><span class="p">.</span><span class="nf">all</span><span class="p">.</span><span class="nf">size</span>      <span class="o">=&gt;</span> <span class="mi">456</span>
-</code></pre></div></div>
-<p>To verify all <code class="language-plaintext highlighter-rouge">IB::Contracts</code> asynchronous, collect any thread into an array and join it.</p>
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">verified_symbols</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="o">&gt;</span> <span class="no">Symbols</span><span class="o">::</span><span class="no">W500</span><span class="p">.</span><span class="nf">map</span><span class="p">{</span><span class="o">|</span><span class="n">y</span><span class="o">|</span> <span class="n">y</span><span class="p">.</span><span class="nf">verify</span><span class="p">(</span><span class="ss">thread: </span><span class="kp">true</span><span class="p">){</span> <span class="o">|</span><span class="n">c</span><span class="o">|</span> <span class="n">verified_symbols</span> <span class="o">&lt;&lt;</span> <span class="n">c</span>  <span class="p">}}.</span><span class="nf">join</span>
-<span class="c1"># after a while</span>
-<span class="o">&gt;</span> <span class="nb">puts</span> <span class="n">verified_symbols</span><span class="p">.</span><span class="nf">size</span>      <span class="o">=&gt;</span> <span class="mi">456</span>
-</code></pre></div></div>
-
-<p>If the verification is performed asynchron, the thread itself is returned for joining. The results must compiled through 
-the block (as shown above).</p>
 
 
 
     <div class="tags">
         
         <b>Tags: </b>
+        
+        
         
         
         
@@ -638,7 +610,7 @@ the block (as shown above).</p>
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2020 IB-Ruby. All rights reserved. <br />
-<span>Page last updated:</span> October 27, 2020<br/> Site last generated: Nov 30, 2020 <br />
+<span>Page last updated:</span> November 26, 2020<br/> Site last generated: Nov 30, 2020 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>
