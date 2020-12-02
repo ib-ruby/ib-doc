@@ -147,6 +147,17 @@
 
 
 {
+"title": "Databases &amp; Rails",
+"tags": "dborientdb",
+"keywords": "database",
+"url": "database_overview.html",
+"summary": ""
+}
+,
+
+
+
+{
 "title": "Expiry vs. Last-Trading-Day",
 "tags": "contract",
 "keywords": "contracts, attributes, expiry",
@@ -963,10 +974,21 @@
 
 
 {
-"title": "Overview",
+"title": "OrientDB Integration - Introduction",
 "tags": "dborientdb",
 "keywords": "database",
-"url": "orientdb_overview.html",
+"url": "orientdb_introduction.html",
+"summary": ""
+}
+,
+
+
+
+{
+"title": "OrientDB - Setup",
+"tags": "dborientdb",
+"keywords": "database",
+"url": "orientdb_setup.html",
 "summary": ""
 }
 ,

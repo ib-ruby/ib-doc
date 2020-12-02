@@ -104,6 +104,12 @@
   
   
   <url>
+    <loc>https://github.com/database_overview.html</loc>
+  </url>
+  
+  
+  
+  <url>
     <loc>https://github.com/expiry_and_last_trading_day.html</loc>
   </url>
   
@@ -550,7 +556,13 @@
   
   
   <url>
-    <loc>https://github.com/orientdb_overview.html</loc>
+    <loc>https://github.com/orientdb_introduction.html</loc>
+  </url>
+  
+  
+  
+  <url>
+    <loc>https://github.com/orientdb_setup.html</loc>
   </url>
   
   

@@ -5,8 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
-<meta name="keywords" content="contract,  contracts, attributes, expiry">
-<title>Expiry vs. Last-Trading-Day | IB-Ruby documentation</title>
+<meta name="keywords" content="dborientdb,  database">
+<title>OrientDB - Setup | IB-Ruby documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -144,7 +144,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Expiry vs. Last-Trading-Day">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="OrientDB - Setup">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -314,7 +314,7 @@
           
           
           
-          <li class="active"><a title="Expiry vs. Last-Trading-Day" href="expiry_and_last_trading_day.html">Expiry vs. Last-Trading-Day</a></li>
+          <li><a title="Expiry vs. Last-Trading-Day" href="expiry_and_last_trading_day.html">Expiry vs. Last-Trading-Day</a></li>
           
           
           
@@ -459,7 +459,7 @@
                   
                   
                   
-                  <li><a title="Setup" href="orientdb_setup.html">Setup</a></li>
+                  <li class="active"><a title="Setup" href="orientdb_setup.html">Setup</a></li>
                   
                   
                   
@@ -514,7 +514,7 @@
         <!-- Content Column -->
         <div class="col-md-9" id="tg-sb-content">
             <div class="post-header">
-   <h1 class="post-title-main">Expiry vs. Last-Trading-Day</h1>
+   <h1 class="post-title-main">OrientDB - Setup</h1>
 </div>
 
 
@@ -551,42 +551,83 @@ $('#toc').on('click', 'a', function() {
 
     
 
-   <p>Since TWS version 950 derivats are defined by <code class="language-plaintext highlighter-rouge">:last_trading_day</code> instead of <code class="language-plaintext highlighter-rouge">:expiry</code>.<br />
-<a href="https://www.interactivebrokers.com/en/index.php?f=13983">IB-Release Notes</a>. <br />
-<code class="language-plaintext highlighter-rouge">:real_expiration_date</code> was added to the list of <code class="language-plaintext highlighter-rouge">IB::Contract</code> attributes.</p>
+   <h2 id="install-the-orientdb-database-server">Install the OrientDB-Database-Server</h2>
 
-<p><strong><em>IB-Ruby</em></strong> still uses <code class="language-plaintext highlighter-rouge">:expiry</code> to query Options and Futures. However, the  <code class="language-plaintext highlighter-rouge">:last_trading_day</code> directive is supported as well. <code class="language-plaintext highlighter-rouge">:expiry</code> is addressed via <code class="language-plaintext highlighter-rouge">YYYYMMDD</code>, either as String or as Integer. <code class="language-plaintext highlighter-rouge">:last_trading_day</code> 
-uses the String-representation of a <code class="language-plaintext highlighter-rouge">Date</code>-Object: <code class="language-plaintext highlighter-rouge">"YYYY-MM-DD"</code>.</p>
+<p>The database can be run as single instance or distributed across several cloud units.</p>
 
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">the_contract</span> <span class="o">=</span> <span class="no">IB</span><span class="o">::</span><span class="no">Option</span><span class="p">.</span><span class="nf">new</span> <span class="ss">symbol: </span><span class="s1">'SPY'</span><span class="p">,</span> <span class="ss">right: :put</span><span class="p">,</span> <span class="ss">strike: </span><span class="mi">330</span><span class="p">,</span> <span class="ss">currency: </span><span class="s1">'USD'</span><span class="p">,</span> <span class="ss">expiry: </span><span class="mi">202012</span>
-<span class="o">&gt;</span> <span class="n">the_contract</span><span class="p">.</span><span class="nf">to_human</span>                    <span class="o">=&gt;</span> <span class="s2">"&lt;Option: SPY 202012 put 330.0 SMART USD&gt;"</span> 
-<span class="o">&gt;</span> <span class="n">the_contract</span><span class="p">.</span><span class="nf">last_trading_day</span>            <span class="o">=&gt;</span> <span class="s2">""</span> 
-<span class="o">&gt;</span> <span class="n">the_contract</span><span class="p">.</span><span class="nf">verify</span><span class="p">.</span><span class="nf">size</span>                 <span class="o">=&gt;</span> <span class="mi">68</span>                      
-<span class="o">&gt;</span> <span class="n">the_contract</span><span class="p">.</span><span class="nf">verify</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">last_trading_day</span> <span class="o">=&gt;</span> <span class="s2">"2020-12-18"</span>
+<p>We focus on a single server instance and highly recommend to install the database-server 
+on an virtual machine, a lxc/lxd-container or to run it inside a docker image.</p>
 
-<span class="o">&gt;</span> <span class="n">spy</span> <span class="o">=</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Option</span><span class="p">.</span><span class="nf">new</span> <span class="ss">symbol: </span><span class="s1">'SPY'</span><span class="p">,</span> <span class="ss">last_trading_day: </span><span class="s2">"2020-12-18"</span><span class="p">,</span> <span class="ss">right: :put</span><span class="p">,</span> <span class="ss">strike: </span><span class="mi">330</span>
-<span class="o">&gt;</span> <span class="n">spy</span><span class="p">.</span><span class="nf">verify</span><span class="p">.</span><span class="nf">size</span>                          <span class="o">=&gt;</span> <span class="mi">1</span> 
-<span class="o">&gt;</span> <span class="n">spy</span><span class="p">.</span><span class="nf">to_human</span>                             <span class="o">=&gt;</span> <span class="s2">"&lt;Option: SPY 202018 put 330.0 SMART USD&gt;"</span> 
+<div class="alert alert-info" role="alert"><i class="fa fa-bars"></i> Follow the instructions of <a href="https://github.com/ib-ruby/ib-orientdb/blob/main/setup.md">setup.md  of ib-orientdb</a> <br /> These are suitable for a lxc-container. <br />Consider to install ib-ruby-components there as well.</div>
+
+<p>Check your installation by visiting the <code class="language-plaintext highlighter-rouge">studio app</code>. Serveraddress: https://{ip of orientdb-server}:2480</p>
+
+<h2 id="prepare-the-database">Prepare the database</h2>
+
+<p>As for RDBMS-Databases database-classes have to be declared in OrientDB as well. However, we can omit 
+the specification of most database-fields.</p>
+
+<p>The database structure is defined in  <a href="https://github.com/ib-ruby/ib-orientdb/blob/main/lib/db_init.rb">db_init.rb</a>. <code class="language-plaintext highlighter-rouge">Setup.init_database</code>  is called during initialisation of the <a href="https://github.com/ib-ruby/ib-orientdb/blob/main/bin/console">interactive console</a>.</p>
+
+<p>The following hierarchy  is implemented:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- - V
+  - - ib_account
+    - - ib_advisor
+      - - ib_demo_advisor
+    - - ib_user
+      - - ib_demo_user
+    - ib_account_value
+    - ib_bar
+    - ib_contract
+    - - ib_bag
+      - - ib_spread
+      - ib_forex
+      - ib_future
+      - ib_index
+      - ib_option
+      - ib_stock
+   - ib_contract_detail
+   - ib_portfolio
+   - ib_portfolio_value
+
+</code></pre></div></div>
+<p>The vertex-class ‘V’ is the root. Any <code class="language-plaintext highlighter-rouge">IB::Model</code> class is a vertex. Vertices are connected via joins 
+(unidirectional) or through edges (bidirectional).</p>
+
+<h2 id="setup-the-timegrid">Setup the TimeGrid</h2>
+<p>Many data received from the TWS are time related. <a href="https://github.com/topofocus/orientdb_time_graph">OrientDB Time Graph</a> provides the infrastructure to connect these items to a grid. Any time-dependend data can ba assigned
+to the grid. Complex queries are performed easily.</p>
+
+<p>This Graph is realized</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">Jahr</span> <span class="o">--</span> <span class="p">[</span><span class="no">MONTH_OF</span><span class="p">]</span> <span class="o">--</span> <span class="no">Monat</span> <span class="o">--</span><span class="p">[</span><span class="no">DAY_OF</span><span class="p">]</span><span class="o">--</span> <span class="no">Tag</span> <span class="o">--</span><span class="p">[</span><span class="no">TIME_OF</span><span class="p">]</span><span class="o">--</span> <span class="no">Stunde</span>
+</code></pre></div></div>
+<p>The nodes are crosslinked and any point of the grid is easily accessed.</p>
+
+<p>The library provides »to_tg« additions to »Date«, »DateTime« and »String«. 
+The grid is easily accessed:</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">z</span> <span class="o">=</span> <span class="s2">"22.3.2003"</span><span class="p">.</span><span class="nf">to_tg</span>
+<span class="o">=&gt;</span> <span class="c1">#&lt;TG::Tag:0x000000030d79d0 @metadata={"type"=&gt;"d", "class"=&gt;"tag", "version"=&gt;4, "fieldTypes"=&gt;"in_grid_of=g,out_grid_of=g,in_day_of=g", "cluster"=&gt;25, "record"=&gt;294}, @d=nil, @attributes={"value"=&gt;22, "in_grid_of" =&gt;["#49:304"], "out_grid_of"=&gt;["#50:304"], "in_day_of"=&gt;["#41:294"], "created_at"=&gt;Mon, 12 Sep 2016 09:56:41 +0200}&gt; </span>
+<span class="n">z</span><span class="p">.</span><span class="nf">datum</span>          <span class="o">=&gt;</span> <span class="no">Sat</span><span class="p">,</span> <span class="mi">22</span> <span class="no">Mar</span> <span class="mi">2003</span>  <span class="p">(</span><span class="n">returns</span> <span class="n">a</span> <span class="no">Date</span><span class="p">)</span>
+<span class="n">z</span><span class="p">.</span><span class="nf">next</span><span class="p">.</span><span class="nf">datum</span>     <span class="o">=&gt;</span> <span class="no">Sun</span><span class="p">,</span> <span class="mi">23</span> <span class="no">Mar</span> <span class="mi">2003</span>
+<span class="p">(</span> <span class="n">z</span> <span class="o">+</span> <span class="mi">3</span> <span class="p">).</span><span class="nf">datum</span>  <span class="o">=&gt;</span> <span class="no">Tue</span><span class="p">,</span> <span class="mi">25</span> <span class="no">Mar</span> <span class="mi">2003</span> 
+<span class="n">z</span><span class="p">.</span><span class="nf">prev</span><span class="p">.</span><span class="nf">datum</span>     <span class="o">=&gt;</span> <span class="no">Fri</span><span class="p">,</span> <span class="mi">21</span> <span class="no">Mar</span> <span class="mi">2003</span>
+<span class="p">(</span><span class="n">z</span> <span class="o">-</span> <span class="mi">5</span> <span class="p">).</span><span class="nf">datum</span>   <span class="o">=&gt;</span> <span class="no">Mon</span><span class="p">,</span> <span class="mi">17</span> <span class="no">Mar</span> <span class="mi">2003</span> 
+<span class="n">z</span><span class="p">.</span><span class="nf">move</span><span class="p">(</span> <span class="o">-</span><span class="mi">20</span> <span class="p">).</span><span class="nf">datum</span> <span class="o">=&gt;</span> <span class="no">Sun</span><span class="p">,</span> <span class="mo">02</span> <span class="no">Mar</span> <span class="mi">2003</span> 
+<span class="n">z</span><span class="p">.</span><span class="nf">environment</span><span class="p">(</span> <span class="mi">5</span><span class="p">).</span><span class="nf">datum</span>
+ <span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"18.5.2003"</span><span class="p">,</span> <span class="s2">"19.5.2003"</span><span class="p">,</span> <span class="s2">"20.5.2003"</span><span class="p">,</span> <span class="s2">"21.5.2003"</span><span class="p">,</span> <span class="s2">"22.5.2003"</span><span class="p">,</span> <span class="s2">"23.5.2003"</span><span class="p">,</span> <span class="s2">"24.5.2003"</span><span class="p">,</span> <span class="s2">"25.5.2003"</span><span class="p">,</span> <span class="s2">"26.5.2003"</span><span class="p">,</span> <span class="s2">"27.5.2003"</span><span class="p">,</span> <span class="s2">"28.5.2003"</span><span class="p">]</span> 
+
 </code></pre></div></div>
 
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="no">IB</span><span class="o">::</span><span class="no">Option</span><span class="p">.</span><span class="nf">new</span> <span class="ss">symbol: </span><span class="s1">'GE'</span><span class="p">,</span> <span class="ss">strike: </span><span class="mi">7</span><span class="p">,</span> <span class="ss">expiry: </span><span class="mi">202101</span><span class="p">,</span> <span class="ss">exchange: </span><span class="s1">'SMART'</span>
-</code></pre></div></div>
-<p>covers all options expiring in January 2020. When requested (<a href="/Verify_contracts.html">Contract.verify</a> )
- Call- and Put-options with a strike at 15$ are returned.</p>
-
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">&gt;</span>  <span class="n">ge_options</span> <span class="o">=</span> <span class="no">IB</span><span class="o">::</span><span class="no">Option</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span> <span class="ss">symbol: </span><span class="s1">'GE'</span><span class="p">,</span> <span class="ss">strike: </span><span class="mi">15</span><span class="p">,</span> <span class="ss">expiry: </span><span class="mi">202101</span><span class="p">,</span> <span class="ss">exchange: </span><span class="s1">'SMART'</span>  <span class="p">).</span><span class="nf">verify</span>
- <span class="o">&gt;</span>  <span class="n">ge_options</span><span class="p">.</span><span class="nf">size</span>      <span class="o">=&gt;</span> <span class="mi">2</span>
- <span class="o">&gt;</span>  <span class="n">ge_options</span><span class="p">.</span><span class="nf">map</span> <span class="o">&amp;</span><span class="ss">:to_human</span>  
-  <span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"&lt;Option: GE 20210115 call 15.0 SMART USD&gt;"</span><span class="p">,</span> <span class="s2">"&lt;Option: GE 20210115 put 15.0 SMART USD&gt;"</span><span class="p">]</span>
- <span class="o">&gt;</span>  <span class="n">ge_options</span><span class="p">.</span><span class="nf">map</span> <span class="o">&amp;</span><span class="ss">:expiry</span>                 <span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"20210115"</span><span class="p">,</span> <span class="s2">"20210115"</span> <span class="p">]</span>
- <span class="o">&gt;</span>  <span class="n">ge_</span> <span class="n">option</span><span class="p">.</span><span class="nf">map</span> <span class="o">&amp;</span><span class="ss">:last_trading_day</span>       <span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"2021-01-15"</span><span class="p">,</span> <span class="s2">"2021-01-15"</span><span class="p">]</span> 
-</code></pre></div></div>
+<p><code class="language-plaintext highlighter-rouge">datum</code> is a method of the <code class="language-plaintext highlighter-rouge">TimeGrid</code>-gem. It is to be replaced by custom methods to access connected data.</p>
 
 
 
     <div class="tags">
         
         <b>Tags: </b>
+        
+        
         
         
         
@@ -605,7 +646,7 @@ uses the String-representation of a <code class="language-plaintext highlighter-
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2020 IB-Ruby. All rights reserved. <br />
-<span>Page last updated:</span> October 28, 2020<br/> Site last generated: Dec 2, 2020 <br />
+<span>Page last updated:</span> December 2, 2020<br/> Site last generated: Dec 2, 2020 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>

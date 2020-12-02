@@ -5,8 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
-<meta name="keywords" content="contract,  contracts, attributes, expiry">
-<title>Expiry vs. Last-Trading-Day | IB-Ruby documentation</title>
+<meta name="keywords" content="dborientdb,  database">
+<title>OrientDB Integration - Introduction | IB-Ruby documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -144,7 +144,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Expiry vs. Last-Trading-Day">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="OrientDB Integration - Introduction">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -314,7 +314,7 @@
           
           
           
-          <li class="active"><a title="Expiry vs. Last-Trading-Day" href="expiry_and_last_trading_day.html">Expiry vs. Last-Trading-Day</a></li>
+          <li><a title="Expiry vs. Last-Trading-Day" href="expiry_and_last_trading_day.html">Expiry vs. Last-Trading-Day</a></li>
           
           
           
@@ -453,7 +453,7 @@
                   
                   
                   
-                  <li><a title="Introduction" href="orientdb_introduction.html">Introduction</a></li>
+                  <li class="active"><a title="Introduction" href="orientdb_introduction.html">Introduction</a></li>
                   
                   
                   
@@ -514,7 +514,7 @@
         <!-- Content Column -->
         <div class="col-md-9" id="tg-sb-content">
             <div class="post-header">
-   <h1 class="post-title-main">Expiry vs. Last-Trading-Day</h1>
+   <h1 class="post-title-main">OrientDB Integration - Introduction</h1>
 </div>
 
 
@@ -551,35 +551,61 @@ $('#toc').on('click', 'a', function() {
 
     
 
-   <p>Since TWS version 950 derivats are defined by <code class="language-plaintext highlighter-rouge">:last_trading_day</code> instead of <code class="language-plaintext highlighter-rouge">:expiry</code>.<br />
-<a href="https://www.interactivebrokers.com/en/index.php?f=13983">IB-Release Notes</a>. <br />
-<code class="language-plaintext highlighter-rouge">:real_expiration_date</code> was added to the list of <code class="language-plaintext highlighter-rouge">IB::Contract</code> attributes.</p>
+   <div class="bs-callout bs-callout-info">
+To use the features described, include the <em>ib-orientdb</em> Gem  in the Gemfile.
 
-<p><strong><em>IB-Ruby</em></strong> still uses <code class="language-plaintext highlighter-rouge">:expiry</code> to query Options and Futures. However, the  <code class="language-plaintext highlighter-rouge">:last_trading_day</code> directive is supported as well. <code class="language-plaintext highlighter-rouge">:expiry</code> is addressed via <code class="language-plaintext highlighter-rouge">YYYYMMDD</code>, either as String or as Integer. <code class="language-plaintext highlighter-rouge">:last_trading_day</code> 
-uses the String-representation of a <code class="language-plaintext highlighter-rouge">Date</code>-Object: <code class="language-plaintext highlighter-rouge">"YYYY-MM-DD"</code>.</p>
+</div>
 
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">the_contract</span> <span class="o">=</span> <span class="no">IB</span><span class="o">::</span><span class="no">Option</span><span class="p">.</span><span class="nf">new</span> <span class="ss">symbol: </span><span class="s1">'SPY'</span><span class="p">,</span> <span class="ss">right: :put</span><span class="p">,</span> <span class="ss">strike: </span><span class="mi">330</span><span class="p">,</span> <span class="ss">currency: </span><span class="s1">'USD'</span><span class="p">,</span> <span class="ss">expiry: </span><span class="mi">202012</span>
-<span class="o">&gt;</span> <span class="n">the_contract</span><span class="p">.</span><span class="nf">to_human</span>                    <span class="o">=&gt;</span> <span class="s2">"&lt;Option: SPY 202012 put 330.0 SMART USD&gt;"</span> 
-<span class="o">&gt;</span> <span class="n">the_contract</span><span class="p">.</span><span class="nf">last_trading_day</span>            <span class="o">=&gt;</span> <span class="s2">""</span> 
-<span class="o">&gt;</span> <span class="n">the_contract</span><span class="p">.</span><span class="nf">verify</span><span class="p">.</span><span class="nf">size</span>                 <span class="o">=&gt;</span> <span class="mi">68</span>                      
-<span class="o">&gt;</span> <span class="n">the_contract</span><span class="p">.</span><span class="nf">verify</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">last_trading_day</span> <span class="o">=&gt;</span> <span class="s2">"2020-12-18"</span>
+<p><strong><em>OrientDB</em></strong> is a <strong>N</strong>ot <strong>O</strong>nly <strong>SQL</strong> Database owned and maintained by <em>SAP</em>.</p>
 
-<span class="o">&gt;</span> <span class="n">spy</span> <span class="o">=</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Option</span><span class="p">.</span><span class="nf">new</span> <span class="ss">symbol: </span><span class="s1">'SPY'</span><span class="p">,</span> <span class="ss">last_trading_day: </span><span class="s2">"2020-12-18"</span><span class="p">,</span> <span class="ss">right: :put</span><span class="p">,</span> <span class="ss">strike: </span><span class="mi">330</span>
-<span class="o">&gt;</span> <span class="n">spy</span><span class="p">.</span><span class="nf">verify</span><span class="p">.</span><span class="nf">size</span>                          <span class="o">=&gt;</span> <span class="mi">1</span> 
-<span class="o">&gt;</span> <span class="n">spy</span><span class="p">.</span><span class="nf">to_human</span>                             <span class="o">=&gt;</span> <span class="s2">"&lt;Option: SPY 202018 put 330.0 SMART USD&gt;"</span> 
-</code></pre></div></div>
+<p>It aims to be “the first Multi-Model Open Source NOSQL DBMS that brings together the power of graphs and the flexibility of documents into one scalable high-performance operational database.” Through <a href="https://github.com/topofocus/active-orient">Active-Orient</a> it acts as an object-orientated SQL-RDBMS-Database with graph capabilities.</p>
 
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="no">IB</span><span class="o">::</span><span class="no">Option</span><span class="p">.</span><span class="nf">new</span> <span class="ss">symbol: </span><span class="s1">'GE'</span><span class="p">,</span> <span class="ss">strike: </span><span class="mi">7</span><span class="p">,</span> <span class="ss">expiry: </span><span class="mi">202101</span><span class="p">,</span> <span class="ss">exchange: </span><span class="s1">'SMART'</span>
-</code></pre></div></div>
-<p>covers all options expiring in January 2020. When requested (<a href="/Verify_contracts.html">Contract.verify</a> )
- Call- and Put-options with a strike at 15$ are returned.</p>
+<p>The <strong><em>IB-OrientDB</em></strong>-Gem  connects a running <strong><em>IB-api</em></strong>-client to a running OrientDB-Database-Server 
+and provides methods to store data provided by the Interactive Brokers TWS into the database.</p>
 
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">&gt;</span>  <span class="n">ge_options</span> <span class="o">=</span> <span class="no">IB</span><span class="o">::</span><span class="no">Option</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span> <span class="ss">symbol: </span><span class="s1">'GE'</span><span class="p">,</span> <span class="ss">strike: </span><span class="mi">15</span><span class="p">,</span> <span class="ss">expiry: </span><span class="mi">202101</span><span class="p">,</span> <span class="ss">exchange: </span><span class="s1">'SMART'</span>  <span class="p">).</span><span class="nf">verify</span>
- <span class="o">&gt;</span>  <span class="n">ge_options</span><span class="p">.</span><span class="nf">size</span>      <span class="o">=&gt;</span> <span class="mi">2</span>
- <span class="o">&gt;</span>  <span class="n">ge_options</span><span class="p">.</span><span class="nf">map</span> <span class="o">&amp;</span><span class="ss">:to_human</span>  
-  <span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"&lt;Option: GE 20210115 call 15.0 SMART USD&gt;"</span><span class="p">,</span> <span class="s2">"&lt;Option: GE 20210115 put 15.0 SMART USD&gt;"</span><span class="p">]</span>
- <span class="o">&gt;</span>  <span class="n">ge_options</span><span class="p">.</span><span class="nf">map</span> <span class="o">&amp;</span><span class="ss">:expiry</span>                 <span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"20210115"</span><span class="p">,</span> <span class="s2">"20210115"</span> <span class="p">]</span>
- <span class="o">&gt;</span>  <span class="n">ge_</span> <span class="n">option</span><span class="p">.</span><span class="nf">map</span> <span class="o">&amp;</span><span class="ss">:last_trading_day</span>       <span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"2021-01-15"</span><span class="p">,</span> <span class="s2">"2021-01-15"</span><span class="p">]</span> 
+<div class="alert alert-info" role="alert"><i class="fa fa-bars"></i> Upon initialisation, <em><strong>IB-OrientDB</strong></em> 
+ fetches all database classes and initialises them as descendants of <code class="language-plaintext highlighter-rouge">IB::Model</code>. As a consequence, objects received from the TWS
+ are in fact unsaved database-entries and objects read from the database are suitable for tws-queries.</div>
+
+<p>This is shown in the following example. To reproduce, clone <a href="https://github.com/ib-ruby/ib-orientdb">ib-orientdb</a> and run the <code class="language-plaintext highlighter-rouge">./console</code> script in <code class="language-plaintext highlighter-rouge">/bin</code> .</p>
+
+<p>We create a <code class="language-plaintext highlighter-rouge">IB::Stock</code>-object, verify through the <code class="language-plaintext highlighter-rouge">TWS</code> and 
+subsequently store
+it in the database. <br />
+Then we query the database and fetch some historical data. No conversion of any kind is required as objects received via the TWS-API are identical to those stored in the database.</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Create a new Contract</span>
+<span class="o">&gt;</span> <span class="n">f</span> <span class="o">=</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Stock</span><span class="p">.</span><span class="nf">new</span> <span class="ss">symbol: </span><span class="s1">'F'</span>
+<span class="c1"># Inspect its class hierarchy</span>
+<span class="o">&gt;</span> <span class="n">f</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">ancestors</span>   <span class="c1"># edited result:</span>
+ <span class="o">=&gt;</span> <span class="no">IB</span><span class="o">::</span><span class="no">Stock</span><span class="p">,</span> <span class="no">IB</span><span class="o">::</span><span class="no">Contract</span><span class="p">,</span> <span class="no">V</span><span class="p">,</span> <span class="no">ActiveOrient</span><span class="o">::</span><span class="no">Model</span><span class="p">,</span> <span class="no">ActiveOrient</span><span class="o">::</span><span class="no">Base</span>  
+<span class="c1"># Note: The Stock-Object is indeed Child of a OrientDB Vertex-Class "V" </span>
+
+<span class="c1"># Now store it and check its presence in the database </span>
+<span class="o">&gt;</span> <span class="n">f</span><span class="p">.</span><span class="nf">rid</span>              <span class="o">=&gt;</span> <span class="s2">":"</span>    <span class="c1">#  its not saved jet</span>
+<span class="o">&gt;</span> <span class="n">f</span><span class="p">.</span><span class="nf">save</span>             <span class="o">=&gt;</span> <span class="kp">false</span>  <span class="c1">#  it cannot be saved, because its not verified</span>
+                               <span class="c1">#  ( no con_id is present  )</span>
+<span class="o">&gt;</span> <span class="n">verified_f</span> <span class="o">=</span> <span class="n">f</span><span class="p">.</span><span class="nf">verify</span><span class="p">.</span><span class="nf">first</span>
+<span class="o">&gt;</span> <span class="n">verified_f</span><span class="p">.</span><span class="nf">save</span>
+<span class="o">&gt;</span> <span class="n">verified_f</span><span class="p">.</span><span class="nf">rid</span>    <span class="o">=&gt;</span> <span class="s2">"59:0"</span> <span class="c1"># the object is updated </span>
+
+<span class="o">&gt;</span> <span class="n">new_f</span> <span class="o">=</span>  <span class="no">V</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"59:0"</span>       <span class="c1"># retrieve from the database. Note that we do not </span>
+                              <span class="c1"># have to specify the appropriate class. </span>
+<span class="o">&gt;</span> <span class="n">new_f</span><span class="p">.</span><span class="nf">class</span>       <span class="o">=&gt;</span> <span class="no">IB</span><span class="o">::</span><span class="no">Stock</span> 
+<span class="o">&gt;</span> <span class="n">new_f</span> <span class="o">==</span> <span class="n">verified_f</span>  <span class="o">=&gt;</span> <span class="kp">true</span> <span class="c1">#  its a copy of the original</span>
+<span class="c1"># Query the database and ask the TWS for historical data</span>
+<span class="o">&gt;</span> <span class="nb">puts</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Stock</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span> <span class="ss">symbol: </span><span class="s1">'F'</span> <span class="p">).</span><span class="nf">first</span><span class="p">.</span><span class="nf">eod</span><span class="p">(</span> <span class="ss">duration: </span><span class="s1">'10 d'</span> <span class="p">).</span><span class="nf">to_human</span>
+<span class="c1"># INFO-&gt;MATCH {class: ib_stock, as: ib_stocks, where: ( symbol = 'F') } </span>
+<span class="o">&lt;</span><span class="no">Bar</span><span class="p">:</span> <span class="mi">2020</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">13</span> <span class="n">wap</span> <span class="mf">8.452</span> <span class="no">OHLC</span> <span class="mf">8.31</span> <span class="mf">8.57</span> <span class="mf">8.16</span> <span class="mf">8.52</span> <span class="n">trades</span> <span class="mi">79407</span> <span class="n">vol</span> <span class="mi">764141</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="no">Bar</span><span class="p">:</span> <span class="mi">2020</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">16</span> <span class="n">wap</span> <span class="mf">8.761</span> <span class="no">OHLC</span> <span class="mf">8.65</span> <span class="mf">8.91</span> <span class="mf">8.57</span> <span class="mf">8.8</span> <span class="n">trades</span> <span class="mi">90727</span> <span class="n">vol</span> <span class="mi">826969</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="no">Bar</span><span class="p">:</span> <span class="mi">2020</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">17</span> <span class="n">wap</span> <span class="mf">8.739</span> <span class="no">OHLC</span> <span class="mf">8.75</span> <span class="mf">8.85</span> <span class="mf">8.63</span> <span class="mf">8.73</span> <span class="n">trades</span> <span class="mi">54007</span> <span class="n">vol</span> <span class="mi">455313</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="no">Bar</span><span class="p">:</span> <span class="mi">2020</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">18</span> <span class="n">wap</span> <span class="mf">8.951</span> <span class="no">OHLC</span> <span class="mf">8.76</span> <span class="mf">9.05</span> <span class="mf">8.74</span> <span class="mf">8.9</span> <span class="n">trades</span> <span class="mi">75730</span> <span class="n">vol</span> <span class="mi">724330</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="no">Bar</span><span class="p">:</span> <span class="mi">2020</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">19</span> <span class="n">wap</span> <span class="mf">8.802</span> <span class="no">OHLC</span> <span class="mf">8.87</span> <span class="mf">8.94</span> <span class="mf">8.74</span> <span class="mf">8.77</span> <span class="n">trades</span> <span class="mi">54895</span> <span class="n">vol</span> <span class="mi">545472</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="no">Bar</span><span class="p">:</span> <span class="mi">2020</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">20</span> <span class="n">wap</span> <span class="mf">8.742</span> <span class="no">OHLC</span> <span class="mf">8.73</span> <span class="mf">8.87</span> <span class="mf">8.68</span> <span class="mf">8.76</span> <span class="n">trades</span> <span class="mi">66661</span> <span class="n">vol</span> <span class="mi">550186</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="no">Bar</span><span class="p">:</span> <span class="mi">2020</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">23</span> <span class="n">wap</span> <span class="mf">8.885</span> <span class="no">OHLC</span> <span class="mf">8.76</span> <span class="mf">8.98</span> <span class="mf">8.75</span> <span class="mf">8.93</span> <span class="n">trades</span> <span class="mi">75533</span> <span class="n">vol</span> <span class="mi">662582</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="no">Bar</span><span class="p">:</span> <span class="mi">2020</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">24</span> <span class="n">wap</span> <span class="mf">9.386</span> <span class="no">OHLC</span> <span class="mf">8.92</span> <span class="mf">9.56</span> <span class="mf">8.91</span> <span class="mf">9.56</span> <span class="n">trades</span> <span class="mi">110795</span> <span class="n">vol</span> <span class="mi">959114</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="no">Bar</span><span class="p">:</span> <span class="mi">2020</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">25</span> <span class="n">wap</span> <span class="mf">9.089</span> <span class="no">OHLC</span> <span class="mf">9.33</span> <span class="mf">9.41</span> <span class="mf">9.0</span> <span class="mf">9.12</span> <span class="n">trades</span> <span class="mi">98761</span> <span class="n">vol</span> <span class="mi">925084</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="no">Bar</span><span class="p">:</span> <span class="mi">2020</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">27</span> <span class="n">wap</span> <span class="mf">9.078</span> <span class="no">OHLC</span> <span class="mf">9.13</span> <span class="mf">9.15</span> <span class="mf">9.03</span> <span class="mf">9.1</span> <span class="n">trades</span> <span class="mi">32327</span> <span class="n">vol</span> <span class="mi">270936</span><span class="o">&gt;</span>
+
 </code></pre></div></div>
 
 
@@ -587,6 +613,8 @@ uses the String-representation of a <code class="language-plaintext highlighter-
     <div class="tags">
         
         <b>Tags: </b>
+        
+        
         
         
         
@@ -605,7 +633,7 @@ uses the String-representation of a <code class="language-plaintext highlighter-
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2020 IB-Ruby. All rights reserved. <br />
-<span>Page last updated:</span> October 28, 2020<br/> Site last generated: Dec 2, 2020 <br />
+<span>Page last updated:</span> December 2, 2020<br/> Site last generated: Dec 2, 2020 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>
