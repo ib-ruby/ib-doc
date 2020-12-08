@@ -5,8 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
-<meta name="keywords" content="message,  messages">
-<title>Request Market-Data | IB-Ruby documentation</title>
+<meta name="keywords" content="dborientdb,  database">
+<title>OrientDB - Working with the Data | IB-Ruby documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -144,7 +144,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Request Market-Data">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="OrientDB - Working with the Data">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -291,7 +291,7 @@
           
           
           
-          <li class="active"><a title="Request Market-Data" href="message_marketdata.html">Request Market-Data</a></li>
+          <li><a title="Request Market-Data" href="message_marketdata.html">Request Market-Data</a></li>
           
           
           
@@ -465,7 +465,7 @@
                   
                   
                   
-                  <li><a title="Working with Data" href="orientdb_working_with_data.html">Working with Data</a></li>
+                  <li class="active"><a title="Working with Data" href="orientdb_working_with_data.html">Working with Data</a></li>
                   
                   
                   
@@ -520,7 +520,7 @@
         <!-- Content Column -->
         <div class="col-md-9" id="tg-sb-content">
             <div class="post-header">
-   <h1 class="post-title-main">Request Market-Data</h1>
+   <h1 class="post-title-main">OrientDB - Working with the Data</h1>
 </div>
 
 
@@ -557,57 +557,61 @@ $('#toc').on('click', 'a', function() {
 
     
 
-   <p>The API offers the <code class="language-plaintext highlighter-rouge">:RequestMarketData</code> message to address the gathering of market-related information</p>
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">ib</span> <span class="o">=</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Connection</span><span class="p">.</span><span class="nf">current</span>
-<span class="o">&gt;</span> <span class="n">ib</span><span class="p">.</span><span class="nf">send_message</span> <span class="ss">:RequestMarketData</span><span class="p">,</span> <span class="ss">contract: </span><span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Stocks</span><span class="p">.</span><span class="nf">wfc</span><span class="p">,</span> <span class="ss">snapshot: </span><span class="kp">true</span>
-<span class="c1"># or</span>
-<span class="o">&gt;</span> <span class="n">ib</span><span class="p">.</span><span class="nf">send_message</span> <span class="ss">:RequestMarketData</span><span class="p">,</span> <span class="ss">contract: </span><span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Stocks</span><span class="p">.</span><span class="nf">wfc</span><span class="p">,</span> <span class="ss">ticklist: </span><span class="p">[</span><span class="mi">106</span><span class="p">,</span><span class="mi">107</span><span class="p">]</span>
-</code></pre></div></div>
+   <p><strong><em>IB-Ruby</em></strong> translates  data received from the <em>TWS</em> in <code class="language-plaintext highlighter-rouge">IB::Model</code> objects which are subsequently stored
+in database classes prefixed by <code class="language-plaintext highlighter-rouge">'ib'</code>(Namespace: <code class="language-plaintext highlighter-rouge">IB</code>).</p>
 
-<p>where items in <code class="language-plaintext highlighter-rouge">:ticklist</code> further specify the request (details in <a href="https://github.com/ib-ruby/ib-api/blob/master/lib/ib/messages/outgoing/request_marketdata.rb">messages/outgoing/request_marketdata</a>).  Most significant are:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> 100 - Option Volume (stocks) -&gt; returned Tick-IDs: 29, 30
- 101 - Option Open Interest (stocks)             -&gt; 27, 28
- 104 - Historical Volatility                     -&gt; 23
- 105 - Average Opt Volume
- 106 - Option Implied Volatility (impvolat)      -&gt; 24
- 107                             (climpvlt)        
- 411 - Realtime Historical Volatility            -&gt; 58
-</code></pre></div></div>
+<p>The date-grid is implemented by database-classes prefixed by <code class="language-plaintext highlighter-rouge">'tg'</code> 
+(Namespace: <code class="language-plaintext highlighter-rouge">TG</code>).</p>
 
-<p>The <a href="https://github.com/ib-ruby/ib-extensions/tree/master/examples/">example dir</a> contains a simple <a href="https://github.com/ib-ruby/ib-extensions/tree/master/examples/market_price">market-data script</a>.</p>
+<p>It is advisable to put calculations and further analyses to another namespace.</p>
 
-<p>A more condensed approach using the gateway:</p>
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">require</span> <span class="s1">'bundler/setup'</span>
-<span class="nb">require</span> <span class="s1">'ib-gateway'</span>
+<blockquote>
+  <p>HC::Portfolio</p>
+</blockquote>
 
-<span class="no">IB</span><span class="o">::</span><span class="no">Gateway</span><span class="p">.</span><span class="nf">new</span> <span class="n">client_id</span><span class="p">:</span><span class="mi">1134</span>
-  <span class="k">if</span> <span class="p">(</span> <span class="n">ib</span> <span class="o">=</span> <span class="no">IB</span><span class="o">::</span><span class="no">Gateway</span><span class="p">.</span><span class="nf">tws</span> <span class="p">).</span><span class="nf">present?</span>
-     <span class="n">contracts</span> <span class="o">=</span> <span class="p">[</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Futures</span><span class="p">.</span><span class="nf">es</span><span class="p">,</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Forex</span><span class="p">.</span><span class="nf">gbpusd</span>  <span class="p">]</span>
-     <span class="n">ib</span><span class="p">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="ss">:TickPrice</span><span class="p">,</span> <span class="ss">:TickSize</span><span class="p">,</span> <span class="ss">:TickString</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">msg</span><span class="o">|</span>
-        <span class="nb">puts</span> <span class="n">contracts</span><span class="p">.</span><span class="nf">find</span><span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span><span class="p">.</span><span class="nf">con_id</span> <span class="o">==</span> <span class="n">msg</span><span class="p">.</span><span class="nf">ticker_id</span><span class="p">}.</span><span class="nf">symbol</span> <span class="o">+</span> <span class="s2">": "</span> <span class="o">+</span> <span class="n">msg</span><span class="p">.</span><span class="nf">to_human</span> <span class="o">+</span> <span class="s2">"</span><span class="se">\t</span><span class="s2"> (press enter to cancel)"</span>
-     <span class="k">end</span>
-     <span class="n">contracts</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span> <span class="n">contract</span><span class="o">|</span>
-        <span class="n">c</span><span class="o">=</span> <span class="n">contract</span><span class="p">.</span><span class="nf">verify</span><span class="p">.</span><span class="nf">first</span>  <span class="c1">#  ensure presence of con_id </span>
-        <span class="n">ib</span><span class="p">.</span><span class="nf">send_message</span> <span class="ss">:RequestMarketData</span><span class="p">,</span> <span class="ss">:id</span> <span class="o">=&gt;</span> <span class="n">c</span><span class="p">.</span><span class="nf">con_id</span><span class="p">,</span> <span class="ss">:contract</span> <span class="o">=&gt;</span> <span class="n">c</span>
-     <span class="k">end</span>
-													 
-     <span class="no">STDIN</span><span class="p">.</span><span class="nf">gets</span>
-  <span class="k">else</span>
-     <span class="nb">puts</span> <span class="s1">'No TWS'</span>
+<p>As living example, <code class="language-plaintext highlighter-rouge">HC::Portfolio</code> is included, which is initialized through <code class="language-plaintext highlighter-rouge">bake</code>:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">module</span> <span class="nn">HC</span>
+ <span class="k">class</span> <span class="nc">Portfolio</span>
+  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">bake</span>  
+   <span class="n">gateway</span><span class="o">=</span> <span class="no">IB</span><span class="o">::</span><span class="no">OrientGateway</span><span class="p">.</span><span class="nf">current</span>                 <span class="c1"># OrientDB-Instance</span>
+   <span class="n">gateway</span><span class="p">.</span><span class="nf">get_account_data</span>                           <span class="c1"># ask TWS for portfolio-data</span>
+   <span class="n">gateway</span><span class="p">.</span><span class="nf">clients</span><span class="p">.</span><span class="nf">map</span> <span class="k">do</span> <span class="o">|</span> <span class="n">the_client</span> <span class="o">|</span>              <span class="c1"># perform task for all clients</span>
+     <span class="nb">p</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="nf">new</span>
+     <span class="nb">p</span><span class="p">.</span><span class="nf">import_account_data</span> <span class="ss">from: </span><span class="n">the_client</span>           <span class="c1"># implies update of p, assigns a rid</span>
+     <span class="nb">p</span><span class="p">.</span><span class="nf">import_positions</span>    <span class="ss">from: </span><span class="n">the_client</span>           <span class="c1"># assigns portfolio-values to the grid</span>
+     <span class="no">HC</span><span class="o">::</span><span class="no">MY_USER</span><span class="p">.</span><span class="nf">create</span>    <span class="ss">from: </span><span class="nb">p</span><span class="p">,</span> <span class="ss">to: </span><span class="n">the_client</span>    <span class="c1"># bidirectional link to account</span>
+     <span class="no">Date</span><span class="p">.</span><span class="nf">today</span><span class="p">.</span><span class="nf">to_tg</span><span class="p">.</span><span class="nf">assign</span> <span class="ss">vertex: </span><span class="nb">p</span><span class="p">,</span> <span class="ss">via: </span><span class="no">HC</span><span class="o">::</span><span class="no">D2F</span>  <span class="c1"># bidirectional link to the time-grid</span>
+     <span class="nb">p</span><span class="p">.</span><span class="nf">rid</span>                                            <span class="c1"># return_value</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+ <span class="k">end</span>
 <span class="k">end</span>
 </code></pre></div></div>
 
-<p>This small script follows exact the paradigm of <strong><em>IB-Ruby</em></strong>. It sends messages and allocates the received information accordingly. Its not very <em>rubish</em>, though.</p>
+<p>The last command of the <em>bake</em>-method assigns the portfolio-object via <code class="language-plaintext highlighter-rouge">HC::D2F</code> to the time-grid.<br />
+In the process, a bidirectional link <code class="language-plaintext highlighter-rouge">TimeGrid -- out HC::D2F -- in -- Portfolio</code> is implemented.</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="s2">"7.12.2020"</span><span class="p">.</span><span class="nf">to_tg</span><span class="p">.</span><span class="nf">out_hc_d2F</span><span class="p">.</span><span class="nf">in</span>         <span class="o">=&gt;</span> <span class="no">Array</span> <span class="n">of</span> <span class="n">assigned</span> <span class="no">Portfolio</span><span class="err">'</span><span class="n">s</span>
+<span class="o">&gt;</span> <span class="no">HC</span><span class="o">::</span><span class="no">Portfolio</span><span class="p">.</span><span class="nf">last</span><span class="p">.</span><span class="nf">in_hc_d2F</span><span class="p">.</span><span class="nf">out</span><span class="p">.</span><span class="nf">datum</span>  <span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"7.12.2020"</span><span class="p">]</span> <span class="c1"># Array of time-grid-objects</span>
+</code></pre></div></div>
+<p>It is reasonable to implement a shortcut <code class="language-plaintext highlighter-rouge">portfolios </code> in <code class="language-plaintext highlighter-rouge">models/tg/tag.rb</code> (modelfile of the timegrid).</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">module</span> <span class="nn">TG</span>
+	<span class="k">class</span> <span class="nc">Tag</span>
+		<span class="k">def</span> <span class="nf">portfolios</span>
+			<span class="n">out_hc_d2F</span><span class="p">.</span><span class="nf">in</span>
+		<span class="k">end</span>
+	<span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div></div>
+<p>Then  <code class="language-plaintext highlighter-rouge">"7.12.2020".to_tg.portfolios</code> yields an array of connected portfolio-records.</p>
 
-<p>The data gathered through <code class="language-plaintext highlighter-rouge">send_message :RequestMarketData</code> are related to <code class="language-plaintext highlighter-rouge">IB::Contract</code>. It seems natural to assign them directly. <br />
-<code class="language-plaintext highlighter-rouge">IB::Contract</code> offers two link-possibilities: <code class="language-plaintext highlighter-rouge">:bars</code> and <code class="language-plaintext highlighter-rouge">misc</code>, which offers a more sophisticated, object orientated solution.</p>
-
-<p>More Details in <a href="/market_price">Contracts/Market-Data</a></p>
 
 
     <div class="tags">
         
         <b>Tags: </b>
+        
+        
         
         
         
@@ -626,7 +630,7 @@ $('#toc').on('click', 'a', function() {
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2020 IB-Ruby. All rights reserved. <br />
-<span>Page last updated:</span> November 1, 2020<br/> Site last generated: Dec 8, 2020 <br />
+<span>Page last updated:</span> December 8, 2020<br/> Site last generated: Dec 8, 2020 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>

@@ -463,6 +463,12 @@
                   
                   
                   
+                  
+                  
+                  <li><a title="Working with Data" href="orientdb_working_with_data.html">Working with Data</a></li>
+                  
+                  
+                  
               </ul>
           </li>
           
@@ -564,8 +570,8 @@ on an virtual machine, a lxc/lxd-container or to run it inside a docker image.</
 
 <h2 id="prepare-the-database">Prepare the database</h2>
 
-<p>As for RDBMS-Databases database-classes have to be declared in OrientDB as well. However, we can omit 
-the specification of most database-fields.</p>
+<p>Although OrientDB can operate completely schemaless, a rudimentary declaration of links, indices and relations
+speeds things up.</p>
 
 <p>The database structure is defined in  <a href="https://github.com/ib-ruby/ib-orientdb/blob/main/lib/db_init.rb">db_init.rb</a>. <code class="language-plaintext highlighter-rouge">Setup.init_database</code>  is called during initialisation of the <a href="https://github.com/ib-ruby/ib-orientdb/blob/main/bin/console">interactive console</a>.</p>
 
@@ -587,16 +593,39 @@ the specification of most database-fields.</p>
       - ib_option
       - ib_stock
    - ib_contract_detail
-   - ib_portfolio
    - ib_portfolio_value
 
 </code></pre></div></div>
-<p>The vertex-class ‘V’ is the root. Any <code class="language-plaintext highlighter-rouge">IB::Model</code> class is a vertex. Vertices are connected via joins 
-(unidirectional) or through edges (bidirectional).</p>
+<p>Any <code class="language-plaintext highlighter-rouge">IB::Model</code> class is a vertex (<code class="language-plaintext highlighter-rouge">V</code>). Vertices hold the data. They  are connected<br />
+via joins (unidirectional) or edges (bidirectional).</p>
+
+<div class="alert alert-info" role="alert"><i class="fa fa-bars"></i> 
+A graph represents a network-like structure consisting of Vertices (Nodes) interconnected by Edges.
+</div>
+
+<ul>
+  <li>Vertex - an entity that can be linked with other Vertices and has the following mandatory properties:
+    <ul>
+      <li>set of incoming Edges ( through <code class="language-plaintext highlighter-rouge">in</code> )</li>
+      <li>set of outgoing Edges ( through <code class="language-plaintext highlighter-rouge">out</code> )</li>
+    </ul>
+  </li>
+  <li>Edge - an entity that links two Vertices and has the following mandatory properties:
+    <ul>
+      <li>link to an incoming Vertex (also known as head)</li>
+      <li>link to an outgoing Vertex (also known as tail)</li>
+      <li>label that defines the type of connection/relationship between head and tail vertex</li>
+    </ul>
+  </li>
+</ul>
+
+<p><a href="https://orientdb.org/docs/3.0.x/datamodeling/Tutorial-Document-and-graph-model.html#the-graph-model">source</a></p>
 
 <h2 id="setup-the-timegrid">Setup the TimeGrid</h2>
-<p>Many data received from the TWS are time related. <a href="https://github.com/topofocus/orientdb_time_graph">OrientDB Time Graph</a> provides the infrastructure to connect these items to a grid. Any time-dependend data can ba assigned
-to the grid. Complex queries are performed easily.</p>
+<p>Many data received from the <em>TWS</em> are time related. <a href="https://github.com/topofocus/orientdb_time_graph">OrientDB Time Graph</a> provides the infrastructure to connect these items to a grid.</p>
+
+<div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> <b>::</b> Any time-dependent object can be assigned
+to the grid.</div>
 
 <p>This Graph is realized</p>
 
@@ -604,22 +633,22 @@ to the grid. Complex queries are performed easily.</p>
 </code></pre></div></div>
 <p>The nodes are crosslinked and any point of the grid is easily accessed.</p>
 
-<p>The library provides »to_tg« additions to »Date«, »DateTime« and »String«. 
-The grid is easily accessed:</p>
+<p>The library provides <code class="language-plaintext highlighter-rouge">.to_tg</code> additions to »Date«, »DateTime« and »String«.</p>
+
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">z</span> <span class="o">=</span> <span class="s2">"22.3.2003"</span><span class="p">.</span><span class="nf">to_tg</span>
 <span class="o">=&gt;</span> <span class="c1">#&lt;TG::Tag:0x000000030d79d0 @metadata={"type"=&gt;"d", "class"=&gt;"tag", "version"=&gt;4, "fieldTypes"=&gt;"in_grid_of=g,out_grid_of=g,in_day_of=g", "cluster"=&gt;25, "record"=&gt;294}, @d=nil, @attributes={"value"=&gt;22, "in_grid_of" =&gt;["#49:304"], "out_grid_of"=&gt;["#50:304"], "in_day_of"=&gt;["#41:294"], "created_at"=&gt;Mon, 12 Sep 2016 09:56:41 +0200}&gt; </span>
 <span class="n">z</span><span class="p">.</span><span class="nf">datum</span>          <span class="o">=&gt;</span> <span class="no">Sat</span><span class="p">,</span> <span class="mi">22</span> <span class="no">Mar</span> <span class="mi">2003</span>  <span class="p">(</span><span class="n">returns</span> <span class="n">a</span> <span class="no">Date</span><span class="p">)</span>
 <span class="n">z</span><span class="p">.</span><span class="nf">next</span><span class="p">.</span><span class="nf">datum</span>     <span class="o">=&gt;</span> <span class="no">Sun</span><span class="p">,</span> <span class="mi">23</span> <span class="no">Mar</span> <span class="mi">2003</span>
 <span class="p">(</span> <span class="n">z</span> <span class="o">+</span> <span class="mi">3</span> <span class="p">).</span><span class="nf">datum</span>  <span class="o">=&gt;</span> <span class="no">Tue</span><span class="p">,</span> <span class="mi">25</span> <span class="no">Mar</span> <span class="mi">2003</span> 
 <span class="n">z</span><span class="p">.</span><span class="nf">prev</span><span class="p">.</span><span class="nf">datum</span>     <span class="o">=&gt;</span> <span class="no">Fri</span><span class="p">,</span> <span class="mi">21</span> <span class="no">Mar</span> <span class="mi">2003</span>
-<span class="p">(</span><span class="n">z</span> <span class="o">-</span> <span class="mi">5</span> <span class="p">).</span><span class="nf">datum</span>   <span class="o">=&gt;</span> <span class="no">Mon</span><span class="p">,</span> <span class="mi">17</span> <span class="no">Mar</span> <span class="mi">2003</span> 
+<span class="p">(</span> <span class="n">z</span> <span class="o">-</span> <span class="mi">5</span> <span class="p">).</span><span class="nf">datum</span>   <span class="o">=&gt;</span> <span class="no">Mon</span><span class="p">,</span> <span class="mi">17</span> <span class="no">Mar</span> <span class="mi">2003</span> 
 <span class="n">z</span><span class="p">.</span><span class="nf">move</span><span class="p">(</span> <span class="o">-</span><span class="mi">20</span> <span class="p">).</span><span class="nf">datum</span> <span class="o">=&gt;</span> <span class="no">Sun</span><span class="p">,</span> <span class="mo">02</span> <span class="no">Mar</span> <span class="mi">2003</span> 
-<span class="n">z</span><span class="p">.</span><span class="nf">environment</span><span class="p">(</span> <span class="mi">5</span><span class="p">).</span><span class="nf">datum</span>
+<span class="n">z</span><span class="p">.</span><span class="nf">environment</span><span class="p">(</span> <span class="mi">5</span> <span class="p">).</span><span class="nf">datum</span>
  <span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"18.5.2003"</span><span class="p">,</span> <span class="s2">"19.5.2003"</span><span class="p">,</span> <span class="s2">"20.5.2003"</span><span class="p">,</span> <span class="s2">"21.5.2003"</span><span class="p">,</span> <span class="s2">"22.5.2003"</span><span class="p">,</span> <span class="s2">"23.5.2003"</span><span class="p">,</span> <span class="s2">"24.5.2003"</span><span class="p">,</span> <span class="s2">"25.5.2003"</span><span class="p">,</span> <span class="s2">"26.5.2003"</span><span class="p">,</span> <span class="s2">"27.5.2003"</span><span class="p">,</span> <span class="s2">"28.5.2003"</span><span class="p">]</span> 
 
 </code></pre></div></div>
 
-<p><code class="language-plaintext highlighter-rouge">datum</code> is a method of the <code class="language-plaintext highlighter-rouge">TimeGrid</code>-gem. It is to be replaced by custom methods to access connected data.</p>
+<p><code class="language-plaintext highlighter-rouge">datum</code> is a method of the <code class="language-plaintext highlighter-rouge">TimeGrid</code>-gem. It has to be replaced by custom methods to access connected data.</p>
 
 
 
@@ -646,7 +675,7 @@ The grid is easily accessed:</p>
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2020 IB-Ruby. All rights reserved. <br />
-<span>Page last updated:</span> December 2, 2020<br/> Site last generated: Dec 2, 2020 <br />
+<span>Page last updated:</span> December 2, 2020<br/> Site last generated: Dec 8, 2020 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>
