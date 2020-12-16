@@ -591,28 +591,14 @@ in database classes prefixed by <code class="language-plaintext highlighter-roug
 
 <p>The last command of the <em>bake</em>-method assigns the portfolio-object via <code class="language-plaintext highlighter-rouge">HC::D2F</code> to the time-grid.<br />
 In the process, a bidirectional link <code class="language-plaintext highlighter-rouge">TimeGrid -- out HC::D2F -- in -- Portfolio</code> is implemented.</p>
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="s2">"7.12.2020"</span><span class="p">.</span><span class="nf">to_tg</span><span class="p">.</span><span class="nf">nodes</span><span class="p">(</span> <span class="ss">:out</span><span class="p">,</span> <span class="ss">via: </span><span class="no">HC</span><span class="o">::</span><span class="no">D2F</span> <span class="p">)</span>         <span class="o">=&gt;</span> <span class="no">Array</span> <span class="n">of</span> <span class="n">assigned</span> <span class="no">Portfolio</span><span class="err">'</span><span class="n">s</span>
-<span class="o">&gt;</span> <span class="no">HC</span><span class="o">::</span><span class="no">Portfolio</span><span class="p">.</span><span class="nf">last</span><span class="p">.</span><span class="nf">nodes</span><span class="p">(</span> <span class="ss">:in</span><span class="p">,</span> <span class="ss">via: </span><span class="no">HC</span><span class="o">::</span><span class="no">D2F</span> <span class="p">).</span><span class="nf">datum</span>  <span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"7.12.2020"</span><span class="p">]</span> <span class="c1"># Array of time-grid-objects</span>
-</code></pre></div></div>
-<p><strong>note:</strong> Vertex#nodes is a  method of <code class="language-plaintext highlighter-rouge">ActiveOrient</code>, its <a href="https://github.com/topofocus/active-orient/wiki/Bidirectional-Connections">documented here</a></p>
 
-<p>It is reasonable to implement a shortcut <code class="language-plaintext highlighter-rouge">portfolios </code> in <code class="language-plaintext highlighter-rouge">models/tg/tag.rb</code> (modelfile of the timegrid).</p>
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">module</span> <span class="nn">TG</span>
-  <span class="k">class</span> <span class="nc">Tag</span>
-    <span class="k">def</span> <span class="nf">portfolios</span>
-      <span class="n">nodes</span><span class="p">(</span> <span class="ss">:out</span><span class="p">,</span> <span class="ss">via: </span><span class="no">HC</span><span class="o">::</span><span class="no">D2F</span> <span class="p">)</span>
-    <span class="k">end</span>
-  <span class="k">end</span>
-<span class="k">end</span>
+<p><strong><em>Active-Orient</em></strong> provides an intuitive interface to connected nodes</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="s2">"7.12.2020"</span><span class="p">.</span><span class="nf">to_tg</span><span class="p">.</span><span class="nf">out</span><span class="p">(</span> <span class="no">HC</span><span class="o">::</span><span class="no">D2F</span> <span class="p">).</span><span class="nf">in</span>         <span class="o">=&gt;</span> <span class="no">Array</span> <span class="n">of</span> <span class="n">assigned</span> <span class="no">Portfolio</span><span class="err">'</span><span class="n">s</span>
+<span class="o">&gt;</span> <span class="no">HC</span><span class="o">::</span><span class="no">Portfolio</span><span class="p">.</span><span class="nf">last</span><span class="p">.</span><span class="nf">in</span><span class="p">(</span> <span class="sr">/d2f/</span> <span class="p">).</span><span class="nf">out</span><span class="p">.</span><span class="nf">datum</span>    <span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"7.12.2020"</span><span class="p">]</span> <span class="c1"># Array of time-grid-objects</span>
 </code></pre></div></div>
-<p>Then  <code class="language-plaintext highlighter-rouge">"7.12.2020".to_tg.portfolios</code> yields an array of connected portfolio-records.</p>
+<p>Edges can be pronounced either by the class-name or a regular expression, which relies on the database-class name.</p>
 
-<p>The following database queries are fired:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-&gt;select COUNT(*) from tg_time_of 
--&gt;select  expand (  outE('tg_day_of').in[ value = 7 ]  ) from  ( select  expand (  outE('tg_month_of').in[ value = 12 ]  ) from  ( select from tg_jahr where value = 2020  )   )  ## result: #49:1868 
--&gt;select  outE('hc_d2F').in  from #49:1868 
-
-</code></pre></div></div>
+<div class="alert alert-info" role="alert"><i class="fa fa-bars"></i> As shortcut, a method <code class="language-plaintext highlighter-rouge">portfolios</code> is provided for <code class="language-plaintext highlighter-rouge">TG::TAG</code> (TimeGrid)-Vertices.</div>
 
 <h2 id="get-account-data">Get Account-Data</h2>
 
@@ -622,16 +608,17 @@ In the process, a bidirectional link <code class="language-plaintext highlighter
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> HC::Portfolio.values[ :key ][:ALL][:EUR] =&gt; value
                                    [:USD] =&gt; value
-														 [:S]  [:EUR] =&gt; Value
-														 [:C]  [:EUR] =&gt; value
+                             [:S]  [:EUR] =&gt; Value
+                             [:C]  [:EUR] =&gt; value
 </code></pre></div></div>
 <p>Thus to access the data from yesterday:</p>
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="no">Date</span><span class="p">.</span><span class="nf">today</span><span class="p">.</span><span class="nf">to_tg</span><span class="p">.</span><span class="nf">prev</span><span class="p">.</span><span class="nf">portfolios</span> <span class="o">&amp;</span><span class="p">.</span><span class="nf">values</span><span class="p">.</span><span class="nf">map</span><span class="p">{</span><span class="o">|</span><span class="n">y</span><span class="o">|</span> <span class="n">y</span><span class="p">[</span><span class="ss">:SMA</span><span class="p">][</span><span class="ss">:ALL</span><span class="p">][</span><span class="ss">:EUR</span><span class="p">]</span> <span class="p">}</span>
  <span class="o">=&gt;</span> <span class="p">[</span><span class="o">-</span><span class="mf">9033.37</span><span class="p">,</span> <span class="mf">12565.67</span><span class="p">]</span>
  <span class="c1"># or</span>
- <span class="no">Date</span><span class="p">.</span><span class="nf">today</span><span class="p">.</span><span class="nf">to_tg</span><span class="p">.</span><span class="nf">prev</span><span class="p">.</span><span class="nf">portfolios</span> <span class="o">&amp;</span><span class="p">.</span><span class="nf">values</span><span class="p">.</span><span class="nf">slice</span> <span class="sr">/SM/</span>
+ <span class="no">Date</span><span class="p">.</span><span class="nf">yesterday</span><span class="p">.</span><span class="nf">to_tg</span><span class="p">.</span><span class="nf">portfolios</span> <span class="o">&amp;</span><span class="p">.</span><span class="nf">values</span><span class="p">.</span><span class="nf">map</span><span class="p">{</span><span class="o">|</span><span class="n">y</span><span class="o">|</span> <span class="n">y</span><span class="p">.</span><span class="nf">slice</span> <span class="sr">/SM/</span> <span class="p">}</span>
  <span class="o">=&gt;</span> <span class="p">[{</span><span class="ss">:SMA</span><span class="o">=&gt;</span><span class="p">{</span><span class="ss">:ALL</span><span class="o">=&gt;</span><span class="p">{</span><span class="ss">:EUR</span><span class="o">=&gt;-</span><span class="mf">4701.63</span><span class="p">},</span> <span class="ss">:S</span><span class="o">=&gt;</span><span class="p">{</span><span class="ss">:EUR</span><span class="o">=&gt;-</span><span class="mf">4701.63</span><span class="p">}}},</span> <span class="p">(</span><span class="o">...</span><span class="p">)</span> 
 </code></pre></div></div>
+<div class="alert alert-info" role="alert"><i class="fa fa-bars"></i>  <code class="language-plaintext highlighter-rouge">slice</code> is a method of <code class="language-plaintext highlighter-rouge">OrienhtSupport::Array</code>. It overwrites <code class="language-plaintext highlighter-rouge">Array#slice</code> (available since ruby 2.6) </div>
 
 <p><strong>Database Solution</strong></p>
 
@@ -639,32 +626,79 @@ In the process, a bidirectional link <code class="language-plaintext highlighter
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  select values[ key ] as key from hc_portfolio
 </code></pre></div></div>
 
-<p>It is composed with <code class="language-plaintext highlighter-rouge">OrientSupport::OrientQuery</code>, to be reused in different contexts. In the
-following example the keys are specified 
-as a regular expression.</p>
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="no">Q</span><span class="o">=</span>  <span class="no">OrientSupport</span><span class="o">::</span><span class="no">OrientQuery</span>                     <span class="o">=&gt;</span> <span class="n">just</span> <span class="n">a</span> <span class="n">shortcut</span>
-<span class="o">&gt;</span> <span class="nb">p</span> <span class="o">=</span>  <span class="no">HC</span><span class="o">::</span><span class="no">Portfolio</span><span class="p">.</span><span class="nf">last</span>                            <span class="o">=&gt;</span> <span class="n">get</span> <span class="n">stored</span> <span class="n">data</span>
-<span class="o">&gt;</span> <span class="c1"># regular expression:  /Ac/</span>
-<span class="o">&gt;</span> <span class="n">fields</span> <span class="o">=</span> <span class="nb">p</span><span class="p">.</span><span class="nf">values</span><span class="p">.</span><span class="nf">keys</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/Ac/</span><span class="p">).</span><span class="nf">compact</span><span class="p">.</span><span class="nf">string</span>  <span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"AccruedCash"</span><span class="p">,</span> <span class="s2">"AccruedDividend"</span><span class="p">]</span> 
-<span class="c1"># build the projection</span>
-<span class="o">&gt;</span> <span class="n">the_projection</span> <span class="o">=</span> <span class="n">fields</span><span class="p">.</span><span class="nf">map</span><span class="p">{</span><span class="o">|</span><span class="n">y</span><span class="o">|</span> <span class="s2">"values[</span><span class="se">\"</span><span class="si">#{</span><span class="n">y</span><span class="si">}</span><span class="se">\"</span><span class="s2">] as </span><span class="si">#{</span><span class="n">y</span><span class="si">}</span><span class="s2"> "</span><span class="p">}.</span><span class="nf">join</span><span class="p">(</span><span class="s2">", "</span><span class="p">)</span>
-<span class="c1"># compose the query  (all entries of HC::Portfolio)</span>
-<span class="c1"># note: Instead of a database class, a subquery can be provide as well.</span>
-<span class="o">&gt;</span> <span class="n">query</span><span class="o">=</span> <span class="n">q</span><span class="p">.</span><span class="nf">new</span> <span class="ss">from: </span><span class="no">HC</span><span class="o">::</span><span class="no">Portfolio</span><span class="p">,</span> <span class="ss">projection: </span><span class="n">the_projection</span>
-<span class="o">&gt;</span> <span class="n">query</span><span class="p">.</span><span class="nf">to_s</span>         
-<span class="o">=&gt;</span> <span class="s2">"select values[</span><span class="se">\"</span><span class="s2">AccruedCash</span><span class="se">\"</span><span class="s2">] as AccruedCash , values[</span><span class="se">\"</span><span class="s2">AccruedDividend</span><span class="se">\"</span><span class="s2">] as AccruedDividend  from hc_portfolio "</span>
-<span class="o">&gt;</span> <span class="n">result</span> <span class="o">=</span>  <span class="n">query</span><span class="p">.</span><span class="nf">execute</span>
-<span class="o">=&gt;</span> <span class="p">[{</span><span class="ss">:AccruedCash</span><span class="o">=&gt;</span><span class="p">{</span><span class="ss">:ALL</span><span class="o">=&gt;</span><span class="p">{</span><span class="ss">:USD</span><span class="o">=&gt;-</span><span class="mf">1.41</span><span class="p">,</span> <span class="ss">:BASE</span><span class="o">=&gt;-</span><span class="mf">1.1629538</span><span class="p">},</span> <span class="ss">:S</span><span class="o">=&gt;</span><span class="p">{</span><span class="ss">:EUR</span><span class="o">=&gt;-</span><span class="mf">1.16</span><span class="p">}},</span> 
-     <span class="ss">:AccruedDividend</span><span class="o">=&gt;</span><span class="p">{</span><span class="ss">:ALL</span><span class="o">=&gt;</span><span class="p">{</span><span class="ss">:EUR</span><span class="o">=&gt;</span><span class="mf">30.43</span><span class="p">},</span> <span class="ss">:S</span><span class="o">=&gt;</span><span class="p">{</span><span class="ss">:EUR</span><span class="o">=&gt;</span><span class="mf">30.43</span><span class="p">}}},</span> 
-    <span class="p">{</span><span class="ss">:AccruedCash</span><span class="o">=&gt;</span><span class="p">{</span><span class="ss">:ALL</span><span class="o">=&gt;</span><span class="p">{</span><span class="ss">:USD</span><span class="o">=&gt;-</span><span class="mf">1.41</span><span class="p">,</span> <span class="ss">:BASE</span><span class="o">=&gt;-</span><span class="mf">1.1640194</span><span class="p">},</span> <span class="ss">:S</span><span class="o">=&gt;</span><span class="p">{</span><span class="ss">:EUR</span><span class="o">=&gt;-</span><span class="mf">1.16</span><span class="p">}},</span> 
-     <span class="ss">:AccruedDividend</span><span class="o">=&gt;</span><span class="p">{</span><span class="ss">:ALL</span><span class="o">=&gt;</span><span class="p">{</span><span class="ss">:EUR</span><span class="o">=&gt;</span><span class="mf">30.45</span><span class="p">},</span> <span class="ss">:S</span><span class="o">=&gt;</span><span class="p">{</span><span class="ss">:EUR</span><span class="o">=&gt;</span><span class="mf">30.45</span><span class="p">}}},</span><span class="n">i</span>
-    <span class="p">{</span><span class="ss">:AccruedCash</span><span class="o">=&gt;</span><span class="p">{</span><span class="ss">:ALL</span><span class="o">=&gt;</span><span class="p">{</span><span class="ss">:USD</span><span class="o">=&gt;-</span><span class="mf">6.29</span><span class="p">,</span> <span class="ss">:BASE</span><span class="o">=&gt;-</span><span class="mf">5.1826279</span><span class="p">},</span> <span class="ss">:S</span><span class="o">=&gt;</span><span class="p">{</span><span class="ss">:EUR</span><span class="o">=&gt;-</span><span class="mf">5.19</span><span class="p">}},</span>
-		 <span class="p">(</span><span class="o">...</span><span class="p">)</span>                       <span class="p">}]</span>
+<p>which can be send to the database through <code class="language-plaintext highlighter-rouge">execute</code></p>
 
-<span class="c1"># Show AccruedCash for all HC::Portfolio-Datasets</span>
-<span class="o">&gt;</span> <span class="n">result</span><span class="p">.</span><span class="nf">map</span><span class="p">{</span><span class="o">|</span><span class="n">y</span><span class="o">|</span> <span class="n">y</span><span class="p">[</span><span class="ss">:AccruedCash</span><span class="p">][</span><span class="ss">:ALL</span><span class="p">][</span><span class="ss">:BASE</span><span class="p">]}</span>
- <span class="o">=&gt;</span> <span class="p">[</span><span class="o">-</span><span class="mf">1.1629538</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.1640194</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.1826279</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.1843791</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.1839736</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.2096704</span><span class="p">]</span>		 
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="no">V</span><span class="p">.</span><span class="nf">db</span><span class="p">.</span><span class="nf">execute</span><span class="p">{</span> <span class="s2">"select values[</span><span class="se">\"</span><span class="s2">SMA</span><span class="se">\"</span><span class="s2">] as SMA   from hc_portfolio "</span> <span class="p">}</span>
+  <span class="o">=&gt;</span> <span class="p">[{</span><span class="ss">:SMA</span><span class="o">=&gt;</span><span class="p">{</span><span class="ss">:ALL</span><span class="o">=&gt;</span><span class="p">{</span><span class="ss">:EUR</span><span class="o">=&gt;-</span><span class="mf">4701.63</span><span class="p">},</span> <span class="ss">:S</span><span class="o">=&gt;</span><span class="p">{</span><span class="ss">:EUR</span><span class="o">=&gt;-</span><span class="mf">4701.63</span><span class="p">}}},</span> <span class="o">...</span> 
+
 </code></pre></div></div>
+
+<div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> <b>::</b> In plain vanilla queries OrientDB-Database-class names have to bo used. </div>
+
+<h2 id="monitor-the-portfolio">Monitor the Portfolio</h2>
+
+<p><code class="language-plaintext highlighter-rouge">HC::Portfolio.bake</code> imports <code class="language-plaintext highlighter-rouge">IB::PortfolioValues</code> as well. The records are connected via 
+<code class="language-plaintext highlighter-rouge">HC::HAS_POSITION</code>-edges.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> `TG::Tag -- out  `HC::D2F` in --  `HC::Portfolio` -- `out` HC_HAS_POSITION `in` -- `IB::PortfolioValue` 
+</code></pre></div></div>
+
+<p>To access PortfolioValues  just join the edges.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="no">Date</span><span class="p">.</span><span class="nf">today</span><span class="p">.</span><span class="nf">to_tg</span><span class="p">.</span><span class="nf">out</span><span class="p">(</span> <span class="sr">/d2F/</span><span class="p">).</span><span class="nf">in</span><span class="p">.</span><span class="nf">out</span><span class="p">(</span> <span class="sr">/has/</span><span class="p">).</span><span class="nf">in</span><span class="p">.</span><span class="nf">contract</span>
+ <span class="o">=&gt;</span> <span class="p">[[</span><span class="s2">"#202:0"</span><span class="p">,</span> <span class="s2">"#203:0"</span><span class="p">,</span> <span class="s2">"#204:0"</span><span class="p">],</span> <span class="o">...</span> 
+<span class="c1"># contracts are stored as rid-valus which have to be expanded:</span>
+<span class="o">&gt;</span> <span class="nb">puts</span> <span class="no">Date</span><span class="p">.</span><span class="nf">today</span><span class="p">.</span><span class="nf">to_tg</span><span class="p">.</span><span class="nf">out</span><span class="p">(</span><span class="no">TG</span><span class="o">::</span><span class="no">D2F</span><span class="p">).</span><span class="nf">in</span><span class="p">.</span><span class="nf">out</span><span class="p">(</span> <span class="no">HC</span><span class="o">::</span><span class="no">HAS_POSITION</span> <span class="p">).</span><span class="nf">in</span><span class="p">.</span><span class="nf">contract</span><span class="p">.</span><span class="nf">expand</span><span class="p">.</span><span class="nf">to_human</span>
+     <span class="o">&lt;</span><span class="no">Stock</span><span class="p">:</span> <span class="no">J36</span> <span class="no">USD</span> <span class="no">SGX</span><span class="o">&gt;</span>
+     <span class="o">&lt;</span><span class="no">Stock</span><span class="p">:</span> <span class="no">PRX</span> <span class="no">EUR</span> <span class="no">AEB</span><span class="o">&gt;</span>
+     <span class="o">&lt;</span><span class="no">Stock</span><span class="p">:</span> <span class="no">WFC</span> <span class="no">USD</span> <span class="no">NYSE</span><span class="o">&gt;</span>
+     <span class="o">&lt;</span><span class="no">Stock</span><span class="p">:</span> <span class="no">ALB</span> <span class="no">USD</span> <span class="no">NYSE</span><span class="o">&gt;</span>
+		 <span class="p">(</span><span class="o">..</span><span class="p">)</span>
+</code></pre></div></div>
+<p>Other properties of <code class="language-plaintext highlighter-rouge">IB::PortfolioValue</code> can be obtained through ruby methods</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">portfolio_values</span> <span class="o">=</span>  <span class="no">Date</span><span class="p">.</span><span class="nf">today</span><span class="p">.</span><span class="nf">to_tg</span><span class="p">.</span><span class="nf">out</span><span class="p">(</span><span class="no">TG</span><span class="o">::</span><span class="no">D2F</span><span class="p">).</span><span class="nf">in</span><span class="p">.</span><span class="nf">out</span><span class="p">(</span> <span class="no">HC</span><span class="o">::</span><span class="no">HAS_POSITION</span> <span class="p">).</span><span class="nf">in</span>
+<span class="o">&gt;</span> <span class="nb">puts</span> <span class="n">portfolio_values</span><span class="p">.</span><span class="nf">map</span><span class="p">{</span><span class="o">|</span><span class="n">y</span><span class="o">|</span> <span class="p">[</span> <span class="n">y</span><span class="p">.</span><span class="nf">contract</span><span class="p">.</span><span class="nf">expand</span><span class="p">.</span><span class="nf">to_human</span><span class="p">,</span> <span class="n">y</span><span class="p">.</span><span class="nf">unrealized_pnl</span> <span class="p">].</span><span class="nf">join</span> <span class="s2">" -&gt; </span><span class="se">\t</span><span class="s2"> "</span><span class="p">}</span>
+  <span class="o">&lt;</span><span class="no">Option</span><span class="p">:</span> <span class="no">AIR</span> <span class="mi">20210115</span> <span class="n">put</span> <span class="mf">86.0</span> <span class="no">DTB</span> <span class="no">EUR</span><span class="o">&gt;</span>   <span class="o">-&gt;</span> <span class="mf">277.44</span>
+  <span class="o">&lt;</span><span class="no">Stock</span><span class="p">:</span> <span class="no">BABA</span> <span class="no">USD</span> <span class="no">NYSE</span><span class="o">&gt;</span>                    <span class="o">-&gt;</span> <span class="mf">222.84</span>
+  <span class="o">&lt;</span><span class="no">Stock</span><span class="p">:</span> <span class="no">BEPC</span> <span class="no">USD</span> <span class="no">NYSE</span><span class="o">&gt;</span>                    <span class="o">-&gt;</span> <span class="mf">394.47</span>
+  <span class="o">&lt;</span><span class="no">Option</span><span class="p">:</span> <span class="no">BOSS</span> <span class="mi">20210219</span> <span class="n">put</span> <span class="mf">25.0</span> <span class="no">DTB</span> <span class="no">EUR</span><span class="o">&gt;</span>  <span class="o">-&gt;</span> <span class="o">-</span><span class="mf">83.07</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>  
+
+</code></pre></div></div>
+
+<p>Specific positions can be filtered in the process.</p>
+
+<p>Instead of <code class="language-plaintext highlighter-rouge">in</code> and <code class="language-plaintext highlighter-rouge">out</code>, edges have to be accessed through <a href="https://github.com/topofocus/active-orient/wiki/Bidirectional-Connections">Vertex#nodes</a>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Get Jardine Matheson
+&gt; jardine = IB::Contract.where symbol: 'J36'
+# Fetch PortfolioPositions
+&gt; portfolio = Date.today.to_tg.out(HC::D2F).in.first
+&gt; portfolio.nodes( via: /has/, where: { contract: jardine.rid } ).market_value
+  #INFO-&gt;select  outE('hc_has_position').in[ contract in [202:0] ]  from #246:20
+  =&gt; [6480.48] 
+</code></pre></div></div>
+
+<h3 id="monitor-the-progress-of-a-position">Monitor the progress of a position</h3>
+
+<p>This approach works with a range of datasets as well.</p>
+
+<p>Assume, we »baked« a few <code class="language-plaintext highlighter-rouge">HC::Portfolios</code> in the last days. Then <code class="language-plaintext highlighter-rouge">Date.today.to_tg.environment(7,0)</code>
+ addresses the <code class="language-plaintext highlighter-rouge">TG::Tag</code> vertices of the last week. <a href="https://github.com/topofocus/orientdb_time_graph">Documentation: Time-Grid Gem</a></p>
+
+<p>Then</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">&gt;</span> <span class="no">Date</span><span class="p">.</span><span class="nf">today</span><span class="p">.</span><span class="nf">to_tg</span>
+             <span class="p">.</span><span class="nf">environment</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+             <span class="p">.</span><span class="nf">out</span><span class="p">(</span><span class="no">HC</span><span class="o">::</span><span class="no">D2F</span><span class="p">).</span><span class="nf">in</span>
+             <span class="p">.</span><span class="nf">nodes</span><span class="p">(</span> <span class="ss">via: </span><span class="sr">/has/</span><span class="p">,</span> <span class="ss">where: </span><span class="p">{</span> <span class="ss">contract: </span><span class="n">jardine</span><span class="p">.</span><span class="nf">rid</span> <span class="p">}</span> <span class="p">)</span>
+             <span class="p">.</span><span class="nf">market_value</span>
+ <span class="o">=&gt;</span> <span class="p">[[[</span><span class="mf">6424.77</span><span class="p">]],</span> <span class="p">[[</span><span class="mf">6522.31</span><span class="p">]],</span> <span class="p">[[</span><span class="mf">6480.48</span><span class="p">]]]</span>
+</code></pre></div></div>
+
+<p>In this case,  only one portfolio is monitored by <strong><em>IB-Ruby</em></strong>, thus only one element is left in each sub-array.</p>
+
+<p>Note that only three <code class="language-plaintext highlighter-rouge">TG_Tag</code> vertices were populated. Empty TimeGrid-Entries are silently ignored.</p>
 
 
 
@@ -691,7 +725,7 @@ as a regular expression.</p>
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2020 IB-Ruby. All rights reserved. <br />
-<span>Page last updated:</span> December 11, 2020<br/> Site last generated: Dec 11, 2020 <br />
+<span>Page last updated:</span> December 16, 2020<br/> Site last generated: Dec 16, 2020 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>

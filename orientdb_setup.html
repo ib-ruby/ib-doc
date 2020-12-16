@@ -650,6 +650,108 @@ to the grid.</div>
 
 <p><code class="language-plaintext highlighter-rouge">datum</code> is a method of the <code class="language-plaintext highlighter-rouge">TimeGrid</code>-gem. It has to be replaced by custom methods to access connected data.</p>
 
+<h3 id="working-with-intervalls">Working with intervalls</h3>
+
+<p>The time-grid provides a high degree of flexibility to access intervalls.</p>
+
+<ul>
+  <li>Display any data associated to the first three day of the month August to November in the years 2000, 2005 and 2010</li>
+</ul>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">z</span><span class="o">=</span> <span class="no">TG</span><span class="o">::</span><span class="no">Jahr</span><span class="p">[</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">2005</span><span class="p">,</span><span class="o">.</span><span class="mi">2010</span><span class="p">].</span><span class="nf">monat</span><span class="p">(</span><span class="mi">8</span> <span class="o">..</span> <span class="mi">11</span><span class="p">).</span><span class="nf">tag</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span> <span class="p">).</span><span class="nf">orient_flatten</span><span class="p">.</span><span class="nf">datum</span>
+  <span class="o">=&gt;</span>  <span class="p">[</span><span class="no">Tue</span><span class="p">,</span> <span class="mo">01</span> <span class="no">Aug</span> <span class="mi">2000</span><span class="p">,</span> <span class="no">Wed</span><span class="p">,</span> <span class="mo">02</span> <span class="no">Aug</span> <span class="mi">2000</span><span class="p">,</span> <span class="no">Thu</span><span class="p">,</span> <span class="mo">03</span> <span class="no">Aug</span> <span class="mi">2000</span><span class="p">,</span>
+       <span class="no">Fri</span><span class="p">,</span> <span class="mo">01</span> <span class="no">Sep</span> <span class="mi">2000</span><span class="p">,</span> <span class="no">Sat</span><span class="p">,</span> <span class="mo">02</span> <span class="no">Sep</span> <span class="mi">2000</span><span class="p">,</span> <span class="no">Sun</span><span class="p">,</span> <span class="mo">03</span> <span class="no">Sep</span> <span class="mi">2000</span><span class="p">,</span>
+       <span class="no">Sun</span><span class="p">,</span> <span class="mo">01</span> <span class="no">Oct</span> <span class="mi">2000</span><span class="p">,</span> <span class="no">Mon</span><span class="p">,</span> <span class="mo">02</span> <span class="no">Oct</span> <span class="mi">2000</span><span class="p">,</span> <span class="no">Tue</span><span class="p">,</span> <span class="mo">03</span> <span class="no">Oct</span> <span class="mi">2000</span><span class="p">,</span>
+       <span class="no">Wed</span><span class="p">,</span> <span class="mo">01</span> <span class="no">Nov</span> <span class="mi">2000</span><span class="p">,</span> <span class="no">Thu</span><span class="p">,</span> <span class="mo">02</span> <span class="no">Nov</span> <span class="mi">2000</span><span class="p">,</span> <span class="no">Fri</span><span class="p">,</span> <span class="mo">03</span> <span class="no">Nov</span> <span class="mi">2000</span><span class="p">,</span>
+      <span class="no">Mon</span><span class="p">,</span> <span class="mo">01</span> <span class="no">Aug</span> <span class="mi">2005</span><span class="p">,</span> <span class="no">Tue</span><span class="p">,</span> <span class="mo">02</span> <span class="no">Aug</span> <span class="mi">2005</span><span class="p">,</span> <span class="no">Wed</span><span class="p">,</span> <span class="mo">03</span> <span class="no">Aug</span> <span class="mi">2005</span><span class="p">,</span>
+       <span class="no">Thu</span><span class="p">,</span> <span class="mo">01</span> <span class="no">Sep</span> <span class="mi">2005</span><span class="p">,</span> <span class="no">Fri</span><span class="p">,</span> <span class="mo">02</span> <span class="no">Sep</span> <span class="mi">2005</span><span class="p">,</span> <span class="no">Sat</span><span class="p">,</span> <span class="mo">03</span> <span class="no">Sep</span> <span class="mi">2005</span><span class="p">,</span>
+       <span class="no">Sat</span><span class="p">,</span> <span class="mo">01</span> <span class="no">Oct</span> <span class="mi">2005</span><span class="p">,</span> <span class="no">Sun</span><span class="p">,</span> <span class="mo">02</span> <span class="no">Oct</span> <span class="mi">2005</span><span class="p">,</span> <span class="no">Mon</span><span class="p">,</span> <span class="mo">03</span> <span class="no">Oct</span> <span class="mi">2005</span><span class="p">,</span>
+       <span class="no">Tue</span><span class="p">,</span> <span class="mo">01</span> <span class="no">Nov</span> <span class="mi">2005</span><span class="p">,</span> <span class="no">Wed</span><span class="p">,</span> <span class="mo">02</span> <span class="no">Nov</span> <span class="mi">2005</span><span class="p">,</span> <span class="no">Thu</span><span class="p">,</span> <span class="mo">03</span> <span class="no">Nov</span> <span class="mi">2005</span><span class="p">,</span>
+      <span class="no">Sun</span><span class="p">,</span> <span class="mo">01</span> <span class="no">Aug</span> <span class="mi">2010</span><span class="p">,</span> <span class="no">Mon</span><span class="p">,</span> <span class="mo">02</span> <span class="no">Aug</span> <span class="mi">2010</span><span class="p">,</span> <span class="no">Tue</span><span class="p">,</span> <span class="mo">03</span> <span class="no">Aug</span> <span class="mi">2010</span><span class="p">,</span>
+       <span class="no">Wed</span><span class="p">,</span> <span class="mo">01</span> <span class="no">Sep</span> <span class="mi">2010</span><span class="p">,</span> <span class="no">Thu</span><span class="p">,</span> <span class="mo">02</span> <span class="no">Sep</span> <span class="mi">2010</span><span class="p">,</span> <span class="no">Fri</span><span class="p">,</span> <span class="mo">03</span> <span class="no">Sep</span> <span class="mi">2010</span><span class="p">,</span>
+       <span class="no">Fri</span><span class="p">,</span> <span class="mo">01</span> <span class="no">Oct</span> <span class="mi">2010</span><span class="p">,</span> <span class="no">Sat</span><span class="p">,</span> <span class="mo">02</span> <span class="no">Oct</span> <span class="mi">2010</span><span class="p">,</span> <span class="no">Sun</span><span class="p">,</span> <span class="mo">03</span> <span class="no">Oct</span> <span class="mi">2010</span><span class="p">,</span>
+       <span class="no">Mon</span><span class="p">,</span> <span class="mo">01</span> <span class="no">Nov</span> <span class="mi">2010</span><span class="p">,</span> <span class="no">Tue</span><span class="p">,</span> <span class="mo">02</span> <span class="no">Nov</span> <span class="mi">2010</span><span class="p">,</span> <span class="no">Wed</span><span class="p">,</span> <span class="mo">03</span> <span class="no">Nov</span> <span class="mi">2010</span><span class="p">]</span>
+ 
+</code></pre></div></div>
+<p><code class="language-plaintext highlighter-rouge">orient_flatten</code> flattens the array and leaves <code class="language-plaintext highlighter-rouge">ActiveOrient</code>-Objects intact.</p>
+
+<h3 id="boot-process">Boot-Process</h3>
+
+<p>In <em>Strict-Mode</em> (<code class="language-plaintext highlighter-rouge">ActiveOrient::Model.keep_models_without_file = false</code>)  <em><strong>ActiveOrient</strong></em> only 
+recognizes database classes  if a corresponding model file is detected. The files are searched in 
+directories specified in <code class="language-plaintext highlighter-rouge">ActiveOrient::Model.model_dir</code>.</p>
+
+<p>The boot-process of <em><strong>IB-OrientDB</strong></em> starts initializing the time-grid. Any database class prefixed by ‘tg_’
+is assigned to corresponding ruby classes. Other database-classes are left unallocated. Then the 
+namespace is changed to <code class="language-plaintext highlighter-rouge">IB</code> and ‘ib_‘-prefixed classes are initialized. Finally the namespace is
+changed to <code class="language-plaintext highlighter-rouge">HC</code>.</p>
+
+<p>If the interactive console is run, this process is documented:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;#:~/workspace/ib-orientdb/bin$ ./gateway 
+
+&gt;&gt; IB-OrientDB Interactive Console  &lt;&lt;
+---------------------------------------------
+
+ ... preparing environment
+13.12.(05:38:23) INFO-&gt;Connected to database demo
+13.12.(05:38:23) INFO-&gt;CREATE CLASS E 
+13.12.(05:38:23) INFO-&gt;CREATE CLASS V 
+13.12.(05:38:23) INFO-&gt;Connected to database demo    ### Time-grid initialisation
+                                                     ### Its OK that the following classes 
+                                                     ### are left  untouchted
+13.12.(05:38:23) INFO-&gt;TG::HC_D2F --&gt;  Class NOT allocated
+13.12.(05:38:23) INFO-&gt;TG::HC_GRID --&gt;  Class NOT allocated
+13.12.(05:38:23) INFO-&gt;TG::HC_HAS_ACCOUNT --&gt;  Class NOT allocated
+13.12.(05:38:23) INFO-&gt;TG::HC_HAS_PORTFOLIO --&gt;  Class NOT allocated
+13.12.(05:38:23) INFO-&gt;TG::HC_HAS_POSITION --&gt;  Class NOT allocated
+13.12.(05:38:23) INFO-&gt;TG::HC_HAS_STRATEGY --&gt;  Class NOT allocated
+13.12.(05:38:23) INFO-&gt;TG::HC_MY_USER --&gt;  Class NOT allocated
+13.12.(05:38:23) INFO-&gt;TG::HC_P2U --&gt;  Class NOT allocated
+13.12.(05:38:23) INFO-&gt;TG::HcPortfolio --&gt;  Class NOT allocated
+13.12.(05:38:23) INFO-&gt;TG::IbAccount --&gt;  Class NOT allocated
+13.12.(05:38:23) INFO-&gt;TG::IbAccountValue --&gt;  Class NOT allocated
+13.12.(05:38:23) INFO-&gt;TG::IbAccount --&gt;  Class NOT allocated
+13.12.(05:38:23) INFO-&gt;TG::IbContract --&gt;  Class NOT allocated
+13.12.(05:38:23) INFO-&gt;TG::IbBar --&gt;  Class NOT allocated
+13.12.(05:38:23) INFO-&gt;TG::IbContract --&gt;  Class NOT allocated
+13.12.(05:38:23) INFO-&gt;TG::IbContractDetail --&gt;  Class NOT allocated
+13.12.(05:38:23) INFO-&gt;TG::IbAccount --&gt;  Class NOT allocated
+13.12.(05:38:23) INFO-&gt;TG::IbAccount --&gt;  Class NOT allocated
+13.12.(05:38:23) INFO-&gt;TG::IbContract --&gt;  Class NOT allocated
+13.12.(05:38:23) INFO-&gt;TG::IbContract --&gt;  Class NOT allocated
+13.12.(05:38:23) INFO-&gt;TG::IbContract --&gt;  Class NOT allocated
+13.12.(05:38:23) INFO-&gt;TG::IbContract --&gt;  Class NOT allocated
+13.12.(05:38:23) INFO-&gt;TG::IbPortfolioValue --&gt;  Class NOT allocated
+13.12.(05:38:23) INFO-&gt;TG::IbContract --&gt;  Class NOT allocated
+13.12.(05:38:23) INFO-&gt;TG::IbContract --&gt;  Class NOT allocated
+13.12.(05:38:23) INFO-&gt;TG::IbUnderlying --&gt;  Class NOT allocated
+13.12.(05:38:23) INFO-&gt;TG::IbAccount --&gt;  Class NOT allocated
+13.12.(05:38:23) INFO-&gt;select COUNT(*) from tg_time_of 
+13.12.(05:38:24) INFO-&gt;Connected to database demo     ### IB-OrientDB initialisation
+                                                      ### the list of not allocated 
+                                                      ### classes shortens
+13.12.(05:38:24) INFO-&gt;IB::HC_D2F --&gt;  Class NOT allocated
+13.12.(05:38:24) INFO-&gt;IB::HC_GRID --&gt;  Class NOT allocated
+13.12.(05:38:24) INFO-&gt;IB::HC_HAS_ACCOUNT --&gt;  Class NOT allocated
+13.12.(05:38:24) INFO-&gt;IB::HC_HAS_PORTFOLIO --&gt;  Class NOT allocated
+13.12.(05:38:24) INFO-&gt;IB::HC_HAS_POSITION --&gt;  Class NOT allocated
+13.12.(05:38:24) INFO-&gt;IB::HC_HAS_STRATEGY --&gt;  Class NOT allocated
+13.12.(05:38:24) INFO-&gt;IB::HC_MY_USER --&gt;  Class NOT allocated
+13.12.(05:38:24) INFO-&gt;IB::HC_P2U --&gt;  Class NOT allocated
+13.12.(05:38:24) INFO-&gt;IB::HcPortfolio --&gt;  Class NOT allocated
+Contract already a constant
+Underlying already a constant
+-------------------- initialize --------------------
+13.12.(05:38:24) INFO-&gt;Connected to database demo     ### HC- initialisation :: only one class is
+                                                      ### left uninitialized. The file has to be 
+                                                      ### created if the database class should be used.
+13.12.(05:38:24) INFO-&gt;HC::HAS_ACCOUNT --&gt;  Class NOT allocated
+-----------------------------------------------------------------------------------
+----------------------------------- TWS Connect -----------------------------------
+SELF: IB::OrientGateway
+&lt; ManagedAccounts:
+</code></pre></div></div>
 
 
     <div class="tags">
@@ -675,7 +777,7 @@ to the grid.</div>
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2020 IB-Ruby. All rights reserved. <br />
-<span>Page last updated:</span> December 2, 2020<br/> Site last generated: Dec 11, 2020 <br />
+<span>Page last updated:</span> December 2, 2020<br/> Site last generated: Dec 16, 2020 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>
