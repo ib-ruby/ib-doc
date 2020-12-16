@@ -565,9 +565,7 @@ in database classes prefixed by <code class="language-plaintext highlighter-roug
 
 <p>It is advisable to put calculations and further analyses to another namespace.</p>
 
-<blockquote>
-  <p>HC::Portfolio</p>
-</blockquote>
+<h3 id="hcportfolio">HC::Portfolio</h3>
 
 <p>As living example, <code class="language-plaintext highlighter-rouge">HC::Portfolio</code> is included, which is initialized through <code class="language-plaintext highlighter-rouge">bake</code>:</p>
 
@@ -592,6 +590,14 @@ in database classes prefixed by <code class="language-plaintext highlighter-roug
 <p>The last command of the <em>bake</em>-method assigns the portfolio-object via <code class="language-plaintext highlighter-rouge">HC::D2F</code> to the time-grid.<br />
 In the process, a bidirectional link <code class="language-plaintext highlighter-rouge">TimeGrid -- out HC::D2F -- in -- Portfolio</code> is implemented.</p>
 
+<h4 id="to_human">to_human</h4>
+<p>Most classes in <strong><em>IB-Ruby</em></strong> ship with a <code class="language-plaintext highlighter-rouge">to_human</code>-method. <code class="language-plaintext highlighter-rouge">HC::Portfolio#to_human</code> summarizes
+the associated objects:</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="no">HC</span><span class="o">::</span><span class="no">Portfolio</span><span class="p">.</span><span class="nf">last</span><span class="p">.</span><span class="nf">to_human</span>
+ <span class="o">=&gt;</span> <span class="s2">"&lt;Portfolio[244:0]: account:&lt;user U1****12&gt;, 36 AccountValues; 18 Positions &gt;"</span>
+</code></pre></div></div>
+
+<h4 id="traverse-through-connected-nodes">Traverse through connected nodes</h4>
 <p><strong><em>Active-Orient</em></strong> provides an intuitive interface to connected nodes</p>
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="s2">"7.12.2020"</span><span class="p">.</span><span class="nf">to_tg</span><span class="p">.</span><span class="nf">out</span><span class="p">(</span> <span class="no">HC</span><span class="o">::</span><span class="no">D2F</span> <span class="p">).</span><span class="nf">in</span>         <span class="o">=&gt;</span> <span class="no">Array</span> <span class="n">of</span> <span class="n">assigned</span> <span class="no">Portfolio</span><span class="err">'</span><span class="n">s</span>
 <span class="o">&gt;</span> <span class="no">HC</span><span class="o">::</span><span class="no">Portfolio</span><span class="p">.</span><span class="nf">last</span><span class="p">.</span><span class="nf">in</span><span class="p">(</span> <span class="sr">/d2f/</span> <span class="p">).</span><span class="nf">out</span><span class="p">.</span><span class="nf">datum</span>    <span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"7.12.2020"</span><span class="p">]</span> <span class="c1"># Array of time-grid-objects</span>
@@ -600,7 +606,7 @@ In the process, a bidirectional link <code class="language-plaintext highlighter
 
 <div class="alert alert-info" role="alert"><i class="fa fa-bars"></i> As shortcut, a method <code class="language-plaintext highlighter-rouge">portfolios</code> is provided for <code class="language-plaintext highlighter-rouge">TG::TAG</code> (TimeGrid)-Vertices.</div>
 
-<h2 id="get-account-data">Get Account-Data</h2>
+<h4 id="get-account-data">Get Account-Data</h4>
 
 <p>In the <a href="account_overview.html">IB-Gateway</a>-Section a primitive approach to access Account-Value-Data is presented.</p>
 
@@ -635,7 +641,7 @@ In the process, a bidirectional link <code class="language-plaintext highlighter
 
 <div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> <b>::</b> In plain vanilla queries OrientDB-Database-class names have to bo used. </div>
 
-<h2 id="monitor-the-portfolio">Monitor the Portfolio</h2>
+<h3 id="monitor-the-portfolio">Monitor the Portfolio</h3>
 
 <p><code class="language-plaintext highlighter-rouge">HC::Portfolio.bake</code> imports <code class="language-plaintext highlighter-rouge">IB::PortfolioValues</code> as well. The records are connected via 
 <code class="language-plaintext highlighter-rouge">HC::HAS_POSITION</code>-edges.</p>
@@ -648,7 +654,7 @@ In the process, a bidirectional link <code class="language-plaintext highlighter
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="no">Date</span><span class="p">.</span><span class="nf">today</span><span class="p">.</span><span class="nf">to_tg</span><span class="p">.</span><span class="nf">out</span><span class="p">(</span> <span class="sr">/d2F/</span><span class="p">).</span><span class="nf">in</span><span class="p">.</span><span class="nf">out</span><span class="p">(</span> <span class="sr">/has/</span><span class="p">).</span><span class="nf">in</span><span class="p">.</span><span class="nf">contract</span>
  <span class="o">=&gt;</span> <span class="p">[[</span><span class="s2">"#202:0"</span><span class="p">,</span> <span class="s2">"#203:0"</span><span class="p">,</span> <span class="s2">"#204:0"</span><span class="p">],</span> <span class="o">...</span> 
 <span class="c1"># contracts are stored as rid-valus which have to be expanded:</span>
-<span class="o">&gt;</span> <span class="nb">puts</span> <span class="no">Date</span><span class="p">.</span><span class="nf">today</span><span class="p">.</span><span class="nf">to_tg</span><span class="p">.</span><span class="nf">out</span><span class="p">(</span><span class="no">TG</span><span class="o">::</span><span class="no">D2F</span><span class="p">).</span><span class="nf">in</span><span class="p">.</span><span class="nf">out</span><span class="p">(</span> <span class="no">HC</span><span class="o">::</span><span class="no">HAS_POSITION</span> <span class="p">).</span><span class="nf">in</span><span class="p">.</span><span class="nf">contract</span><span class="p">.</span><span class="nf">expand</span><span class="p">.</span><span class="nf">to_human</span>
+<span class="o">&gt;</span> <span class="nb">puts</span> <span class="no">Date</span><span class="p">.</span><span class="nf">today</span><span class="p">.</span><span class="nf">to_tg</span><span class="p">.</span><span class="nf">out</span><span class="p">(</span><span class="no">HC</span><span class="o">::</span><span class="no">D2F</span><span class="p">).</span><span class="nf">in</span><span class="p">.</span><span class="nf">out</span><span class="p">(</span> <span class="no">HC</span><span class="o">::</span><span class="no">HAS_POSITION</span> <span class="p">).</span><span class="nf">in</span><span class="p">.</span><span class="nf">contract</span><span class="p">.</span><span class="nf">expand</span><span class="p">.</span><span class="nf">to_human</span>
      <span class="o">&lt;</span><span class="no">Stock</span><span class="p">:</span> <span class="no">J36</span> <span class="no">USD</span> <span class="no">SGX</span><span class="o">&gt;</span>
      <span class="o">&lt;</span><span class="no">Stock</span><span class="p">:</span> <span class="no">PRX</span> <span class="no">EUR</span> <span class="no">AEB</span><span class="o">&gt;</span>
      <span class="o">&lt;</span><span class="no">Stock</span><span class="p">:</span> <span class="no">WFC</span> <span class="no">USD</span> <span class="no">NYSE</span><span class="o">&gt;</span>
@@ -699,6 +705,33 @@ In the process, a bidirectional link <code class="language-plaintext highlighter
 <p>In this case,  only one portfolio is monitored by <strong><em>IB-Ruby</em></strong>, thus only one element is left in each sub-array.</p>
 
 <p>Note that only three <code class="language-plaintext highlighter-rouge">TG_Tag</code> vertices were populated. Empty TimeGrid-Entries are silently ignored.</p>
+
+<h3 id="ibaccount-ibadvisor-ibuser">IB::Account, IB::Advisor, IB::User</h3>
+
+<p>Finally each <code class="language-plaintext highlighter-rouge">HC::Portfolio</code>-record is connected to an <code class="language-plaintext highlighter-rouge">IB::Account</code>-reference.  Again, the connection
+is bidirectional, each <code class="language-plaintext highlighter-rouge">IB::Account</code> knows how many <code class="language-plaintext highlighter-rouge">HC::Portfolio</code> records are saved and each 
+<code class="language-plaintext highlighter-rouge">HC::Portfolio</code> is bind to an Account. Inheritance is maintained.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="no">IB</span><span class="o">::</span><span class="no">Account</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">to_human</span>
+  <span class="no">INFO</span><span class="o">-&gt;</span><span class="nb">select</span> <span class="n">from</span> <span class="n">ib_account</span> <span class="n">order</span> <span class="n">by</span> <span class="vi">@rid</span> <span class="n">limit</span>  <span class="mi">1</span>
+ <span class="o">=&gt;</span> <span class="s2">"&lt;user U1****12&gt;"</span> 
+
+ <span class="o">&gt;</span>  <span class="nb">puts</span> <span class="no">IB</span><span class="o">::</span><span class="no">Account</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">in</span><span class="p">.</span><span class="nf">out</span><span class="p">.</span><span class="nf">to_human</span>
+   <span class="o">&lt;</span><span class="no">Portfolio</span><span class="p">[</span><span class="mi">242</span><span class="p">:</span><span class="mi">0</span><span class="p">]:</span> <span class="n">account</span><span class="ss">:&lt;</span><span class="n">user</span> <span class="no">U12</span><span class="o">****</span><span class="mi">2</span><span class="o">&gt;</span><span class="p">,</span> <span class="mi">35</span> <span class="no">AccountValues</span><span class="p">;</span> <span class="mi">19</span> <span class="no">Positions</span> <span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="no">Portfolio</span><span class="p">[</span><span class="mi">243</span><span class="p">:</span><span class="mi">0</span><span class="p">]:</span> <span class="n">account</span><span class="ss">:&lt;</span><span class="n">user</span> <span class="no">U12</span><span class="o">****</span><span class="mi">2</span><span class="o">&gt;</span><span class="p">,</span> <span class="mi">35</span> <span class="no">AccountValues</span><span class="p">;</span> <span class="mi">19</span> <span class="no">Positions</span> <span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="no">Portfolio</span><span class="p">[</span><span class="mi">244</span><span class="p">:</span><span class="mi">0</span><span class="p">]:</span> <span class="n">account</span><span class="ss">:&lt;</span><span class="n">user</span> <span class="no">U12</span><span class="o">****</span><span class="mi">2</span><span class="o">&gt;</span><span class="p">,</span> <span class="mi">36</span> <span class="no">AccountValues</span><span class="p">;</span> <span class="mi">18</span> <span class="no">Positions</span> <span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="no">Portfolio</span><span class="p">[</span><span class="mi">245</span><span class="p">:</span><span class="mi">0</span><span class="p">]:</span> <span class="n">account</span><span class="ss">:&lt;</span><span class="n">user</span> <span class="no">U12</span><span class="o">****</span><span class="mi">2</span><span class="o">&gt;</span><span class="p">,</span> <span class="mi">36</span> <span class="no">AccountValues</span><span class="p">;</span> <span class="mi">18</span> <span class="no">Positions</span> <span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="no">Portfolio</span><span class="p">[</span><span class="mi">246</span><span class="p">:</span><span class="mi">0</span><span class="p">]:</span> <span class="n">account</span><span class="ss">:&lt;</span><span class="n">user</span> <span class="no">U12</span><span class="o">****</span><span class="mi">2</span><span class="o">&gt;</span><span class="p">,</span> <span class="mi">36</span> <span class="no">AccountValues</span><span class="p">;</span> <span class="mi">18</span> <span class="no">Positions</span> <span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="no">Portfolio</span><span class="p">[</span><span class="mi">247</span><span class="p">:</span><span class="mi">0</span><span class="p">]:</span> <span class="n">account</span><span class="ss">:&lt;</span><span class="n">user</span> <span class="no">U12</span><span class="o">****</span><span class="mi">2</span><span class="o">&gt;</span><span class="p">,</span> <span class="mi">36</span> <span class="no">AccountValues</span><span class="p">;</span> <span class="mi">18</span> <span class="no">Positions</span> <span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="no">Portfolio</span><span class="p">[</span><span class="mi">248</span><span class="p">:</span><span class="mi">0</span><span class="p">]:</span> <span class="n">account</span><span class="ss">:&lt;</span><span class="n">user</span> <span class="no">U12</span><span class="o">****</span><span class="mi">2</span><span class="o">&gt;</span><span class="p">,</span> <span class="mi">34</span> <span class="no">AccountValues</span><span class="p">;</span> <span class="mi">20</span> <span class="no">Positions</span> <span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="no">Portfolio</span><span class="p">[</span><span class="mi">249</span><span class="p">:</span><span class="mi">0</span><span class="p">]:</span> <span class="n">account</span><span class="ss">:&lt;</span><span class="n">user</span> <span class="no">U12</span><span class="o">****</span><span class="mi">2</span><span class="o">&gt;</span><span class="p">,</span> <span class="mi">35</span> <span class="no">AccountValues</span><span class="p">;</span> <span class="mi">19</span> <span class="no">Positions</span> <span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="no">Portfolio</span><span class="p">[</span><span class="mi">242</span><span class="p">:</span><span class="mi">1</span><span class="p">]:</span> <span class="n">account</span><span class="ss">:&lt;</span><span class="n">user</span> <span class="no">U12</span><span class="o">****</span><span class="mi">2</span><span class="o">&gt;</span><span class="p">,</span> <span class="mi">38</span> <span class="no">AccountValues</span><span class="p">;</span> <span class="mi">21</span> <span class="no">Positions</span> <span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="no">Portfolio</span><span class="p">[</span><span class="mi">243</span><span class="p">:</span><span class="mi">1</span><span class="p">]:</span> <span class="n">account</span><span class="ss">:&lt;</span><span class="n">user</span> <span class="no">U12</span><span class="o">****</span><span class="mi">2</span><span class="o">&gt;</span><span class="p">,</span> <span class="mi">38</span> <span class="no">AccountValues</span><span class="p">;</span> <span class="mi">22</span> <span class="no">Positions</span> <span class="o">&gt;</span>
+
+<span class="o">&gt;</span> <span class="no">IB</span><span class="o">::</span><span class="no">Account</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">in</span><span class="p">.</span><span class="nf">out</span><span class="p">.</span><span class="nf">in</span><span class="p">(</span> <span class="sr">/d2F/</span><span class="p">).</span><span class="nf">out</span><span class="p">.</span><span class="nf">datum</span>
+  <span class="o">=&gt;</span> <span class="p">[[</span><span class="no">Mon</span><span class="p">,</span> <span class="mo">07</span> <span class="no">Dec</span> <span class="mi">2020</span><span class="p">],</span> <span class="p">[</span><span class="no">Tue</span><span class="p">,</span> <span class="mi">08</span> <span class="no">Dec</span> <span class="mi">2020</span><span class="p">],</span> <span class="p">[</span><span class="no">Wed</span><span class="p">,</span> <span class="mi">09</span> <span class="no">Dec</span> <span class="mi">2020</span><span class="p">],</span> <span class="o">...</span> 
+
+</code></pre></div></div>
 
 
 
