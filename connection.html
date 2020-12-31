@@ -567,39 +567,85 @@ require 'ib-api'
 
 in your scripts.
 </div>
+<h2 id="ibconnection">IB::Connection</h2>
 
-<h2 id="typical-setup">Typical setup</h2>
-
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">require</span> <span class="s1">'bundler/setup'</span>
-<span class="nb">require</span> <span class="s1">'ib-api'</span>
-
-<span class="no">TWS</span><span class="o">=</span> <span class="s1">'tws:7496'</span> <span class="c1"># or 'localhost'  </span>
-
-<span class="no">IB</span><span class="o">::</span><span class="no">Connection</span><span class="p">.</span><span class="nf">new</span> <span class="ss">host: </span><span class="s1">'127.0.0'</span> <span class="p">,</span> <span class="ss">port: </span><span class="mi">7496</span><span class="p">,</span>  <span class="n">client_id</span><span class="p">:</span><span class="mi">1134</span>
-
-<span class="k">if</span> <span class="p">(</span> <span class="n">ib</span> <span class="o">=</span> <span class="no">IB</span><span class="o">::</span><span class="no">Connection</span><span class="p">.</span><span class="nf">current</span> <span class="p">).</span><span class="nf">present?</span>
-    <span class="p">(</span><span class="o">...</span><span class="p">)</span>
-  <span class="k">else</span>
-   <span class="nb">puts</span> <span class="s1">'No TWS'</span>
-  <span class="k">end</span>
+<p><strong><em>ib-api</em></strong> provides <code class="language-plaintext highlighter-rouge">IB::Connection.new</code> to connect to the TWS/Gateway.</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">initialize</span> <span class="ss">host: </span><span class="s1">'127.0.0.1'</span><span class="p">,</span>
+               <span class="ss">port: </span><span class="s1">'4002'</span><span class="p">,</span> <span class="c1"># IB Gateway connection  4001:  production</span>
+                             <span class="c1"># TWS                    7496:  production</span>
+               <span class="ss">connect: </span><span class="kp">true</span><span class="p">,</span>         <span class="c1"># Connect at initialization</span>
+               <span class="ss">received:  </span><span class="kp">true</span><span class="p">,</span>       <span class="c1"># Keep all received messages in a @received Hash</span>
+               <span class="ss">logger: </span><span class="n">default_logger</span><span class="p">,</span>
+               <span class="ss">client_id:  </span><span class="nb">rand</span><span class="p">(</span> <span class="mi">1001</span> <span class="o">..</span> <span class="mi">9999</span> <span class="p">)</span> 
 </code></pre></div></div>
 
-<p>To prevent losses of messages transmitted by the <em>TWS</em> before establishing the connection itself,
-the message-management is initialized  prior to the connect-attempt. Incoming messages
-are stored in <code class="language-plaintext highlighter-rouge">IB::Connection.received</code>. The response can further customized  through a provided block</p>
+<p>If called without arguments, it connects through port 4002 to a  locally running gateway, prints 
+messages to the screen and saves the communication in a <code class="language-plaintext highlighter-rouge">received</code>-hash.</p>
 
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">ib</span> <span class="o">=</span> <span class="no">IB</span><span class="o">::</span><span class="no">Connection</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span> <span class="ss">client_id: </span><span class="mi">1112</span><span class="p">,</span>  <span class="ss">port: </span><span class="mi">7496</span> <span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">gw</span><span class="o">|</span>
-<span class="o">&gt;</span>  <span class="c1">## Subcribe to forseable events before the connection is completed</span>
-<span class="o">&gt;</span>  <span class="c1">## Subscribe to TWS alerts/errors</span>
-<span class="o">&gt;</span>  <span class="n">gw</span><span class="p">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="ss">:Alert</span><span class="p">,</span> <span class="ss">:AccountSummary</span><span class="p">){</span> <span class="o">|</span><span class="n">msg</span><span class="o">|</span> <span class="nb">puts</span> <span class="n">msg</span><span class="p">.</span><span class="nf">to_human</span> <span class="p">}</span>
-<span class="o">&gt;</span>  <span class="c1">## set logging level</span>
-<span class="o">&gt;</span>  <span class="n">gw</span><span class="p">.</span><span class="nf">logger</span><span class="p">.</span><span class="nf">level</span> <span class="o">=</span> <span class="no">Logger</span><span class="o">::</span><span class="no">ERROR</span>
-<span class="o">&gt;</span> <span class="k">end</span>
+<div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> <b>::</b> The active Connection is always present via <code class="language-plaintext highlighter-rouge">IB::Connection.current</code></div>
 
+<h3 id="public-interface">public interface</h3>
+
+<table>
+  <tbody>
+    <tr>
+      <td>connect</td>
+      <td>connected?</td>
+      <td>disconnect</td>
+    </tr>
+    <tr>
+      <td>subscribe</td>
+      <td>unsubscribe</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>send_message</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>received</td>
+      <td>received?</td>
+      <td>clear_received</td>
+    </tr>
+    <tr>
+      <td>wait_for</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>place_order</td>
+      <td>modify_order</td>
+      <td>cancel_order</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Its usage is demonstrated by this small demonstration</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nb">require</span> <span class="s1">'bundler/setup'</span>
+ <span class="nb">require</span> <span class="s1">'ib-api'</span>
+ 
+ <span class="n">ib</span> <span class="o">=</span> <span class="no">IB</span><span class="o">::</span><span class="no">Connection</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span> <span class="ss">port: </span><span class="mi">7497</span> <span class="p">)</span> <span class="k">do</span> <span class="o">|</span> <span class="n">gw</span> <span class="o">|</span>
+      <span class="n">gw</span><span class="p">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="ss">:Alert</span><span class="p">,</span> <span class="ss">:AccountValue</span><span class="p">)</span> <span class="p">{</span> <span class="o">|</span><span class="n">msg</span><span class="o">|</span> <span class="nb">puts</span> <span class="n">msg</span><span class="p">.</span><span class="nf">to_human</span> <span class="p">}</span>
+      <span class="n">gw</span><span class="p">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="ss">:OpenOrder</span><span class="p">)</span> <span class="p">{</span> <span class="o">|</span><span class="n">msg</span><span class="o">|</span> <span class="nb">puts</span> <span class="s2">"Placed: </span><span class="si">#{</span><span class="n">msg</span><span class="p">.</span><span class="nf">order</span><span class="si">}</span><span class="s2">!"</span> <span class="p">}</span>
+      <span class="n">gw</span><span class="p">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="ss">:ExecutionData</span><span class="p">)</span> <span class="p">{</span> <span class="o">|</span><span class="n">msg</span><span class="o">|</span> <span class="nb">puts</span> <span class="s2">"Filled: </span><span class="si">#{</span><span class="n">msg</span><span class="p">.</span><span class="nf">execution</span><span class="si">}</span><span class="s2">!"</span> <span class="p">}</span>
+    <span class="k">end</span>
+
+ <span class="n">ib</span><span class="p">.</span><span class="nf">send_message</span> <span class="ss">:RequestAccountData</span><span class="p">,</span> <span class="ss">account_code: </span><span class="s1">'U123456'</span>
+ <span class="n">ib</span><span class="p">.</span><span class="nf">wait_for</span> <span class="ss">:AccountDownloadEnd</span>
+
+ <span class="n">contract</span> <span class="o">=</span> <span class="no">IB</span><span class="o">::</span><span class="no">Stock</span><span class="p">.</span><span class="nf">new</span> <span class="ss">symbol: </span><span class="s1">'WFC'</span>
+ <span class="n">buy_order</span> <span class="o">=</span> <span class="no">IB</span><span class="o">::</span><span class="no">Limit</span><span class="p">.</span><span class="nf">order</span> <span class="ss">size: </span><span class="mi">100</span><span class="p">,</span> <span class="ss">price: </span><span class="mf">21.00</span><span class="p">,</span> <span class="ss">action: :buy</span><span class="p">,</span>
+                                <span class="ss">tif: :good_till_cancelled</span><span class="p">,</span> <span class="ss">account_code: </span><span class="s1">'U123456'</span>
+
+ <span class="n">ib</span><span class="p">.</span><span class="nf">place_order</span> <span class="n">buy_order</span><span class="p">,</span> <span class="n">contract</span>
+ <span class="n">ib</span><span class="p">.</span><span class="nf">wait_for</span> <span class="ss">:ExecutionData</span>
 
 </code></pre></div></div>
 
-<p>The main purpose of <code class="language-plaintext highlighter-rouge">IB::Connection</code> is to submit <code class="language-plaintext highlighter-rouge">IB::Messages</code> to the <em>TWS-Api</em> and to receive 
+<p>The main purpose of <code class="language-plaintext highlighter-rouge">IB::Connection</code> is connect to the tws/gateway,
+to submit <code class="language-plaintext highlighter-rouge">IB::Messages</code> to the <em>TWS-Api</em> and to receive 
 the response.
 Thus the centerpiece is its <code class="language-plaintext highlighter-rouge">send_message</code> method.</p>
 
@@ -633,7 +679,7 @@ Thus the centerpiece is its <code class="language-plaintext highlighter-rouge">s
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2020 IB-Ruby. All rights reserved. <br />
- Site last generated: Dec 16, 2020 <br />
+ Site last generated: Dec 31, 2020 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>

@@ -557,10 +557,40 @@ $('#toc').on('click', 'a', function() {
 
     
 
-   <p>In the WAN-World many things can go terribly wrong.<br />
-Even a super stable cable connection can suddenly vanish. Then a reconnection may be necessary.</p>
+   <div class="bs-callout bs-callout-info">
+The <em>ib-api</em> Gem includes the <em>Connecton</em> application.    
+<br />
+Include  
+<pre> 
+require 'ib-api' 
+</pre>
+
+in your scripts.
+</div>
 
 <h2 id="ibconnection">IB::Connection</h2>
+
+<p><code class="language-plaintext highlighter-rouge">IB::Connection.new</code> instantiates the  connection.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">Connection</code>-instance provides</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>connect</td>
+      <td>connected?</td>
+      <td>disconnect</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>to manage the connection.</p>
+
+<h2 id="ibgateway">IB::Gateway</h2>
+
+<p>In the WAN-World many things can go terribly wrong.<br />
+Even a super stable cable connection can suddenly vanish. Then a reconnection may be necessary.</p>
+
 <p>The connection to the TWS is performed in <code class="language-plaintext highlighter-rouge">IB::Connection.connect</code>, simply by opening a port</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>self.socket = IBSocket.open(@host, @port)  
 </code></pre></div></div>
@@ -568,8 +598,6 @@ Even a super stable cable connection can suddenly vanish. Then a reconnection ma
 
 <p>If the connection cannot be established,  <code class="language-plaintext highlighter-rouge">Errno::ECONNREFUSED</code>  is fired. Its up to the user 
 to handle this error.</p>
-
-<h2 id="ibgateway">IB::Gateway</h2>
 
 <div class="bs-callout bs-callout-info">
 The <em>ib-extensions</em> Gem includes the <em>Gateway</em> application.    
@@ -635,7 +663,7 @@ Then an error-message is transmitted:</p>
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2020 IB-Ruby. All rights reserved. <br />
- Site last generated: Dec 16, 2020 <br />
+ Site last generated: Dec 31, 2020 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>

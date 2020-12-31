@@ -586,7 +586,8 @@ $('#toc').on('click', 'a', function() {
 
 <p>This is easiest demonstrated by copying  example-files to the  project</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> $ cd {your project}
- $ cp -r ../../ib-api/example  .
+ $ ib_api=`bundle info --path ib-api`  # get the path of the installed gem
+ $ cp -r $ib_api/example  .
  $ cd example
  $ ./account_positions
  # TWS Warning 2104: Market data farm connection is OK:usfarm
@@ -602,7 +603,7 @@ in the TWS/Gateway and change the <code class="language-plaintext highlighter-ro
 
 <h3 id="a-local-console">A local Console</h3>
 
-<p>Copy the <code class="language-plaintext highlighter-rouge">/bin</code>-directory of <code class="language-plaintext highlighter-rouge">ib-api</code> or <code class="language-plaintext highlighter-rouge">ib-extensions</code> to your project-directory and modify the <code class="language-plaintext highlighter-rouge">console</code>-script to your needs.  Details: <a href="/console">Interactive Console</a></p>
+<p>Copy the <code class="language-plaintext highlighter-rouge">/bin</code>-directory of <code class="language-plaintext highlighter-rouge">ib-api</code> or <code class="language-plaintext highlighter-rouge">ib-extensions</code> to your project-directory and modify the <code class="language-plaintext highlighter-rouge">console</code>-script to your needs.  Details: <a href="console">Interactive Console</a></p>
 
 
     <div class="tags">
@@ -628,7 +629,7 @@ in the TWS/Gateway and change the <code class="language-plaintext highlighter-ro
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2020 IB-Ruby. All rights reserved. <br />
- Site last generated: Dec 16, 2020 <br />
+ Site last generated: Dec 31, 2020 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>

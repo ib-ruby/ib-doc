@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
-<meta name="keywords" content="troubleshooting,  ">
+<meta name="keywords" content=" ">
 <title>IB-Ruby Console | IB-Ruby documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
@@ -557,9 +557,37 @@ $('#toc').on('click', 'a', function() {
 
     
 
-   <p>To experiment with the API, a preconfigurated interactive irb-console is provided</p>
+   <p>To experiment with the API, a preconfigured interactive irb-console is provided</p>
 
-<div class="alert alert-info" role="alert"><i class="fa fa-bars"></i> To Access: <code class="language-plaintext highlighter-rouge">cd bin &amp;&amp; ./console.rb</code>.</div>
+<div class="alert alert-info" role="alert"><i class="fa fa-bars"></i> To Access: <code class="language-plaintext highlighter-rouge">cd bin &amp;&amp; ./console</code>.</div>
+
+<h3 id="install-the-console-in-your-project">Install the console in your project</h3>
+
+<p>This is easily obtained  by copying the  bin-directory form the <code class="language-plaintext highlighter-rouge">ib-api</code>, <code class="language-plaintext highlighter-rouge">ib-extension' or
+</code>ib-orientdb` gem  to the  project-dir</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> $ cd {your project}
+ $ ib_gem=`bundle info --path ib-extension`  # or ib-api  or ib-orientdb
+ $ cp -r $ib_gem/bin  .
+
+</code></pre></div></div>
+
+<p>Include <code class="language-plaintext highlighter-rouge">require [your_project_name]</code> to the scripts.</p>
+
+<h3 id="run-the-console">Run the console</h3>
+
+<p>Without parameters it connects to a running Gateway-Application on localhost. <br />
+The GUI-Version (TWS) is addressed by calling <code class="language-plaintext highlighter-rouge">./console tws</code> from the command line..</p>
+
+<div class="alert alert-info" role="alert"><i class="fa fa-bars"></i> API-Ports and Client_id are read from <code class="language-plaintext highlighter-rouge">connect.yml</code>.</div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>:gateway:  4002
+:tws: 7496
+:client_id: 2000
+</code></pre></div></div>
+<p>Edit the file and ensure that the ports chosen are equal to those specified in the <code class="language-plaintext highlighter-rouge">API</code>-section of the 
+configuration of TWS/Gateway:</p>
+
+<p><img src="images/tws-settings.png" alt="Screenshot" /></p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> ---------------------------------------------
  Namespace is IB ! 
@@ -574,20 +602,11 @@ $('#toc').on('click', 'a', function() {
  some basic Messages are subscribed and accordingly displayed
 </code></pre></div></div>
 
-<p>Without parameters it connects to a running Gateway-Application on localhost. <br />
-The GUI-Version (TWS) is addressed through <code class="language-plaintext highlighter-rouge">./console.rb tws</code>.</p>
+<p>The <code class="language-plaintext highlighter-rouge">IB::Connection</code>-Object is accessed through <strong><code class="language-plaintext highlighter-rouge">C</code></strong></p>
 
-<div class="alert alert-info" role="alert"><i class="fa fa-bars"></i> Api-Ports and Client_id are read from <code class="language-plaintext highlighter-rouge">console.yml</code>.</div>
+<p>(for Gateway)</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>:gateway:  4002
-:tws: 7496
-:client_id: 2000
-</code></pre></div></div>
-<p>Edit the file and ensure that the ports choosen are equal to those specified in the <code class="language-plaintext highlighter-rouge">API</code>-section of the 
-configuration of TWS/Gateway:
-<img src="/images/tws-settings.png" alt="screenshot" /></p>
-
-<p>The <code class="language-plaintext highlighter-rouge">IB::Connection</code>-Object is accessed through <strong><code class="language-plaintext highlighter-rouge">C</code></strong>:</p>
+<p>The <code class="language-plaintext highlighter-rouge">IB::Gateway</code>-Object is accessed through <strong><code class="language-plaintext highlighter-rouge">G</code></strong></p>
 
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="no">C</span><span class="p">.</span><span class="nf">send_message</span> <span class="ss">:RequestContractDetails</span><span class="p">,</span> <span class="ss">contract: </span><span class="no">Stock</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span> <span class="ss">symbol: </span><span class="s1">'TAP'</span> <span class="p">)</span>
   <span class="o">=&gt;</span> <span class="mi">5878</span> 
@@ -605,7 +624,7 @@ configuration of TWS/Gateway:
  <span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"&lt;Stock: TAP USD&gt;"</span><span class="p">]</span> 
 </code></pre></div></div>
 
-<h2 id="array-expansion">Array Expansion</h2>
+<h3 id="array-expansion">Array Expansion</h3>
 <p>To simplify operations with received data, arbitrary operations may be applied to array’s.</p>
 
 <p><strong>Example:</strong> After collecting <a href="/Historical_data">End-of-Day historical data</a> for a <code class="language-plaintext highlighter-rouge">IB::Contract</code>,
@@ -625,14 +644,6 @@ configuration of TWS/Gateway:
 
     <div class="tags">
         
-        <b>Tags: </b>
-        
-        
-        
-        <a href="tag_troubleshooting.html" class="btn btn-default navbar-btn cursorNorm" role="button">troubleshooting</a>
-        
-        
-        
     </div>
 
 
@@ -646,7 +657,7 @@ configuration of TWS/Gateway:
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2020 IB-Ruby. All rights reserved. <br />
- Site last generated: Dec 16, 2020 <br />
+ Site last generated: Dec 31, 2020 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>
