@@ -562,10 +562,10 @@ To use the <em>End of Data Historical Data</em> feature, include the <em>ib-exte
 
 <pre> 
 require 'ib-api' 
-require 'ib/eod' 
+require 'ib/eod'  # or require 'ib-extensions'
 </pre>
 
-in your scripts.
+in your scripts. 
 </div>
 
 <h3 id="historical-data">Historical Data</h3>
@@ -580,30 +580,30 @@ Next the script has to listen for a <code class="language-plaintext highlighter-
   <li><code class="language-plaintext highlighter-rouge">contract.eod( duration: '10 w', start: Date.new(2019,3,14) what: :historical_volatility )</code>  gets the histrorical volatility for the  10 weeks starting on March 14th 2019.</li>
 </ul>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-IB::Contract.eod start: {a date}, to: {a date; Default: Date.today},
-                 duration: {string  or integer},
-                 what: {symbol; Default: :trades }
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="no">IB</span><span class="o">::</span><span class="no">Contract</span><span class="p">.</span><span class="nf">eod</span> <span class="ss">start: </span><span class="p">{</span><span class="n">a</span> <span class="n">date</span><span class="p">},</span> <span class="ss">to: </span><span class="p">{</span><span class="n">a</span> <span class="n">date</span><span class="p">;</span> <span class="no">Default</span><span class="p">:</span> <span class="no">Date</span><span class="p">.</span><span class="nf">today</span><span class="p">},</span>
+                 <span class="ss">duration: </span><span class="p">{</span><span class="n">string</span>  <span class="n">or</span> <span class="n">integer</span><span class="p">},</span>
+                 <span class="ss">what: </span><span class="p">{</span><span class="n">symbol</span><span class="p">;</span> <span class="no">Default</span><span class="p">:</span> <span class="ss">:trades</span> <span class="p">}</span>
 
 
-The duration can either be specified as Sting " yx D", " yx W", "yx M" , "xy Y" 
-or as Integer. If the string-notation is used, ensure to include a space.
+<span class="o">-&gt;</span> <span class="no">The</span> <span class="n">duration</span> <span class="n">can</span> <span class="n">either</span> <span class="n">be</span> <span class="n">specified</span> <span class="n">as</span> <span class="no">Sting</span> <span class="s2">" yx D"</span><span class="p">,</span> <span class="s2">" yx W"</span><span class="p">,</span> <span class="s2">"yx M"</span> <span class="p">,</span> <span class="s2">"xy Y"</span> 
+<span class="o">-&gt;</span> <span class="n">or</span> <span class="n">as</span> <span class="no">Integer</span><span class="o">.</span> <span class="no">If</span> <span class="n">the</span> <span class="n">string</span><span class="o">-</span><span class="n">notation</span> <span class="n">is</span> <span class="n">used</span><span class="p">,</span> <span class="k">ensure</span> <span class="n">to</span> <span class="kp">include</span> <span class="n">a</span> <span class="n">space</span><span class="p">.</span>
 
-The parameter :what specifies the kind of received data: 
-Valid values:
-        :trades, :midpoint, :bid, :ask, :bid_ask,
-        :historical_volatility, :option_implied_volatility,
-        :option_volume, :option_open_interest
+<span class="nf">-</span><span class="o">&gt;</span> <span class="no">The</span> <span class="n">parameter</span> <span class="ss">:what</span> <span class="n">specifies</span> <span class="n">the</span> <span class="n">kind</span> <span class="n">of</span> <span class="n">received</span> <span class="ss">data: 
+</span><span class="o">-&gt;</span> <span class="no">Valid</span> <span class="ss">values:
+        :trades</span><span class="p">,</span> <span class="ss">:midpoint</span><span class="p">,</span> <span class="ss">:bid</span><span class="p">,</span> <span class="ss">:ask</span><span class="p">,</span> <span class="ss">:bid_ask</span><span class="p">,</span>
+        <span class="ss">:historical_volatility</span><span class="p">,</span> <span class="ss">:option_implied_volatility</span><span class="p">,</span>
+        <span class="ss">:option_volume</span><span class="p">,</span> <span class="ss">:option_open_interest</span>
 
-IB::Contract.eod returns an array of IB::Bar objects unless they are  preprocessed in a block.
+<span class="o">-&gt;</span> <span class="no">IB</span><span class="o">::</span><span class="no">Contract</span><span class="p">.</span><span class="nf">eod</span> <span class="n">returns</span> <span class="n">an</span> <span class="n">array</span> <span class="n">of</span> <span class="no">IB</span><span class="o">::</span><span class="no">Bar</span> <span class="n">objects</span> <span class="k">unless</span> <span class="n">they</span> <span class="n">are</span>  <span class="n">preprocessed</span> <span class="k">in</span> <span class="n">a</span> <span class="n">block</span><span class="o">.</span>
 
-&gt; IB::Symbols.Index.estx.eod( duration: '10 d' ){ |r| r.close  }
+<span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">.</span><span class="no">Index</span><span class="p">.</span><span class="nf">estx</span><span class="p">.</span><span class="nf">eod</span><span class="p">(</span> <span class="ss">duration: </span><span class="s1">'10 d'</span> <span class="p">){</span> <span class="o">|</span><span class="n">r</span><span class="o">|</span> <span class="n">r</span><span class="p">.</span><span class="nf">close</span>  <span class="p">}</span>
 
-returns an array of close prices of the last ten days.
+<span class="o">-&gt;</span> <span class="n">returns</span> <span class="n">an</span> <span class="n">array</span> <span class="n">of</span> <span class="n">close</span> <span class="n">prices</span> <span class="n">of</span> <span class="n">the</span> <span class="n">last</span> <span class="n">ten</span> <span class="n">days</span><span class="o">.</span>
 
-&gt; IB::Symbols.Index.estx.eod( duration: '10 d' ){ |r| r.high - r.low  }
+<span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">.</span><span class="no">Index</span><span class="p">.</span><span class="nf">estx</span><span class="p">.</span><span class="nf">eod</span><span class="p">(</span> <span class="ss">duration: </span><span class="s1">'10 d'</span> <span class="p">){</span> <span class="o">|</span><span class="n">r</span><span class="o">|</span> <span class="n">r</span><span class="p">.</span><span class="nf">high</span> <span class="o">-</span> <span class="n">r</span><span class="p">.</span><span class="nf">low</span>  <span class="p">}</span>
 
-returns an array of price-ranges  of the last ten days.
+<span class="o">-&gt;</span> <span class="n">returns</span> <span class="n">an</span> <span class="n">array</span> <span class="n">of</span> <span class="n">price</span><span class="o">-</span><span class="n">ranges</span>  <span class="n">of</span> <span class="n">the</span> <span class="n">last</span> <span class="n">ten</span> <span class="n">days</span><span class="o">.</span>
 </code></pre></div></div>
 
 <h3 id="examples">Examples</h3>
@@ -621,7 +621,7 @@ returns an array of price-ranges  of the last ten days.
 
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="n">yesterdays_close</span> <span class="o">=</span> <span class="kp">nil</span>
  <span class="no">IB</span><span class="o">::</span><span class="no">Stock</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span> <span class="ss">symbol: </span><span class="s1">'GE'</span><span class="p">).</span>
-           <span class="nf">eod</span><span class="p">(</span> <span class="ss">start: </span><span class="no">Date</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">2010</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">15</span><span class="p">),</span> <span class="ss">duration: </span><span class="mi">10</span> <span class="p">)</span><span class="k">do</span> <span class="o">|</span><span class="n">r</span><span class="o">|</span>
+           <span class="nf">eod</span><span class="p">(</span> <span class="ss">start: </span><span class="no">Date</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">2010</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">15</span><span class="p">),</span> <span class="ss">duration: </span><span class="mi">10</span> <span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">r</span><span class="o">|</span>
                   <span class="n">z</span><span class="o">=</span> <span class="k">if</span>  <span class="n">yesterdays_close</span><span class="p">.</span><span class="nf">nil?</span> 
                          <span class="mi">0</span>
                      <span class="k">else</span> 
@@ -633,6 +633,14 @@ returns an array of price-ranges  of the last ten days.
 <span class="o">=&gt;</span> <span class="s2">"0 : 0.08 : 0.02 : 0.0 : 0.01 : 0.03 : 0.03 : 0.1 : 0.04 : 0.03"</span> 
 </code></pre></div></div>
 <p>We save the close of each day in <code class="language-plaintext highlighter-rouge">yesterdays_close</code> and pass it to the next iteration.</p>
+
+<hr />
+<p>Get the daily median of Implied Volatilities</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ge</span><span class="p">.</span><span class="nf">eod</span><span class="p">(</span> <span class="ss">duration: </span><span class="mi">10</span><span class="p">,</span> <span class="ss">what:  :option_implied_volatility</span><span class="p">){</span><span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="nf">high</span> <span class="o">+</span> <span class="n">x</span><span class="p">.</span><span class="nf">low</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span> <span class="p">}.</span><span class="nf">to_f</span><span class="p">.</span><span class="nf">round</span> <span class="mi">3</span>
+<span class="o">=&gt;</span> <span class="p">[</span><span class="mf">0.434</span><span class="p">,</span> <span class="mf">0.425</span><span class="p">,</span> <span class="mf">0.437</span><span class="p">,</span> <span class="mf">0.442</span><span class="p">,</span> <span class="mf">0.441</span><span class="p">,</span> <span class="mf">0.436</span><span class="p">,</span> <span class="mf">0.491</span><span class="p">,</span> <span class="mf">0.491</span><span class="p">,</span> <span class="mf">0.491</span><span class="p">,</span> <span class="mf">0.494</span><span class="p">]</span> 
+
+</code></pre></div></div>
 
 
 
@@ -656,8 +664,8 @@ returns an array of price-ranges  of the last ten days.
 <footer>
             <div class="row">
                 <div class="col-lg-12 footer">
-               &copy;2020 IB-Ruby. All rights reserved. <br />
-<span>Page last updated:</span> October 28, 2020<br/> Site last generated: Dec 31, 2020 <br />
+               &copy;2021 IB-Ruby. All rights reserved. <br />
+<span>Page last updated:</span> Jan 1, 2021<br/> Site last generated: Jan 1, 2021 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>
