@@ -570,6 +570,11 @@ To use the features described, include the <em>ib-orientdb</em> Gem  in the Gemf
 </div>
 
 <p><strong><em>OrientDB</em></strong> is a <strong>N</strong>ot <strong>O</strong>nly <strong>SQL</strong> Database owned and maintained by <em>SAP</em>.</p>
+<div class="bs-callout bs-callout-info">
+The [wiki of ActiveOrient](https://github.com/topofocus/active-orient/wiki/Initialisation) gives an overview of the features
+of the ruby-implementation.
+
+</div>
 
 <p>It aims to be “the first Multi-Model Open Source NOSQL DBMS that brings together the power of graphs and the flexibility of documents into one scalable high-performance operational database.” Through <a href="https://github.com/topofocus/active-orient">Active-Orient</a> it acts as an object-orientated SQL-RDBMS-Database with graph capabilities.</p>
 
@@ -580,7 +585,7 @@ and provides methods to store data provided by the Interactive Brokers TWS into 
  fetches all database classes and initialises them as descendants of <code class="language-plaintext highlighter-rouge">IB::Model</code>. As a consequence, objects received from the TWS
  are in fact unsaved database-entries and objects read from the database are suitable for tws-queries.</div>
 
-<p>This is shown in the following example. To reproduce, clone <a href="https://github.com/ib-ruby/ib-orientdb">ib-orientdb</a> and run the <code class="language-plaintext highlighter-rouge">./console</code> script in <code class="language-plaintext highlighter-rouge">/bin</code> .</p>
+<p>This is shown in the following example. To reproduce, clone <a href="https://github.com/ib-ruby/ib-orientdb">ib-orientdb</a> and run the <code class="language-plaintext highlighter-rouge">./console</code> script in <code class="language-plaintext highlighter-rouge">/bin</code>.</p>
 
 <p>We create a <code class="language-plaintext highlighter-rouge">IB::Stock</code>-object, verify through the <code class="language-plaintext highlighter-rouge">TWS</code> and 
 subsequently store
@@ -646,7 +651,7 @@ Then we query the database and fetch some historical data. No conversion of any 
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2021 IB-Ruby. All rights reserved. <br />
-<span>Page last updated:</span> December 2, 2020<br/> Site last generated: Mar 27, 2021 <br />
+<span>Page last updated:</span> April 5, 2021<br/> Site last generated: Apr 5, 2021 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>

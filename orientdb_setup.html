@@ -571,7 +571,7 @@ $('#toc').on('click', 'a', function() {
 <p>We focus on a single server instance and highly recommend to install the database-server 
 on an virtual machine, a lxc/lxd-container or to run it inside a docker image.</p>
 
-<div class="alert alert-info" role="alert"><i class="fa fa-bars"></i> Follow the instructions of <a href="https://github.com/ib-ruby/ib-orientdb/blob/main/setup.md">setup.md  of ib-orientdb</a> <br /> These are suitable for a lxc-container. <br />Consider to install ib-ruby-components there as well.</div>
+<div class="alert alert-info" role="alert"><i class="fa fa-bars"></i> Follow the instructions of <a href="https://github.com/ib-ruby/ib-orientdb/blob/main/setup.md">setup.md  of ib-orientdb</a> <br /> These are suitable for a lxc-container, like  <a href="https://githb.com/ib-ruby/ib-container">IB-Container</a>  <br />Consider to install ib-ruby-components there as well.</div>
 
 <p>Check your installation by visiting the <code class="language-plaintext highlighter-rouge">studio app</code>. Serveraddress: https://{ip of orientdb-server}:2480</p>
 
@@ -580,7 +580,7 @@ on an virtual machine, a lxc/lxd-container or to run it inside a docker image.</
 <p>Although OrientDB can operate completely schemaless, a rudimentary declaration of links, indices and relations
 speeds things up.</p>
 
-<p>The database structure is defined in  <a href="https://github.com/ib-ruby/ib-orientdb/blob/main/lib/db_init.rb">db_init.rb</a>. <code class="language-plaintext highlighter-rouge">Setup.init_database</code>  is called during initialisation of the <a href="https://github.com/ib-ruby/ib-orientdb/blob/main/bin/console">interactive console</a>.</p>
+<p>The database structure is defined in  <a href="https://github.com/ib-ruby/ib-orientdb/blob/main/lib/ib/setup-orientdb.rb">setup_orientdb.rb</a>. <code class="language-plaintext highlighter-rouge">Setup.init_database</code>  is called during initialisation of the <a href="https://github.com/ib-ruby/ib-orientdb/blob/main/bin/console">interactive console</a>.</p>
 
 <p>The following hierarchy  is implemented:</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- - V
@@ -784,7 +784,7 @@ SELF: IB::OrientGateway
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2021 IB-Ruby. All rights reserved. <br />
-<span>Page last updated:</span> December 2, 2020<br/> Site last generated: Mar 27, 2021 <br />
+<span>Page last updated:</span> April 5, 2021<br/> Site last generated: Apr 5, 2021 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>
