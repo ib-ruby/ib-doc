@@ -639,41 +639,36 @@ basic requirements to achieve this goal:</p>
   </tbody>
 </table>
 
-<ul>
-  <li>Any contract is fully identified by its <code class="language-plaintext highlighter-rouge">con_id</code> and its <code class="language-plaintext highlighter-rouge">exchange</code></li>
-  <li>A <code class="language-plaintext highlighter-rouge">IB::Stock</code> may be defined by its <code class="language-plaintext highlighter-rouge">:symbol</code> and <code class="language-plaintext highlighter-rouge">:currency</code> or <code class="language-plaintext highlighter-rouge">:exchange</code>. In rare occasions, <code class="language-plaintext highlighter-rouge">:primary_exchange</code>  and <code class="language-plaintext highlighter-rouge">:trading_class</code>  have to be specified, too.</li>
-</ul>
+<p>Any contract is fully identified by its <code class="language-plaintext highlighter-rouge">con_id</code> and its <code class="language-plaintext highlighter-rouge">exchange</code>.</p>
 
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">a</span> <span class="o">=</span>  <span class="no">Stock</span><span class="p">.</span><span class="nf">new</span> <span class="ss">symbol: </span><span class="s1">'aapl'</span>
+<p>A <code class="language-plaintext highlighter-rouge">IB::Stock</code> may be defined by its <code class="language-plaintext highlighter-rouge">:symbol</code> and <code class="language-plaintext highlighter-rouge">:currency</code> or <code class="language-plaintext highlighter-rouge">:exchange</code>. In rare occasions, <code class="language-plaintext highlighter-rouge">:primary_exchange</code>  and <code class="language-plaintext highlighter-rouge">:trading_class</code>  have to be specified, too.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="n">a</span> <span class="o">=</span>  <span class="no">Stock</span><span class="p">.</span><span class="nf">new</span> <span class="ss">symbol: </span><span class="s1">'aapl'</span>
     <span class="c1"># defines the _normal_ apple share, traded at several venues in _USD_.</span>
-<span class="o">&gt;</span> <span class="n">a</span> <span class="o">=</span>  <span class="no">Stock</span><span class="p">.</span><span class="nf">new</span> <span class="ss">symbol: </span><span class="s1">'aapl'</span><span class="p">,</span> <span class="ss">currency: </span><span class="s1">'CHF'</span>
+ <span class="n">a</span> <span class="o">=</span>  <span class="no">Stock</span><span class="p">.</span><span class="nf">new</span> <span class="ss">symbol: </span><span class="s1">'aapl'</span><span class="p">,</span> <span class="ss">currency: </span><span class="s1">'CHF'</span>
     <span class="c1"># specifies the stock traded at the EBS in swiss franc.</span>
 </code></pre></div></div>
 
-<ul>
-  <li>A <code class="language-plaintext highlighter-rouge">IB::Future</code> requires <code class="language-plaintext highlighter-rouge">:symbol</code>, <code class="language-plaintext highlighter-rouge">:exchange</code> and <code class="language-plaintext highlighter-rouge">:expiry</code>.</li>
-</ul>
+<p>A <code class="language-plaintext highlighter-rouge">IB::Future</code> requires <code class="language-plaintext highlighter-rouge">:symbol</code>, <code class="language-plaintext highlighter-rouge">:exchange</code> and <code class="language-plaintext highlighter-rouge">:expiry</code>.</p>
 
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">f</span><span class="o">=</span> <span class="no">IB</span><span class="o">::</span><span class="no">Future</span><span class="p">.</span><span class="nf">new</span> <span class="ss">symbol: </span><span class="s1">'ES'</span><span class="p">,</span> <span class="ss">exchange: </span><span class="s1">'GLOBEX'</span><span class="p">,</span> <span class="ss">expiry: </span><span class="mi">202103</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="n">f</span><span class="o">=</span> <span class="no">IB</span><span class="o">::</span><span class="no">Future</span><span class="p">.</span><span class="nf">new</span> <span class="ss">symbol: </span><span class="s1">'ES'</span><span class="p">,</span> <span class="ss">exchange: </span><span class="s1">'GLOBEX'</span><span class="p">,</span> <span class="ss">expiry: </span><span class="mi">202103</span>
 
 </code></pre></div></div>
 
-<ul>
-  <li>An <code class="language-plaintext highlighter-rouge">IB::Option</code> needs the specification of <code class="language-plaintext highlighter-rouge">:symbol</code>, <code class="language-plaintext highlighter-rouge">:exchange</code>, <code class="language-plaintext highlighter-rouge">:strike</code>, <code class="language-plaintext highlighter-rouge">:right</code> and <code class="language-plaintext highlighter-rouge">:expiry</code></li>
-</ul>
+<p>An <code class="language-plaintext highlighter-rouge">IB::Option</code> needs the specification of <code class="language-plaintext highlighter-rouge">:symbol</code>, <code class="language-plaintext highlighter-rouge">:exchange</code>, <code class="language-plaintext highlighter-rouge">:strike</code>, <code class="language-plaintext highlighter-rouge">:right</code> and <code class="language-plaintext highlighter-rouge">:expiry</code></p>
 
 <div class="alert alert-info" role="alert"><i class="fa fa-bars"></i> To address _Zero-strike-options use a negative value for strike: <code class="language-plaintext highlighter-rouge">IB__::Option.new(symbol:'abc', strike:-1. ...)</code>. </div>
 
 <h3 id="requestcontractdata">RequestContractData</h3>
 
 <p>To verify the contract, a <code class="language-plaintext highlighter-rouge">:RequestContractData</code>-message is submitted to the <em>TWS</em>.</p>
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">&gt;</span> <span class="n">ib</span> <span class="o">=</span> <span class="no">IB</span><span class="o">::</span><span class="no">Connection</span><span class="p">.</span><span class="nf">current</span>
- <span class="o">&gt;</span> <span class="n">ib</span><span class="p">.</span><span class="nf">send__message</span> <span class="ss">:RequestContractData</span><span class="p">,</span> <span class="ss">:contract</span> <span class="o">=&gt;</span> <span class="c1">#{some contract}</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="n">ib</span> <span class="o">=</span> <span class="no">IB</span><span class="o">::</span><span class="no">Connection</span><span class="p">.</span><span class="nf">current</span>
+ <span class="n">ib</span><span class="p">.</span><span class="nf">send__message</span> <span class="ss">:RequestContractData</span><span class="p">,</span> <span class="ss">:contract</span> <span class="o">=&gt;</span> <span class="c1">#{some contract}</span>
          
  <span class="c1"># wait until the :ContractDataEnd message returned</span>
- <span class="o">&gt;</span> <span class="n">ib</span><span class="p">.</span><span class="nf">wait_for</span> <span class="ss">:ContractDataEnd</span>
+ <span class="n">ib</span><span class="p">.</span><span class="nf">wait_for</span> <span class="ss">:ContractDataEnd</span>
 
- <span class="o">&gt;</span> <span class="n">the_contract</span> <span class="o">=</span>  <span class="n">ib</span><span class="p">.</span><span class="nf">recieved</span><span class="p">[</span><span class="ss">:ContractData</span><span class="p">].</span><span class="nf">first</span>
+ <span class="n">the_contract</span> <span class="o">=</span>  <span class="n">ib</span><span class="p">.</span><span class="nf">recieved</span><span class="p">[</span><span class="ss">:ContractData</span><span class="p">].</span><span class="nf">first</span>
 
 </code></pre></div></div>
 
@@ -688,17 +683,17 @@ basic requirements to achieve this goal:</p>
 
 <p>The response is a <code class="language-plaintext highlighter-rouge">IB::ContractData</code> object. It holds any information about the successful request</p>
 
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">&gt;</span> <span class="n">z</span><span class="o">=</span> <span class="n">ib</span><span class="p">.</span><span class="nf">received</span><span class="p">[</span><span class="ss">:ContractData</span><span class="p">].</span><span class="nf">first</span>
- <span class="o">&gt;</span> <span class="n">z</span><span class="p">.</span><span class="nf">methods</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="n">z</span><span class="o">=</span> <span class="n">ib</span><span class="p">.</span><span class="nf">received</span><span class="p">[</span><span class="ss">:ContractData</span><span class="p">].</span><span class="nf">first</span>
+ <span class="n">z</span><span class="p">.</span><span class="nf">methods</span>
  <span class="o">=&gt;</span> <span class="p">[</span><span class="ss">:contract_detail</span><span class="p">,</span> <span class="ss">:contract</span><span class="p">,</span> <span class="ss">:to_human</span><span class="p">,</span> <span class="ss">:buffer</span><span class="p">,</span> <span class="ss">:valid?</span><span class="p">,</span> <span class="ss">:load</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="o">...</span>
       <span class="ss">:request_id</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
- <span class="o">&gt;</span> <span class="n">z</span><span class="p">.</span><span class="nf">contract</span><span class="p">.</span><span class="nf">to_human</span>
+ <span class="n">z</span><span class="p">.</span><span class="nf">contract</span><span class="p">.</span><span class="nf">to_human</span>
  <span class="o">=&gt;</span> <span class="s2">"&lt;Stock: AAPL USD NASDAQ&gt;"</span>
 
 </code></pre></div></div>
 
 <p>Usually <code class="language-plaintext highlighter-rouge">ContractData</code>-Objects are just transfer container to initialize <code class="language-plaintext highlighter-rouge">IB::Contracts</code>. <br />
-For that purpose <em><strong>IB-Ruby</strong></em> provides <a href="/Verify_contracts">Verify</a></p>
+For that purpose <em><strong>IB-Ruby</strong></em> provides <a href="Verify_contracts">Verify</a></p>
 
 
 
@@ -723,7 +718,7 @@ For that purpose <em><strong>IB-Ruby</strong></em> provides <a href="/Verify_con
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2021 IB-Ruby. All rights reserved. <br />
-<span>Page last updated:</span> Mar 3, 2021<br/> Site last generated: Apr 7, 2021 <br />
+<span>Page last updated:</span> Mar 3, 2021<br/> Site last generated: May 26, 2021 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>
