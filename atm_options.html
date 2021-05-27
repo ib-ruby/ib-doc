@@ -363,7 +363,14 @@
           
           
           
-          <li class="active"><a title="Option-Chains  and -Greeks" href="atm_options.html">Option-Chains  and -Greeks</a></li>
+          <li class="active"><a title="Option-Chains" href="atm_options.html">Option-Chains</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Option-Greeks" href="option_greeks.html">Option-Greeks</a></li>
           
           
           
@@ -635,32 +642,6 @@ Display five in-the-money- and five out-of-the-money options and their propertie
 <p>To fetch ATM, ITM and OTM Options depending on the current market-price, parts of the result set
 have to be erased.</p>
 
-<h2 id="greeks">Greeks</h2>
-
-<p>If we ask for market-data of an IB::Option, the TWS returns price data and  <em>Option Greeks</em>.  The API-call is analogous
-to <a href="/market_data">IB::Contract.market_data</a>.<br />
-<code class="language-plaintext highlighter-rouge">IB::Option.greeks</code> returns <code class="language-plaintext highlighter-rouge">&lt;IB::Messages::Incoming::TickOption</code>
-objects. It accepts the parameter <code class="language-plaintext highlighter-rouge">:what</code>  { :model, :bid, :ask, :last, :bidask, :all }, default is <code class="language-plaintext highlighter-rouge">model</code>, 
-ie. the calculated Greeks.</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; puts ge_options[2011].greeks.to_human
-  &lt;TickOption model_option  option @    0.517, 
-                            IV: 0.557,
-                            delta: -0.566, gamma: 0.4084, vega: 0.00673, theta: -0.009176, 
-                            pv_dividend: 0.000, 
-                            underlying @    7.270&gt;
-
-</code></pre></div></div>
-
-<p>In <strong>Thread-Modus</strong> option properties are stored in <code class="language-plaintext highlighter-rouge">IB::Option.misc</code>.</p>
-
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">y</span> <span class="o">=</span> <span class="n">ge</span><span class="p">.</span><span class="nf">otm_options</span> <span class="ss">sort: :expiry</span>           <span class="c1"># see below</span>
-<span class="o">&gt;</span> <span class="n">y</span><span class="p">[</span><span class="mi">2012</span><span class="p">].</span><span class="nf">greeks</span><span class="p">(</span> <span class="ss">thread: </span><span class="kp">true</span><span class="p">).</span><span class="nf">join</span>         <span class="c1"># get greeks concurrently</span>
-<span class="o">&gt;</span> <span class="n">y</span><span class="p">[</span><span class="mi">2012</span><span class="p">].</span><span class="nf">misc</span> <span class="o">&amp;</span><span class="p">.</span><span class="nf">implied_volatility</span><span class="p">.</span><span class="nf">to_f</span><span class="p">.</span><span class="nf">round</span> <span class="mf">5.3</span>
- <span class="o">=&gt;</span> <span class="p">[[],</span> <span class="mf">0.5782</span><span class="p">,</span> <span class="p">[],</span> <span class="mf">0.6186</span><span class="p">,</span> <span class="p">[],</span> <span class="mf">0.7023</span><span class="p">]</span>     <span class="c1"># some contracts are not populated</span>
-
-</code></pre></div></div>
-
 <h2 id="get-at-the-money-options">Get at-the-money Options</h2>
 <p>Lets start simple: Get <em>At The Money</em>-Options and their properties.</p>
 
@@ -698,8 +679,8 @@ Therefore</p>
   <span class="o">&lt;</span><span class="no">Option</span><span class="p">:</span> <span class="no">GE</span> <span class="mi">20201120</span> <span class="n">put</span> <span class="mf">9.5</span> <span class="no">SMART</span> <span class="no">USD</span><span class="o">&gt;</span>
   <span class="o">&lt;</span><span class="no">Option</span><span class="p">:</span> <span class="no">GE</span> <span class="mi">20201120</span> <span class="n">put</span> <span class="mf">10.0</span> <span class="no">SMART</span> <span class="no">USD</span><span class="o">&gt;</span> 
 
-<span class="o">&gt;</span> <span class="n">ge_greeks</span> <span class="o">=</span>  <span class="n">ge_options</span><span class="p">[</span><span class="mi">2011</span><span class="p">].</span><span class="nf">map</span><span class="p">{</span><span class="o">|</span><span class="n">o</span><span class="o">|</span> <span class="n">o</span><span class="p">.</span><span class="nf">greeks</span> <span class="p">}</span>
-<span class="o">&gt;</span> <span class="nb">puts</span> <span class="n">ge_greeks</span><span class="p">.</span><span class="nf">implied_volatility</span><span class="p">.</span><span class="nf">round</span><span class="p">(</span><span class="mf">6.4</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="n">ge_options</span><span class="p">[</span><span class="mi">2011</span><span class="p">].</span><span class="nf">map</span><span class="p">{</span><span class="o">|</span><span class="n">o</span><span class="o">|</span> <span class="n">o</span><span class="p">.</span><span class="nf">request_greeks</span><span class="p">(</span> <span class="ss">thread: </span><span class="kp">true</span> <span class="p">)</span> <span class="p">}.</span><span class="nf">join</span>
+<span class="o">&gt;</span> <span class="nb">puts</span> <span class="n">ge_options</span><span class="p">[</span><span class="mi">2011</span><span class="p">].</span><span class="nf">greek</span><span class="p">.</span><span class="nf">implied_volatility</span><span class="p">.</span><span class="nf">round</span><span class="p">(</span><span class="mf">6.4</span><span class="p">)</span>
  <span class="mf">0.5574</span>
  <span class="mf">0.5700</span>
  <span class="mf">0.5928</span>
@@ -745,7 +726,7 @@ Therefore</p>
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2021 IB-Ruby. All rights reserved. <br />
-<span>Page last updated:</span> October 29, 2020<br/> Site last generated: May 26, 2021 <br />
+<span>Page last updated:</span> May 27, 2021<br/> Site last generated: May 27, 2021 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>

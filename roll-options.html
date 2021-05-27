@@ -363,7 +363,14 @@
           
           
           
-          <li><a title="Option-Chains  and -Greeks" href="atm_options.html">Option-Chains  and -Greeks</a></li>
+          <li><a title="Option-Chains" href="atm_options.html">Option-Chains</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Option-Greeks" href="option_greeks.html">Option-Greeks</a></li>
           
           
           
@@ -583,15 +590,15 @@ in your scripts.
 
 <p>An existing Option Contract.</p>
 
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">ge</span> <span class="o">=</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Stock</span><span class="p">.</span><span class="nf">new</span> <span class="ss">symbol: :ge</span>
-<span class="c1"># Get the ATM-Option for the nearest expiry</span>
-<span class="o">&gt;</span> <span class="n">ge</span><span class="p">.</span><span class="nf">atm_option</span><span class="p">.</span><span class="nf">first</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="n">ge</span> <span class="o">=</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Stock</span><span class="p">.</span><span class="nf">new</span> <span class="ss">symbol: :ge</span>
+ <span class="c1"># Get the ATM-Option for the nearest expiry</span>
+ <span class="n">ge</span><span class="p">.</span><span class="nf">atm_option</span><span class="p">.</span><span class="nf">first</span>
   <span class="o">=&gt;</span> <span class="p">[</span><span class="mi">2104</span><span class="p">,</span> <span class="p">[</span><span class="c1">#&lt;IB::Option:0x0000000003077738 @attributes={:symbol=&gt;"ge", :exchange=&gt;"SMART", </span>
              <span class="ss">:trading_class</span><span class="o">=&gt;</span><span class="s2">"GE"</span><span class="p">,</span> <span class="ss">:multiplier</span><span class="o">=&gt;</span><span class="mi">100</span><span class="p">,</span> <span class="ss">:currency</span><span class="o">=&gt;</span><span class="s2">"USD"</span><span class="p">,</span> <span class="ss">:last_trading_day</span><span class="o">=&gt;</span><span class="s2">"2021-04-16"</span><span class="p">,</span> 
              <span class="ss">:strike</span><span class="o">=&gt;</span><span class="mf">12.5</span><span class="p">,</span> <span class="ss">:right</span><span class="o">=&gt;</span><span class="s2">"P"</span><span class="p">,</span> <span class="ss">:created_at</span><span class="o">=&gt;</span><span class="mi">2021</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">25</span> <span class="mo">07</span><span class="p">:</span><span class="mi">40</span><span class="p">:</span><span class="mf">58.516278968</span> <span class="o">+</span><span class="mo">0000</span><span class="p">,</span> 
              <span class="ss">:con_id</span><span class="o">=&gt;</span><span class="mi">0</span><span class="p">,</span> <span class="ss">:include_expired</span><span class="o">=&gt;</span><span class="kp">false</span><span class="p">,</span> <span class="ss">:sec_type</span><span class="o">=&gt;</span><span class="s2">"OPT"</span><span class="p">},</span> <span class="vi">@metadata</span><span class="o">=</span><span class="p">{}</span><span class="o">&gt;</span><span class="p">]]</span> 
-<span class="o">&gt;</span> <span class="n">ge_option</span> <span class="o">=</span>  <span class="n">ge</span><span class="p">.</span><span class="nf">atm_option</span><span class="p">[</span><span class="mi">2104</span><span class="p">].</span><span class="nf">first</span>
-<span class="o">&gt;</span> <span class="n">ge_option</span><span class="p">.</span><span class="nf">to_human</span>
+ <span class="n">ge_option</span> <span class="o">=</span>  <span class="n">ge</span><span class="p">.</span><span class="nf">atm_option</span><span class="p">[</span><span class="mi">2104</span><span class="p">].</span><span class="nf">first</span>
+ <span class="n">ge_option</span><span class="p">.</span><span class="nf">to_human</span>
  <span class="s2">"&lt;Option: ge 20210416 put 12.5 SMART USD&gt;"</span>
 </code></pre></div></div>
 
@@ -600,7 +607,7 @@ in your scripts.
 
 <p>To roll this option to the next expiry</p>
 
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">roll_option</span> <span class="o">=</span>  <span class="n">ge_option</span><span class="p">.</span><span class="nf">roll</span> <span class="mi">20210507</span><span class="p">,</span> <span class="mf">12.5</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="n">roll_option</span> <span class="o">=</span>  <span class="n">ge_option</span><span class="p">.</span><span class="nf">roll</span> <span class="mi">20210507</span><span class="p">,</span> <span class="mf">12.5</span>
 </code></pre></div></div>
 <p>This creates an <code class="language-plaintext highlighter-rouge">IB::Spread</code>:</p>
 <ul>
@@ -610,24 +617,24 @@ in your scripts.
 
 <p>Essentially,</p>
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-<span class="o">&gt;</span> <span class="n">roll_option</span> <span class="o">=</span> <span class="no">IB</span><span class="o">::</span><span class="no">Spread</span><span class="p">.</span><span class="nf">new</span><span class="p">,</span> <span class="ss">symbol: </span><span class="s1">'GE'</span><span class="p">,</span> <span class="ss">currency: </span><span class="s1">'USD'</span><span class="p">,</span> <span class="ss">exchange: </span><span class="s1">'SMART'</span>
-<span class="o">&gt;</span> <span class="n">roll_option</span><span class="p">.</span><span class="nf">add_leg</span> <span class="n">ge_option</span><span class="p">,</span> <span class="ss">action: :buy</span>
-<span class="o">&gt;</span> <span class="n">roll_opton</span><span class="p">.</span><span class="nf">add_leg</span> <span class="no">IB</span><span class="o">::</span><span class="no">Option</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span> <span class="ss">symbol: </span><span class="s1">'GE'</span><span class="p">,</span> <span class="ss">expiry: </span><span class="mi">20210507</span><span class="p">,</span> <span class="ss">strike: </span><span class="mf">12.5</span> <span class="o">...</span> <span class="p">),</span> <span class="ss">action: :sell</span><span class="p">,</span> 
+ <span class="n">roll_option</span> <span class="o">=</span> <span class="no">IB</span><span class="o">::</span><span class="no">Spread</span><span class="p">.</span><span class="nf">new</span><span class="p">,</span> <span class="ss">symbol: </span><span class="s1">'GE'</span><span class="p">,</span> <span class="ss">currency: </span><span class="s1">'USD'</span><span class="p">,</span> <span class="ss">exchange: </span><span class="s1">'SMART'</span>
+ <span class="n">roll_option</span><span class="p">.</span><span class="nf">add_leg</span> <span class="n">ge_option</span><span class="p">,</span> <span class="ss">action: :buy</span>
+ <span class="n">roll_opton</span><span class="p">.</span><span class="nf">add_leg</span> <span class="no">IB</span><span class="o">::</span><span class="no">Option</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span> <span class="ss">symbol: </span><span class="s1">'GE'</span><span class="p">,</span> <span class="ss">expiry: </span><span class="mi">20210507</span><span class="p">,</span> <span class="ss">strike: </span><span class="mf">12.5</span> <span class="o">...</span> <span class="p">),</span> <span class="ss">action: :sell</span><span class="p">,</span> 
 </code></pre></div></div>
 <p>is performed.</p>
 
 <p>The spread  can be placed the usual way, thus, assuming the gateway-app is used:</p>
 
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="no">G</span> <span class="o">=</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Gateway</span><span class="p">.</span><span class="nf">current</span>
-<span class="o">&gt;</span> <span class="n">orders</span> <span class="o">=</span> <span class="no">G</span><span class="p">.</span><span class="nf">clients</span><span class="p">.</span><span class="nf">map</span> <span class="k">do</span> <span class="o">|</span> <span class="n">user</span> <span class="o">|</span>
-<span class="c1"># get the existing position</span>
-<span class="o">&gt;</span>   <span class="n">the_pv</span><span class="o">=</span> <span class="n">user</span><span class="p">.</span><span class="nf">portfolio_values</span><span class="p">.</span><span class="nf">find</span> <span class="k">do</span> <span class="o">|</span> <span class="n">pv</span> <span class="o">|</span>
-<span class="o">&gt;</span>     <span class="n">pv</span><span class="p">.</span><span class="nf">contract</span><span class="p">.</span><span class="nf">con_id</span> <span class="o">==</span> <span class="n">ge_option</span><span class="p">.</span><span class="nf">con_id</span>
-<span class="o">&gt;</span>   <span class="k">end</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="no">G</span> <span class="o">=</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Gateway</span><span class="p">.</span><span class="nf">current</span>
+ <span class="n">orders</span> <span class="o">=</span> <span class="no">G</span><span class="p">.</span><span class="nf">clients</span><span class="p">.</span><span class="nf">map</span> <span class="k">do</span> <span class="o">|</span> <span class="n">user</span> <span class="o">|</span>
+ <span class="c1"># get the existing position</span>
+ <span class="n">the_pv</span><span class="o">=</span> <span class="n">user</span><span class="p">.</span><span class="nf">portfolio_values</span><span class="p">.</span><span class="nf">find</span> <span class="k">do</span> <span class="o">|</span> <span class="n">pv</span> <span class="o">|</span>
+   <span class="n">pv</span><span class="p">.</span><span class="nf">contract</span><span class="p">.</span><span class="nf">con_id</span> <span class="o">==</span> <span class="n">ge_option</span><span class="p">.</span><span class="nf">con_id</span>
+ <span class="k">end</span>
 <span class="c1"># place the order, place returs the order-object  </span>
-<span class="o">&gt;</span>   <span class="n">user</span><span class="p">.</span><span class="nf">place</span> <span class="ss">contract: </span><span class="n">roll_option</span><span class="p">,</span> 
-<span class="o">&gt;</span>              <span class="ss">order: </span><span class="no">Limit</span><span class="p">.</span><span class="nf">order</span><span class="p">(</span> <span class="ss">action: :buy</span><span class="p">,</span> <span class="ss">size: </span><span class="n">the_pv</span><span class="p">.</span><span class="nf">position</span><span class="p">,</span> <span class="ss">price: </span><span class="o">-</span><span class="mf">0.56</span>  <span class="p">)</span>
-<span class="o">&gt;</span> <span class="k">end</span>
+ <span class="n">user</span><span class="p">.</span><span class="nf">place</span> <span class="ss">contract: </span><span class="n">roll_option</span><span class="p">,</span> 
+                <span class="ss">order: </span><span class="no">Limit</span><span class="p">.</span><span class="nf">order</span><span class="p">(</span> <span class="ss">action: :buy</span><span class="p">,</span> <span class="ss">size: </span><span class="n">the_pv</span><span class="p">.</span><span class="nf">position</span><span class="p">,</span> <span class="ss">price: </span><span class="o">-</span><span class="mf">0.56</span>  <span class="p">)</span>
+ <span class="k">end</span>
 
 </code></pre></div></div>
 
@@ -656,7 +663,7 @@ in your scripts.
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2021 IB-Ruby. All rights reserved. <br />
-<span>Page last updated:</span> March 25, 2021<br/> Site last generated: May 26, 2021 <br />
+<span>Page last updated:</span> March 25, 2021<br/> Site last generated: May 27, 2021 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>

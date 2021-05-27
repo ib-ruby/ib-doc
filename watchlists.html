@@ -363,7 +363,14 @@
           
           
           
-          <li><a title="Option-Chains  and -Greeks" href="atm_options.html">Option-Chains  and -Greeks</a></li>
+          <li><a title="Option-Chains" href="atm_options.html">Option-Chains</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Option-Greeks" href="option_greeks.html">Option-Greeks</a></li>
           
           
           
@@ -570,10 +577,10 @@ $('#toc').on('click', 'a', function() {
 
 <p>By default, Watchlists reside in the <code class="language-plaintext highlighter-rouge">symbols</code>-directory of <code class="language-plaintext highlighter-rouge">ib-symbols</code>. This can be changed anytime through</p>
 
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="p">.</span><span class="nf">set_origin</span> <span class="s1">'.'</span>  <span class="c1"># (a valid path, either relative or absolute)</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="p">.</span><span class="nf">set_origin</span> <span class="s1">'.'</span>  <span class="c1"># (a valid path, either relative or absolute)</span>
  <span class="o">=&gt;</span> <span class="c1">#&lt;Pathname:.&gt; </span>
- <span class="o">&gt;</span> <span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="p">.</span><span class="nf">set_origin</span><span class="p">(</span> <span class="s2">"."</span> <span class="p">).</span><span class="nf">realpath</span>
-  <span class="o">=&gt;</span> <span class="c1">#&lt;Pathname:/home/ubuntu/workspace/ib-ruby/bin&gt;</span>
+ <span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="p">.</span><span class="nf">set_origin</span><span class="p">(</span> <span class="s2">"."</span> <span class="p">).</span><span class="nf">realpath</span>
+ <span class="o">=&gt;</span> <span class="c1">#&lt;Pathname:/home/ubuntu/workspace/ib-ruby/bin&gt;</span>
 </code></pre></div></div>
 
 <p>Watchlists are used to organize the output of <code class="language-plaintext highlighter-rouge">IB::Account.portfolio_values</code>. If <code class="language-plaintext highlighter-rouge">IB::Gateway</code> is called with a <code class="language-plaintext highlighter-rouge">:watchlist</code>-parameter, <code class="language-plaintext highlighter-rouge">IB::Account.focuses</code> is initialized and portfolio-entries are grouped by their occurrence in provided watchlists. In particular, if complex contracts are defined in a watchlist, they are restored in <code class="language-plaintext highlighter-rouge">IB::Account.focuses</code> when the response to <code class="language-plaintext highlighter-rouge">:RequestAccountData</code>-Message is processed.</p>
@@ -584,23 +591,23 @@ $('#toc').on('click', 'a', function() {
 
 <p>The CRUD Cycle</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; IB::Symbols.allocate_collection :Demo
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> IB::Symbols.allocate_collection :Demo
   =&gt; IB::Symbols::Demo           # file /symbols/Demo is created 
-&gt; IB::Symbols::Demo.add_contract :uso , IB::Stock.new( symbol: 'USO'  )
+ IB::Symbols::Demo.add_contract :uso , IB::Stock.new( symbol: 'USO'  )
   =&gt; 235                         # returns the count of written bytes to the file 
-&gt; IB::Symbols::Demo.uso          # returns the stored contract
+ IB::Symbols::Demo.uso          # returns the stored contract
 	=&gt; #&lt;IB::Stock:0x0000000002c814f8 @attributes={:symbol=&gt;"USO", :created_at=&gt;2018-04-29 18:47:01 +0000, :con_id=&gt;0, :right=&gt;"", :exchange=&gt;"SMART", :include_expired=&gt;false, :sec_type=&gt;"STK", :currency=&gt;"USD"}&gt; 
- &gt; IB::Symbols::Demo.add_contract :ford , IB::Stock.new( symbol: 'F'  )
+ IB::Symbols::Demo.add_contract :ford , IB::Stock.new( symbol: 'F'  )
   =&gt; 465 
-&gt; IB::Symbols::Demo.all
+ IB::Symbols::Demo.all
 	=&gt; [:ford, :uso]               # lists all stored contracts
-&gt; IB::Symbols::Demo.remove_contract :uso
-&gt; IB::Symbols::Demo.all
+ IB::Symbols::Demo.remove_contract :uso
+ IB::Symbols::Demo.all
   =&gt; [:ford] 
-&gt; IB::Symbols::Demo.purge_collection  # deletes the file and erases contracts kept in memory
+ IB::Symbols::Demo.purge_collection  # deletes the file and erases contracts kept in memory
 	=&gt; nil 
 
-&gt; IB::Symbols::Demo.all
+ IB::Symbols::Demo.all
   =&gt; [] 
 </code></pre></div></div>
 <h2 id="using-the-collection-to-trade-complex-contracts">Using the Collection to Trade Complex Contracts</h2>
@@ -613,12 +620,12 @@ as handy Contract-Stores.</p>
 Collections can act as easy and transparent stores. 
 Occasionally the stored trading-concepts can be transmitted.</p>
 
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">bear</span> <span class="o">=</span> <span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="p">.</span><span class="nf">allocate_collection</span> <span class="ss">:BearishSzenario</span>
-<span class="o">&gt;</span> <span class="n">bear</span><span class="p">.</span><span class="nf">add_contract</span> <span class="ss">:bear_spread_3000_2400</span><span class="p">,</span> 
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="n">bear</span> <span class="o">=</span> <span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="p">.</span><span class="nf">allocate_collection</span> <span class="ss">:BearishSzenario</span>
+ <span class="n">bear</span><span class="p">.</span><span class="nf">add_contract</span> <span class="ss">:bear_spread_3000_2400</span><span class="p">,</span> 
        <span class="no">IB</span><span class="o">::</span><span class="no">Vertical</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span>  <span class="ss">underlying: </span><span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Index</span><span class="p">.</span><span class="nf">stoxx</span><span class="p">,</span> <span class="ss">sell: </span><span class="mi">2500</span><span class="p">,</span> <span class="ss">buy: </span><span class="mi">3000</span><span class="p">,</span>
                          <span class="ss">right: :put</span><span class="p">,</span> <span class="ss">expiry: </span><span class="mi">201903</span><span class="p">)</span>
-<span class="o">&gt;</span> <span class="n">neutral</span> <span class="o">=</span> <span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="p">.</span><span class="nf">allocate_collection</span> <span class="ss">:NeurtalSzenario</span>
-<span class="o">&gt;</span> <span class="n">neutral</span><span class="p">.</span><span class="nf">add_contract</span> <span class="ss">:slight_defensive_straddle</span><span class="p">,</span> 
+ <span class="n">neutral</span> <span class="o">=</span> <span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="p">.</span><span class="nf">allocate_collection</span> <span class="ss">:NeurtalSzenario</span>
+ <span class="n">neutral</span><span class="p">.</span><span class="nf">add_contract</span> <span class="ss">:slight_defensive_straddle</span><span class="p">,</span> 
        <span class="no">IB</span><span class="o">::</span><span class="no">Straddle</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span> <span class="ss">underlying: </span><span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Index</span><span class="p">.</span><span class="nf">stoxx</span><span class="p">,</span> <span class="ss">strike: </span><span class="mi">3200</span><span class="p">,</span> <span class="ss">expiry: </span><span class="mi">291893</span> <span class="p">)</span>
 </code></pre></div></div>
 
@@ -629,23 +636,23 @@ This has neat consequences.</p>
 
 <p>First read an option chain into the collection</p>
 
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="p">.</span><span class="nf">allocate_collection</span> <span class="ss">:Test</span>
-<span class="o">&gt;</span> <span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Options</span><span class="p">.</span><span class="nf">ibm_lazy_strike</span><span class="p">.</span><span class="nf">verify</span><span class="p">{</span><span class="o">|</span><span class="n">y</span><span class="o">|</span> <span class="no">Symbols</span><span class="o">::</span><span class="no">Test</span><span class="p">.</span><span class="nf">add_contract</span> <span class="n">y</span><span class="p">.</span><span class="nf">strike</span><span class="p">.</span><span class="nf">to_i</span><span class="p">,</span> <span class="n">y</span> <span class="p">}</span>  
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="p">.</span><span class="nf">allocate_collection</span> <span class="ss">:Test</span>
+ <span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Options</span><span class="p">.</span><span class="nf">ibm_lazy_strike</span><span class="p">.</span><span class="nf">verify</span><span class="p">{</span><span class="o">|</span><span class="n">y</span><span class="o">|</span> <span class="no">Symbols</span><span class="o">::</span><span class="no">Test</span><span class="p">.</span><span class="nf">add_contract</span> <span class="n">y</span><span class="p">.</span><span class="nf">strike</span><span class="p">.</span><span class="nf">to_i</span><span class="p">,</span> <span class="n">y</span> <span class="p">}</span>  
 </code></pre></div></div>
 
 <p>29 Options are stored in the collection.</p>
 
 <p>They can be inspected and manipulated as comfortably as ordinary arrays:</p>
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Test</span><span class="p">.</span><span class="nf">size</span>                           <span class="o">=&gt;</span> <span class="mi">29</span>
-<span class="o">&gt;</span> <span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Test</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">to_human</span>                 
-   <span class="o">=&gt;</span> <span class="s2">"&lt;Option: IBM 20180921 put 100.0 SMART USD&gt;"</span>  
-<span class="o">&gt;</span> <span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Test</span><span class="p">.</span><span class="nf">map</span> <span class="o">&amp;</span><span class="ss">:strike</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Test</span><span class="p">.</span><span class="nf">size</span>                           <span class="o">=&gt;</span> <span class="mi">29</span>
+ <span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Test</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">to_human</span>                 
+  <span class="o">=&gt;</span> <span class="s2">"&lt;Option: IBM 20180921 put 100.0 SMART USD&gt;"</span>  
+ <span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Test</span><span class="p">.</span><span class="nf">map</span> <span class="o">&amp;</span><span class="ss">:strike</span>
   <span class="o">=&gt;</span> <span class="p">[</span><span class="mf">100.0</span><span class="p">,</span> <span class="mf">105.0</span><span class="p">,</span> <span class="mf">110.0</span><span class="p">,</span> <span class="mf">115.0</span><span class="p">,</span> <span class="mf">120.0</span><span class="p">,</span> <span class="mf">125.0</span><span class="p">,</span> <span class="mf">130.0</span><span class="p">,</span> <span class="mf">135.0</span><span class="p">,</span> <span class="mf">140.0</span><span class="p">,</span> <span class="mf">145.0</span><span class="p">,</span> <span class="mf">150.0</span><span class="p">,</span> <span class="mf">155.0</span><span class="p">,</span> <span class="mf">160.0</span><span class="p">,</span> <span class="mf">165.0</span><span class="p">,</span> <span class="mf">170.0</span><span class="p">,</span> <span class="mf">175.0</span><span class="p">,</span> <span class="mf">180.0</span><span class="p">,</span> <span class="mf">185.0</span><span class="p">,</span> <span class="mf">190.0</span><span class="p">,</span> <span class="mf">195.0</span><span class="p">,</span> <span class="mf">200.0</span><span class="p">,</span> <span class="mf">210.0</span><span class="p">,</span> <span class="mf">220.0</span><span class="p">,</span> <span class="mf">230.0</span><span class="p">,</span> <span class="mf">80.0</span><span class="p">,</span> <span class="mf">85.0</span><span class="p">,</span> <span class="mf">90.0</span><span class="p">,</span> <span class="mf">95.0</span><span class="p">,</span> <span class="mf">75.0</span><span class="p">]</span> 
-<span class="o">&gt;</span> <span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Test</span><span class="p">[</span><span class="mi">100</span><span class="p">].</span><span class="nf">to_human</span>                
+ <span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Test</span><span class="p">[</span><span class="mi">100</span><span class="p">].</span><span class="nf">to_human</span>                
   <span class="o">=&gt;</span> <span class="s2">"&lt;Option: IBM 20180921 put 100.0 SMART USD&gt;"</span>
-<span class="o">&gt;</span> <span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Test</span><span class="p">.</span><span class="nf">find</span><span class="p">{</span><span class="o">|</span> <span class="n">x</span> <span class="o">|</span> <span class="n">x</span><span class="p">.</span><span class="nf">strike</span> <span class="o">==</span> <span class="mi">130</span> <span class="p">}.</span><span class="nf">to_human</span>
+ <span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Test</span><span class="p">.</span><span class="nf">find</span><span class="p">{</span><span class="o">|</span> <span class="n">x</span> <span class="o">|</span> <span class="n">x</span><span class="p">.</span><span class="nf">strike</span> <span class="o">==</span> <span class="mi">130</span> <span class="p">}.</span><span class="nf">to_human</span>
   <span class="o">=&gt;</span> <span class="s2">"&lt;Option: IBM 20180921 put 130.0 SMART USD&gt;"</span> 
-<span class="o">&gt;</span> <span class="nb">puts</span> <span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Test</span><span class="p">.</span><span class="nf">find_all</span> <span class="p">{</span><span class="o">|</span> <span class="n">x</span> <span class="o">|</span> <span class="n">x</span><span class="p">.</span><span class="nf">strike</span> <span class="o">&gt;</span> <span class="mi">130</span> <span class="o">&amp;&amp;</span> <span class="n">x</span><span class="p">.</span><span class="nf">strike</span> <span class="o">&lt;</span> <span class="mi">190</span> <span class="p">}.</span><span class="nf">to_human</span><span class="p">.</span><span class="nf">join</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span>
+ <span class="nb">puts</span> <span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Test</span><span class="p">.</span><span class="nf">find_all</span> <span class="p">{</span><span class="o">|</span> <span class="n">x</span> <span class="o">|</span> <span class="n">x</span><span class="p">.</span><span class="nf">strike</span> <span class="o">&gt;</span> <span class="mi">130</span> <span class="o">&amp;&amp;</span> <span class="n">x</span><span class="p">.</span><span class="nf">strike</span> <span class="o">&lt;</span> <span class="mi">190</span> <span class="p">}.</span><span class="nf">to_human</span><span class="p">.</span><span class="nf">join</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span>
 		<span class="o">&lt;</span><span class="no">Option</span><span class="p">:</span> <span class="no">IBM</span> <span class="mi">20180921</span> <span class="n">put</span> <span class="mf">135.0</span> <span class="no">SMART</span> <span class="no">USD</span><span class="o">&gt;</span>
 		<span class="o">&lt;</span><span class="no">Option</span><span class="p">:</span> <span class="no">IBM</span> <span class="mi">20180921</span> <span class="n">put</span> <span class="mf">140.0</span> <span class="no">SMART</span> <span class="no">USD</span><span class="o">&gt;</span>
 		<span class="o">&lt;</span><span class="no">Option</span><span class="p">:</span> <span class="no">IBM</span> <span class="mi">20180921</span> <span class="n">put</span> <span class="mf">145.0</span> <span class="no">SMART</span> <span class="no">USD</span><span class="o">&gt;</span>
@@ -657,7 +664,7 @@ This has neat consequences.</p>
 		<span class="o">&lt;</span><span class="no">Option</span><span class="p">:</span> <span class="no">IBM</span> <span class="mi">20180921</span> <span class="n">put</span> <span class="mf">175.0</span> <span class="no">SMART</span> <span class="no">USD</span><span class="o">&gt;</span>
 		<span class="o">&lt;</span><span class="no">Option</span><span class="p">:</span> <span class="no">IBM</span> <span class="mi">20180921</span> <span class="n">put</span> <span class="mf">180.0</span> <span class="no">SMART</span> <span class="no">USD</span><span class="o">&gt;</span>
 		<span class="o">&lt;</span><span class="no">Option</span><span class="p">:</span> <span class="no">IBM</span> <span class="mi">20180921</span> <span class="n">put</span> <span class="mf">185.0</span> <span class="no">SMART</span> <span class="no">USD</span><span class="o">&gt;</span>
-<span class="o">&gt;</span> <span class="nb">puts</span> <span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Test</span><span class="p">.</span><span class="nf">sort</span><span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="o">|</span> <span class="n">x</span><span class="p">.</span><span class="nf">strike</span> <span class="o">&lt;=&gt;</span> <span class="n">y</span><span class="p">.</span><span class="nf">strike</span> <span class="p">}.</span><span class="nf">to_human</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+ <span class="nb">puts</span> <span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Test</span><span class="p">.</span><span class="nf">sort</span><span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="o">|</span> <span class="n">x</span><span class="p">.</span><span class="nf">strike</span> <span class="o">&lt;=&gt;</span> <span class="n">y</span><span class="p">.</span><span class="nf">strike</span> <span class="p">}.</span><span class="nf">to_human</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
 		<span class="o">&lt;</span><span class="no">Option</span><span class="p">:</span> <span class="no">IBM</span> <span class="mi">20180921</span> <span class="n">put</span> <span class="mf">75.0</span> <span class="no">SMART</span> <span class="no">USD</span><span class="o">&gt;</span>
 		<span class="o">&lt;</span><span class="no">Option</span><span class="p">:</span> <span class="no">IBM</span> <span class="mi">20180921</span> <span class="n">put</span> <span class="mf">80.0</span> <span class="no">SMART</span> <span class="no">USD</span><span class="o">&gt;</span>
 		<span class="o">&lt;</span><span class="no">Option</span><span class="p">:</span> <span class="no">IBM</span> <span class="mi">20180921</span> <span class="n">put</span> <span class="mf">85.0</span> <span class="no">SMART</span> <span class="no">USD</span><span class="o">&gt;</span>
@@ -712,7 +719,7 @@ This has neat consequences.</p>
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2021 IB-Ruby. All rights reserved. <br />
-<span>Page last updated:</span> October 28, 2020<br/> Site last generated: May 26, 2021 <br />
+<span>Page last updated:</span> October 28, 2020<br/> Site last generated: May 27, 2021 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>

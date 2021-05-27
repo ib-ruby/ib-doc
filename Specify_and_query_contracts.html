@@ -363,7 +363,14 @@
           
           
           
-          <li><a title="Option-Chains  and -Greeks" href="atm_options.html">Option-Chains  and -Greeks</a></li>
+          <li><a title="Option-Chains" href="atm_options.html">Option-Chains</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Option-Greeks" href="option_greeks.html">Option-Greeks</a></li>
           
           
           
@@ -579,11 +586,11 @@ in your scripts.
 <h2 id="specify-a-contract">Specify a Contract</h2>
 
 <p>Any financial asset is a <code class="language-plaintext highlighter-rouge">IB::Contract</code>. Its defined by its _attributes_n</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; c =  IB::Contract.new 
-&gt; c.attributes
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> c =  IB::Contract.new 
+ c.attributes
   =&gt; {:created_at=&gt;2020-10-27 04:39:56 +0000, :con_id=&gt;0, :right=&gt;"", :include_expired=&gt;false} 
-&gt; s =  IB::Stock.new  symbol: 'GE'
-&gt; s.attributes
+ s =  IB::Stock.new  symbol: 'GE'
+ s.attributes
  =&gt; {:created_at=&gt;2020-10-27 04:40:29 +0000, :con_id=&gt;0, :right=&gt;"", :symbol=&gt;'GE',  :include_expired=&gt;false, :sec_type=&gt;"STK", :currency=&gt;"USD", :exchange=&gt;"SMART"} 
 
 </code></pre></div></div>
@@ -657,7 +664,7 @@ basic requirements to achieve this goal:</p>
 
 <p>An <code class="language-plaintext highlighter-rouge">IB::Option</code> needs the specification of <code class="language-plaintext highlighter-rouge">:symbol</code>, <code class="language-plaintext highlighter-rouge">:exchange</code>, <code class="language-plaintext highlighter-rouge">:strike</code>, <code class="language-plaintext highlighter-rouge">:right</code> and <code class="language-plaintext highlighter-rouge">:expiry</code></p>
 
-<div class="alert alert-info" role="alert"><i class="fa fa-bars"></i> To address _Zero-strike-options use a negative value for strike: <code class="language-plaintext highlighter-rouge">IB__::Option.new(symbol:'abc', strike:-1. ...)</code>. </div>
+<div class="alert alert-info" role="alert"><i class="fa fa-bars"></i> To address <em>Zero-strike-options</em> use a negative value for strike: <code class="language-plaintext highlighter-rouge">IB::Option.new(symbol:'abc', strike:-1. ...)</code>. </div>
 
 <h3 id="requestcontractdata">RequestContractData</h3>
 
@@ -673,9 +680,9 @@ basic requirements to achieve this goal:</p>
 </code></pre></div></div>
 
 <p>If this is performed with the <em>Apple</em>-Stock, as defined above:</p>
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">&gt;</span> <span class="n">ib</span> <span class="o">=</span> <span class="no">IB</span><span class="o">::</span><span class="no">Connection</span><span class="p">.</span><span class="nf">current</span>
- <span class="o">&gt;</span> <span class="n">ib</span><span class="p">.</span><span class="nf">send_message</span> <span class="ss">:RequestContractData</span><span class="p">,</span> <span class="ss">:contract</span> <span class="o">=&gt;</span> <span class="no">IB</span><span class="o">::</span><span class="no">Stock</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span> <span class="ss">symbol: </span><span class="s1">'AAPL'</span> <span class="p">)</span>
- <span class="o">&gt;</span> <span class="n">ib</span><span class="p">.</span><span class="nf">received</span><span class="p">[</span><span class="ss">:ContractData</span><span class="p">].</span><span class="nf">first</span><span class="p">.</span><span class="nf">to_human</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="n">ib</span> <span class="o">=</span> <span class="no">IB</span><span class="o">::</span><span class="no">Connection</span><span class="p">.</span><span class="nf">current</span>
+ <span class="n">ib</span><span class="p">.</span><span class="nf">send_message</span> <span class="ss">:RequestContractData</span><span class="p">,</span> <span class="ss">:contract</span> <span class="o">=&gt;</span> <span class="no">IB</span><span class="o">::</span><span class="no">Stock</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span> <span class="ss">symbol: </span><span class="s1">'AAPL'</span> <span class="p">)</span>
+ <span class="n">ib</span><span class="p">.</span><span class="nf">received</span><span class="p">[</span><span class="ss">:ContractData</span><span class="p">].</span><span class="nf">first</span><span class="p">.</span><span class="nf">to_human</span>
  <span class="o">=&gt;</span> <span class="s2">"&lt;Contract &lt;Stock: AAPL USD NASDAQ&gt;   
      &lt;ContractDetails  APPLE INC, market-name:NMS, category:Computers, industry:Technology / Computers, ev_multiplier:, convertible:false, cupon:0.0, md_size_multiplier:100, min_tick:0.01, next_option_partial:false price_magnifier:1, puttable:false, sec_id-list:{:ISIN=&gt;</span><span class="se">\"</span><span class="s2">US0378331005</span><span class="se">\"</span><span class="s2">}, valid exchanges: SMART,AMEX,NYSE,CBOE,PHLX,ISE,CHX,ARCA,ISLAND,DRCTEDGE,BEX,BATS,EDGEA,CSFBALGO,JEFFALGO,BYX,IEX,EDGX,FOXRIVER,PEARL,TPLUS1,NYSENAT,LTSE,MEMX,PSX, order types: ACTIVETIM,AD,ADJUST,ALERT,ALGO,ALLOC,AON,AVGCOST,BASKET,BENCHPX,COND,CONDORDER,DARKONLY,DARKPOLL,DAY,DEACT,DEACTDIS,DEACTEOD,DIS,GAT,GTC,GTD,GTT,HID,IBKRATS,ICE,IMB,IOC,LIT,LMT,LOC,MIT,MKT,MOC,MTL,NGCOMB,NODARK,NONALGO,OCA,OPG,OPGREROUT,PEGBENCH,POSTONLY,PREOPGRTH,REL,RPI,RTH,SCALE,SCALEODD,SCALERST,SNAPMID,SNAPMKT,SNAPREL,STP,STPLMT,SWEEP,TRAIL,TRAILLIT,TRAILLMT,TRAILMIT,WHATIF &gt;&gt;"</span> 
 
@@ -718,7 +725,7 @@ For that purpose <em><strong>IB-Ruby</strong></em> provides <a href="Verify_cont
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2021 IB-Ruby. All rights reserved. <br />
-<span>Page last updated:</span> Mar 3, 2021<br/> Site last generated: May 26, 2021 <br />
+<span>Page last updated:</span> Mar 3, 2021<br/> Site last generated: May 27, 2021 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>
