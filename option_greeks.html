@@ -578,60 +578,56 @@ To use the features described below, include the <em>ib-extensions</em> Gem  in 
 <pre> 
 require 'ib-api' 
 require 'ib/verify'
-require 'ib/option-chain'
+require 'ib/option-greeks'
 </pre>
 
-##  Greeks
+in your scripts.
+</div>
 
-If we ask for market-data of an IB::Option, the TWS returns price data and  _Option Greeks_. 
+<h2 id="greeks">Greeks</h2>
 
+<p>If we ask for market-data of an IB::Option, the TWS returns price data and  <em>Option Greeks</em>.</p>
 
-`IB::Option.request_greeks` populates the    `IB::Option.greek` property.
+<p><code class="language-plaintext highlighter-rouge">IB::Option.request_greeks</code> populates the    <code class="language-plaintext highlighter-rouge">IB::Option.greek</code> property ( and returns the greeks as hash ).</p>
 
-It accepts the parameter `:what`  { :model, :bid, :ask, :last, :bidask, :all }, default is `model`, 
-ie. the calculated Greeks. For batch-processing, a threaded approach is supported via the parameter `thread: true`.
+<p>It accepts the parameter <code class="language-plaintext highlighter-rouge">:what</code>  { :model, :bid, :ask, :last, :bidask, :all }, default is <code class="language-plaintext highlighter-rouge">model</code>, 
+ie. the calculated Greeks. For batch-processing, a threaded approach is supported via the parameter <code class="language-plaintext highlighter-rouge">thread: true</code>.</p>
 
-The processing is _expensive_, it takes about 2 seconds to receive the data from the tws-server. 
+<p>The processing is <em>expensive</em>, it takes about 2 seconds to receive the data from the tws-server.</p>
 
-```ruby 
-  cien =  Option.new( symbol: 'CIEN', strike: 50, expiry: 202107, right: :put, exchange: :smart ).verify.first
-  --&gt; INFO::&lt;Option: CIEN 20210716 put 50.0 SMART USD&gt;
-  cien.request_greeks
-	 =&gt; {:tick_type=&gt;83, :implied_volatility=&gt;0.3860515283461521e0, 
-       :delta=&gt;-0.3163006034515305e0, :option_price=&gt;0.16924407617796515e1, :pv_dividend=&gt;0.0, 
-       :gamma=&gt;0.4684449764772187e-1, 
-       :vega=&gt;0.7141634363804972e-1, 
-       :theta=&gt;-0.2681911830789842e-1, :under_price=&gt;0.53e2} 
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">cien</span> <span class="o">=</span>  <span class="no">Option</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span> <span class="ss">symbol: </span><span class="s1">'CIEN'</span><span class="p">,</span> <span class="ss">strike: </span><span class="mi">50</span><span class="p">,</span> <span class="ss">expiry: </span><span class="mi">202107</span><span class="p">,</span> <span class="ss">right: :put</span><span class="p">,</span> <span class="ss">exchange: :smart</span> <span class="p">).</span><span class="nf">verify</span><span class="p">.</span><span class="nf">first</span>
+  <span class="o">--&gt;</span> <span class="no">INFO</span><span class="o">::&lt;</span><span class="no">Option</span><span class="p">:</span> <span class="no">CIEN</span> <span class="mi">20210716</span> <span class="n">put</span> <span class="mf">50.0</span> <span class="no">SMART</span> <span class="no">USD</span><span class="o">&gt;</span>
+  <span class="n">cien</span><span class="p">.</span><span class="nf">request_greeks</span>
+	 <span class="o">=&gt;</span> <span class="p">{</span><span class="ss">:tick_type</span><span class="o">=&gt;</span><span class="mi">83</span><span class="p">,</span> <span class="ss">:implied_volatility</span><span class="o">=&gt;</span><span class="mf">0.3860515283461521e0</span><span class="p">,</span> 
+       <span class="ss">:delta</span><span class="o">=&gt;-</span><span class="mf">0.3163006034515305e0</span><span class="p">,</span> <span class="ss">:option_price</span><span class="o">=&gt;</span><span class="mf">0.16924407617796515e1</span><span class="p">,</span> <span class="ss">:pv_dividend</span><span class="o">=&gt;</span><span class="mf">0.0</span><span class="p">,</span> 
+       <span class="ss">:gamma</span><span class="o">=&gt;</span><span class="mf">0.4684449764772187e-1</span><span class="p">,</span> 
+       <span class="ss">:vega</span><span class="o">=&gt;</span><span class="mf">0.7141634363804972e-1</span><span class="p">,</span> 
+       <span class="ss">:theta</span><span class="o">=&gt;-</span><span class="mf">0.2681911830789842e-1</span><span class="p">,</span> <span class="ss">:under_price</span><span class="o">=&gt;</span><span class="mf">0.53e2</span><span class="p">}</span> 
 
-  puts cien.greek.to_human
-	&lt;  optionPrice: 1.70818, UnderlyingPrice: 52.95 impl.Vola: 0.386052 ; dividend: 0; 
-     Greeks::  delta:  -0.318621; gamma: 0.0470364, vega: 0.0733351; theta: -0.026878 &gt;
+  <span class="nb">puts</span> <span class="n">cien</span><span class="p">.</span><span class="nf">greek</span><span class="p">.</span><span class="nf">to_human</span>
+	<span class="o">&lt;</span>  <span class="ss">optionPrice: </span><span class="mf">1.70818</span><span class="p">,</span> <span class="no">UnderlyingPrice</span><span class="p">:</span> <span class="mf">52.95</span> <span class="n">impl</span><span class="o">.</span><span class="no">Vola</span><span class="p">:</span> <span class="mf">0.386052</span> <span class="p">;</span> <span class="ss">dividend: </span><span class="mi">0</span><span class="p">;</span> 
+     <span class="no">Greeks</span><span class="o">::</span>  <span class="ss">delta:  </span><span class="o">-</span><span class="mf">0.318621</span><span class="p">;</span> <span class="ss">gamma: </span><span class="mf">0.0470364</span><span class="p">,</span> <span class="ss">vega: </span><span class="mf">0.0733351</span><span class="p">;</span> <span class="ss">theta: </span><span class="o">-</span><span class="mf">0.026878</span> <span class="o">&gt;</span>
 
-```
+</code></pre></div></div>
 
-
-
-```
-&gt; puts ge_options[2011].greeks.to_human
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; puts ge_options[2011].greeks.to_human
   &lt;TickOption model_option  option @    0.517, 
                             IV: 0.557,
                             delta: -0.566, gamma: 0.4084, vega: 0.00673, theta: -0.009176, 
                             pv_dividend: 0.000, 
                             underlying @    7.270&gt;
 
-```
+</code></pre></div></div>
 
-In **Thread-Modus** option properties are stored in `IB::Option.misc`.
+<p>In <strong>Thread-Modus</strong> option properties are stored in <code class="language-plaintext highlighter-rouge">IB::Option.misc</code>.</p>
 
-```ruby
-&gt; y = ge.otm_options sort: :expiry           # see below
-&gt; y[2012].greeks( thread: true).join         # get greeks concurrently
-&gt; y[2012].misc &amp;.implied_volatility.to_f.round 5.3
- =&gt; [[], 0.5782, [], 0.6186, [], 0.7023]     # some contracts are not populated
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">y</span> <span class="o">=</span> <span class="n">ge</span><span class="p">.</span><span class="nf">otm_options</span> <span class="ss">sort: :expiry</span>           <span class="c1"># see below</span>
+<span class="o">&gt;</span> <span class="n">y</span><span class="p">[</span><span class="mi">2012</span><span class="p">].</span><span class="nf">greeks</span><span class="p">(</span> <span class="ss">thread: </span><span class="kp">true</span><span class="p">).</span><span class="nf">join</span>         <span class="c1"># get greeks concurrently</span>
+<span class="o">&gt;</span> <span class="n">y</span><span class="p">[</span><span class="mi">2012</span><span class="p">].</span><span class="nf">misc</span> <span class="o">&amp;</span><span class="p">.</span><span class="nf">implied_volatility</span><span class="p">.</span><span class="nf">to_f</span><span class="p">.</span><span class="nf">round</span> <span class="mf">5.3</span>
+ <span class="o">=&gt;</span> <span class="p">[[],</span> <span class="mf">0.5782</span><span class="p">,</span> <span class="p">[],</span> <span class="mf">0.6186</span><span class="p">,</span> <span class="p">[],</span> <span class="mf">0.7023</span><span class="p">]</span>     <span class="c1"># some contracts are not populated</span>
 
-```
+</code></pre></div></div>
 
-</div>
 
 
     <div class="tags">
