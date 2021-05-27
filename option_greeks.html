@@ -610,25 +610,6 @@ ie. the calculated Greeks. For batch-processing, a threaded approach is supporte
 
 </code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; puts ge_options[2011].greeks.to_human
-  &lt;TickOption model_option  option @    0.517, 
-                            IV: 0.557,
-                            delta: -0.566, gamma: 0.4084, vega: 0.00673, theta: -0.009176, 
-                            pv_dividend: 0.000, 
-                            underlying @    7.270&gt;
-
-</code></pre></div></div>
-
-<p>In <strong>Thread-Modus</strong> option properties are stored in <code class="language-plaintext highlighter-rouge">IB::Option.misc</code>.</p>
-
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">y</span> <span class="o">=</span> <span class="n">ge</span><span class="p">.</span><span class="nf">otm_options</span> <span class="ss">sort: :expiry</span>           <span class="c1"># see below</span>
-<span class="o">&gt;</span> <span class="n">y</span><span class="p">[</span><span class="mi">2012</span><span class="p">].</span><span class="nf">greeks</span><span class="p">(</span> <span class="ss">thread: </span><span class="kp">true</span><span class="p">).</span><span class="nf">join</span>         <span class="c1"># get greeks concurrently</span>
-<span class="o">&gt;</span> <span class="n">y</span><span class="p">[</span><span class="mi">2012</span><span class="p">].</span><span class="nf">misc</span> <span class="o">&amp;</span><span class="p">.</span><span class="nf">implied_volatility</span><span class="p">.</span><span class="nf">to_f</span><span class="p">.</span><span class="nf">round</span> <span class="mf">5.3</span>
- <span class="o">=&gt;</span> <span class="p">[[],</span> <span class="mf">0.5782</span><span class="p">,</span> <span class="p">[],</span> <span class="mf">0.6186</span><span class="p">,</span> <span class="p">[],</span> <span class="mf">0.7023</span><span class="p">]</span>     <span class="c1"># some contracts are not populated</span>
-
-</code></pre></div></div>
-
-
 
     <div class="tags">
         
