@@ -254,6 +254,13 @@
           
           
           
+          <li><a title="IB-Gateway" href="gateway.html">IB-Gateway</a></li>
+          
+          
+          
+          
+          
+          
           <li><a title="IB-Ruby Console" href="console.html">IB-Ruby Console</a></li>
           
           
@@ -261,7 +268,7 @@
           
           
           
-          <li><a title="IB-Gateway" href="gateway.html">IB-Gateway</a></li>
+          <li><a title="Jupyter Notebooks" href="notebook.html">Jupyter Notebooks</a></li>
           
           
           
@@ -587,17 +594,18 @@ in your scripts.
 
 <p><code class="language-plaintext highlighter-rouge">ib-extensions</code> provides a handy <code class="language-plaintext highlighter-rouge">IB::Contract#market_price</code> method, easing the process of collecting 
 market price data from the <em>TWS</em>.<br />
-Basically <code class="language-plaintext highlighter-rouge">IB::Contract.market_price</code> combines the process of sending a <code class="language-plaintext highlighter-rouge">:RequestMarketData</code>-Message, collecting the TickType-Response and returning evaluated. The results can be further customized in a block.</p>
+Basically <code class="language-plaintext highlighter-rouge">IB::Contract.market_price</code> combines the process of sending a <code class="language-plaintext highlighter-rouge">:RequestMarketData</code>-Message, collecting the TickType-Response and returning evaluated data. The results can be further customized in a block.</p>
 
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="n">zn</span> <span class="o">=</span>  <span class="no">Symbols</span><span class="o">::</span><span class="no">Futures</span><span class="p">.</span><span class="nf">zn</span>
  <span class="n">zn</span><span class="p">.</span><span class="nf">market_price</span>       <span class="o">=&gt;</span> <span class="mf">132.78125</span> 
  <span class="n">zn</span><span class="p">.</span><span class="nf">bars</span>               <span class="o">=&gt;</span> <span class="p">[{</span><span class="ss">:bid</span><span class="o">=&gt;</span><span class="mf">132.765625</span><span class="p">,</span> <span class="ss">:ask</span><span class="o">=&gt;</span><span class="mf">132.78125</span><span class="p">,</span> <span class="ss">:last</span><span class="o">=&gt;</span><span class="mf">132.78125</span><span class="p">,</span> <span class="ss">:close</span><span class="o">=&gt;</span><span class="mf">132.859375</span><span class="p">}]</span> 
  <span class="n">zn</span><span class="p">.</span><span class="nf">misc</span>               <span class="o">=&gt;</span> <span class="p">{</span><span class="ss">:realtime</span><span class="o">=&gt;</span><span class="mf">132.78125</span><span class="p">}</span>
 
-<span class="o">&gt;</span> <span class="n">zn</span><span class="p">.</span><span class="nf">market_price</span><span class="p">{</span><span class="o">|</span><span class="n">y</span><span class="o">|</span> <span class="n">y</span><span class="p">[</span><span class="ss">:close</span><span class="p">]}</span>    
+ <span class="n">zn</span><span class="p">.</span><span class="nf">market_price</span><span class="p">{</span><span class="o">|</span><span class="n">y</span><span class="o">|</span> <span class="n">y</span><span class="p">[</span><span class="ss">:close</span><span class="p">]}</span>    
  <span class="o">=&gt;</span> <span class="mf">132.859375</span>
 </code></pre></div></div>
-<p>The default response is to return the <code class="language-plaintext highlighter-rouge">:last</code>-price, if present. Otherwise  the average of <code class="language-plaintext highlighter-rouge">:bid</code> and <code class="language-plaintext highlighter-rouge">:ask</code> or if this fails too, the <code class="language-plaintext highlighter-rouge">:close</code>-price is returned.</p>
+<p>The default response is to return the <code class="language-plaintext highlighter-rouge">:last</code>-price, if present. Otherwise  the average of <code class="language-plaintext highlighter-rouge">:bid</code> and <code class="language-plaintext highlighter-rouge">:ask</code>. 
+If this fails too, the <code class="language-plaintext highlighter-rouge">:close</code>-price is returned.</p>
 
 <h3 id="snapshot-delayed-and-frozen-data">Snapshot, delayed and frozen Data</h3>
 
@@ -606,15 +614,15 @@ the <em>TWS-API</em> offers delayed data, too. They can be accessed without subs
 
 <p>If no marketdata subscription is detected, <code class="language-plaintext highlighter-rouge">market_price</code> automatically switches to delayed data.</p>
 
-<p>This behavior can be controlled through the parameter <code class="language-plaintext highlighter-rouge">delayed: false</code></p>
+<p>This behavior can be controlled by the parameter <code class="language-plaintext highlighter-rouge">delayed: false</code></p>
 
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># assuming market data for stocks trading in singapore are not subscribed</span>
 
  <span class="n">c</span> <span class="o">=</span>  <span class="no">Stock</span><span class="p">.</span><span class="nf">new</span> <span class="ss">symbol: :'C09'</span><span class="p">,</span> <span class="ss">exchange: </span><span class="s1">'SGX'</span><span class="p">,</span> <span class="ss">currency: :sgd</span>
  <span class="n">c</span><span class="p">.</span><span class="nf">market_price</span> <span class="ss">delayed: </span><span class="kp">false</span>
-	 <span class="no">INFO</span><span class="o">::</span><span class="no">Requested</span> <span class="n">market</span> <span class="n">data</span> <span class="n">is</span> <span class="n">not</span> <span class="n">subscribed</span><span class="o">.</span> <span class="no">Delayed</span> <span class="n">market</span> <span class="n">data</span> <span class="n">is</span> <span class="n">not</span> <span class="n">enabled</span><span class="o">.</span>
-	 <span class="no">ERROR</span><span class="o">::&lt;</span><span class="no">Stock</span><span class="p">:</span> <span class="no">C09</span> <span class="n">sgd</span> <span class="no">SGX</span><span class="o">&gt;</span> <span class="o">--&gt;</span> <span class="no">No</span> <span class="n">marketdata</span> <span class="n">permissions</span>
-	  <span class="o">=&gt;</span> <span class="kp">nil</span> 
+  <span class="no">INFO</span><span class="o">::</span><span class="no">Requested</span> <span class="n">market</span> <span class="n">data</span> <span class="n">is</span> <span class="n">not</span> <span class="n">subscribed</span><span class="o">.</span> <span class="no">Delayed</span> <span class="n">market</span> <span class="n">data</span> <span class="n">is</span> <span class="n">not</span> <span class="n">enabled</span><span class="o">.</span>
+  <span class="no">ERROR</span><span class="o">::&lt;</span><span class="no">Stock</span><span class="p">:</span> <span class="no">C09</span> <span class="n">sgd</span> <span class="no">SGX</span><span class="o">&gt;</span> <span class="o">--&gt;</span> <span class="no">No</span> <span class="n">marketdata</span> <span class="n">permissions</span>
+   <span class="o">=&gt;</span> <span class="kp">nil</span> 
  
  <span class="n">c</span><span class="p">.</span><span class="nf">market_price</span> <span class="ss">delayed: </span><span class="kp">true</span>
   <span class="no">INFO</span><span class="o">::</span><span class="no">Requested</span> <span class="n">market</span> <span class="n">data</span> <span class="n">is</span> <span class="n">not</span> <span class="n">subscribed</span><span class="o">.</span> <span class="no">Delayed</span> <span class="n">market</span> <span class="n">data</span> <span class="n">is</span> <span class="n">not</span> <span class="n">enabled</span><span class="o">.</span>
@@ -653,7 +661,7 @@ How to extend this to larger collections?</p>
 
 </code></pre></div></div>
 
-<p>In an experiment, it took <strong>105 seconds</strong>  to fetch the data for just 19  <code class="language-plaintext highlighter-rouge">IB::Contracts</code>. This is  not acceptable.</p>
+<p>In an experiment on a public holiday, it took <strong>105 seconds</strong>  to fetch the data for just 19  <code class="language-plaintext highlighter-rouge">IB::Contracts</code>. This is  not acceptable.</p>
 
 <h4 id="asynchronous-access">Asynchronous Access</h4>
 <p>The alternative approach:  fire the   <code class="language-plaintext highlighter-rouge">:RequestMarketData</code> messages  for all contract at once and wait 
@@ -704,7 +712,7 @@ the fetched market-price is stored in <code class="language-plaintext highlighte
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2021 IB-Ruby. All rights reserved. <br />
-<span>Page last updated:</span> May 31, 2021<br/> Site last generated: May 31, 2021 <br />
+<span>Page last updated:</span> May 31, 2021<br/> Site last generated: Jun 18, 2021 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>

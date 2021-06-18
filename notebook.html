@@ -5,8 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
-<meta name="keywords" content="message,  messages">
-<title>Usage of Request_ID | IB-Ruby documentation</title>
+<meta name="keywords" content=" ">
+<title>Jupyter Notebooks | IB-Ruby documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -144,7 +144,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Usage of Request_ID">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Jupyter Notebooks">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -268,7 +268,7 @@
           
           
           
-          <li><a title="Jupyter Notebooks" href="notebook.html">Jupyter Notebooks</a></li>
+          <li class="active"><a title="Jupyter Notebooks" href="notebook.html">Jupyter Notebooks</a></li>
           
           
           
@@ -291,7 +291,7 @@
           
           
           
-          <li class="active"><a title="Request-ID" href="message_request_id.html">Request-ID</a></li>
+          <li><a title="Request-ID" href="message_request_id.html">Request-ID</a></li>
           
           
           
@@ -541,7 +541,7 @@
         <!-- Content Column -->
         <div class="col-md-9" id="tg-sb-content">
             <div class="post-header">
-   <h1 class="post-title-main">Usage of Request_ID</h1>
+   <h1 class="post-title-main">Jupyter Notebooks</h1>
 </div>
 
 
@@ -578,81 +578,75 @@ $('#toc').on('click', 'a', function() {
 
     
 
-   <p>Several message-calls use <code class="language-plaintext highlighter-rouge">:id</code>, <code class="language-plaintext highlighter-rouge">:ticker_id</code> or <code class="language-plaintext highlighter-rouge">:request_id</code> to distinguish between separate requests.<br />
-You can either specify the <code class="language-plaintext highlighter-rouge">id</code> or delegate it to <strong><em>IB-Ruby</em></strong>.</p>
+   <p>For development purposes <em>Jupyter Notebooks</em> are quite popular.</p>
 
-<p>To delegate, just omit the specification of an <code class="language-plaintext highlighter-rouge">:id</code> of any kind.</p>
+<p>Its easy to setup the <em>Jupyter Environment</em> ready to uses a <em>Ruby Kernel</em>. The 
+<a href="https://github.com/sciruby/iruby">iruby-Project</a> maintains <em>Ruby Notebooks</em> and
+provides a simple installation guide.</p>
 
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">C</span><span class="p">.</span><span class="nf">send_message</span> <span class="ss">:RequestContractData</span><span class="p">,</span> <span class="ss">contract: </span><span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Stocks</span><span class="p">.</span><span class="nf">aapl</span>
- <span class="o">=&gt;</span> <span class="mi">171</span> 
-<span class="mo">06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">31.555</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">10</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ContractData</span><span class="p">)</span>
-<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">31.556812</span> <span class="vg">$1969</span><span class="p">]</span>  <span class="no">INFO</span> <span class="o">--</span> <span class="p">:</span> <span class="o">&lt;</span><span class="no">Stock</span><span class="p">:</span> <span class="no">AAPL</span> <span class="no">USD</span><span class="o">&gt;</span>
-<span class="mo">06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">31.557</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">52</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ContractDataEnd</span><span class="p">)</span>
-<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">31.557438</span> <span class="vg">$1969</span><span class="p">]</span>  <span class="no">INFO</span> <span class="o">--</span> <span class="p">:</span> <span class="o">&lt;</span><span class="no">ContractDataEnd</span><span class="p">:</span> <span class="n">request_id</span> <span class="mi">171</span> <span class="o">&gt;</span>
+<p>After successfully installing the software,   <em>Notebooks</em> are managed by calling</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ iruby notebook
 </code></pre></div></div>
-<p>The <code class="language-plaintext highlighter-rouge">:send_message</code>-method returns the generated »request_id«. The corresponding <code class="language-plaintext highlighter-rouge">:ContractDataEnd</code> message finishes the request.</p>
+<p>Contents of the current directory are displayed in the internet-browser and <em>Notebooks</em> can 
+be managed from there.</p>
 
-<p>If you want to control the <code class="language-plaintext highlighter-rouge">:request_id</code>, just specify it. The autogeneration mechanism is simply overridden.</p>
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="no">C</span><span class="p">.</span><span class="nf">send_message</span> <span class="ss">:RequestContractData</span><span class="p">,</span> <span class="ss">contract: </span><span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Stocks</span><span class="p">.</span><span class="nf">aapl</span><span class="p">,</span> <span class="ss">:id</span> <span class="o">=&gt;</span> <span class="mi">456</span>
-  <span class="o">=&gt;</span> <span class="mi">456</span> 
-<span class="mo">06</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">53.247</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">10</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ContractData</span><span class="p">)</span>
-<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T06</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">53.248262</span> <span class="vg">$1969</span><span class="p">]</span>  <span class="no">INFO</span> <span class="o">--</span> <span class="p">:</span> <span class="o">&lt;</span><span class="no">Stock</span><span class="p">:</span> <span class="no">AAPL</span> <span class="no">USD</span><span class="o">&gt;</span>
-<span class="mo">06</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">53.248</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">52</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ContractDataEnd</span><span class="p">)</span>
-<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T06</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">53.248435</span> <span class="vg">$1969</span><span class="p">]</span>  <span class="no">INFO</span> <span class="o">--</span> <span class="p">:</span> <span class="o">&lt;</span><span class="no">ContractDataEnd</span><span class="p">:</span> <span class="n">request_id</span> <span class="mi">456</span> <span class="o">&gt;</span>
+<p><em>Jupyter Notebooks</em>  use the  usual <code class="language-plaintext highlighter-rouge">bundle</code> environment. 
+Its recommended to create a <code class="language-plaintext highlighter-rouge">setup.rb</code> initialisation file and to require it in the first statement of every <em>Notebook</em>.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">require</span> <span class="s1">'bundler/setup'</span>
+<span class="nb">require</span> <span class="s1">'ib-gateway'</span>
+<span class="nb">require</span> <span class="s1">'ib/symbols'</span>
+
+<span class="c1"># Connect to IB TWS.</span>
+<span class="no">G</span> <span class="o">=</span> <span class="no">IB</span><span class="o">::</span><span class="no">Gateway</span><span class="p">.</span><span class="nf">new</span>   <span class="ss">port:  </span><span class="mi">4002</span>  
+<span class="no">C</span> <span class="o">=</span>  <span class="no">G</span><span class="p">.</span><span class="nf">tws</span>
 </code></pre></div></div>
 
-<h2 id="examples-using-this-feature">Examples using this feature</h2>
+<div class="alert alert-info" role="alert"><i class="fa fa-bars"></i> A sample file is included in <code class="language-plaintext highlighter-rouge">ib-examples</code>:  [/lib/iruby_init.rb] (https://github.com/ib-ruby/ib-examples/blob/main/lib/iruby_init.rb)
+</div>
 
-<ul>
-  <li><a href="https://github.com/ib-ruby/ib-symbols/blob/master/examples/contract_details">contract_details</a></li>
-  <li><a href="https://github.com/ib-ruby/ib-symbols/blob/master/examples/historic_data">historic_data</a></li>
-  <li><a href="https://github.com/ib-ruby/ib-symbols/blob/master/examples/option_data">option_data</a></li>
-  <li><a href="https://github.com/ib-ruby/ib-extensions/blob/master/examples/volatility_research">volatility_research</a></li>
-</ul>
+<h2 id="a-gentle-warning">A gentle warning</h2>
 
-<h2 id="list-of-messages-supporting-auto-generated-request_ids">List of Messages supporting auto-generated request_id’s</h2>
+<p><em>Jupyter Notebooks</em> provide an intuitive way to develop algorithms and showcases. The combination of code and documentation is charming.</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>:RequestAccountSummary
+<p>BUT: There are designed for presentation purposes. Not for software development.</p>
 
-:RequestPositionsMulti
+<p><em>Notebooks</em> are a modern alternative to old school console applications. They are not a substitute to test driven programming.</p>
 
-:RequestAccountUpdatesMulti
+<h2 id="display-contents-with-as-table">Display contents with <em>as-table</em></h2>
 
-:RequestContractDetails = :RequestContractData
+<p>The <a href="https://github.com/tj/terminal-table">Terminal-Table Gem</a>  provides a comfortable output of arrays and hashes.</p>
 
-:RequestExecutions
+<p>Every <code class="language-plaintext highlighter-rouge">IB::Model</code>-Object can be printed  by</p>
 
-:RequestFundamentalData
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="nb">puts</span> <span class="n">object</span><span class="p">.</span><span class="nf">as_table</span>
+</code></pre></div></div>
 
-:RequestHeadTimeStamp
+<p>Example</p>
 
-:RequestHistogramData
-
-:RequestHistoricalData
-
-:RequestRealTimeBars
-
-:RequestCalculateImpliedVolatility = :CalculateImpliedVolatility 
-                                   = :RequestImpliedVolatility 
-
-:RequestCalculateOptionPrice = :CalculateOptionPrice 
-                             = :RequestOptionPrice 
-
-:RequestScannerSubscription 
-
-:RequestSecurityDefinitionOptionParameters = :ReqSecDefOptParams  
-                                           = :RequestOptionChainDefinition 
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mf">3.0</span><span class="o">.</span><span class="mi">0</span> <span class="p">:</span><span class="mo">010</span> <span class="o">&gt;</span> <span class="nb">puts</span> <span class="no">Stock</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span> <span class="ss">symbol: </span><span class="s1">'GE'</span> <span class="p">).</span><span class="nf">verify</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">as_table</span>
+<span class="err">┌───────┬────────┬────────┬──────────┬────────┬────────────┬───────────────┬───────┬────────┬──────────┐</span>
+<span class="err">│</span>       <span class="err">│</span> <span class="n">symbol</span> <span class="err">│</span> <span class="n">con_id</span> <span class="err">│</span> <span class="n">exchange</span> <span class="err">│</span> <span class="n">expiry</span> <span class="err">│</span> <span class="n">multiplier</span> <span class="err">│</span> <span class="n">trading</span><span class="o">-</span><span class="k">class</span> <span class="err">│</span> <span class="n">right</span> <span class="err">│</span> <span class="n">strike</span> <span class="err">│</span> <span class="n">currency</span> <span class="err">│</span>
+<span class="err">╞═══════╪════════╪════════╪══════════╪════════╪════════════╪═══════════════╪═══════╪════════╪══════════╡</span>
+<span class="err">│</span> <span class="no">Stock</span> <span class="err">│</span> <span class="no">GE</span>     <span class="err">│</span> <span class="mi">7516</span>   <span class="err">│</span>  <span class="no">SMART</span>   <span class="err">│</span>        <span class="err">│</span>            <span class="err">│</span>      <span class="no">GE</span>       <span class="err">│</span>       <span class="err">│</span>        <span class="err">│</span>   <span class="no">USD</span>    <span class="err">│</span>
+<span class="err">└───────┴────────┴────────┴──────────┴────────┴────────────┴───────────────┴───────┴────────┴──────────┘</span>
 
 </code></pre></div></div>
+<p>However, for complex objects his approach is no appropriate. <code class="language-plaintext highlighter-rouge">For instance, ContractDetails</code> are better handled by the
+traditional <code class="language-plaintext highlighter-rouge">to_human</code> method</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">puts</span> <span class="no">Stock</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span> <span class="ss">symbol: </span><span class="s1">'GE'</span> <span class="p">).</span><span class="nf">verify</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">contract_detail</span><span class="p">.</span><span class="nf">to_human</span>
+<span class="o">&lt;</span><span class="no">ContractDetails</span>  <span class="no">GENERAL</span> <span class="no">ELECTRIC</span> <span class="no">CO</span><span class="p">,</span> <span class="o">--&gt;</span> <span class="no">GE</span><span class="p">,</span> <span class="sr">/C/</span> <span class="no">Miscellaneous</span> <span class="no">Manufactur</span><span class="p">,</span> <span class="sr">/I/</span> <span class="no">Industrial</span> <span class="sr">/SC/</span> <span class="no">Diversified</span> <span class="no">Manufact</span> <span class="no">Op</span><span class="p">,</span> 
+ <span class="n">md_size_multiplier</span><span class="p">:</span><span class="mi">100</span><span class="p">,</span> <span class="n">min_tick</span><span class="p">:</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">price_magnifier</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="n">sec_id</span><span class="o">-</span><span class="n">list</span><span class="p">:{</span><span class="ss">:ISIN</span><span class="o">=&gt;</span><span class="s2">"US3696041033"</span><span class="p">},</span> 
+ <span class="n">valid</span> <span class="ss">exchanges: </span><span class="no">SMART</span><span class="p">,</span><span class="no">AMEX</span><span class="p">,</span><span class="no">NYSE</span><span class="p">,</span><span class="no">CBOE</span><span class="p">,</span><span class="no">PHLX</span><span class="p">,</span><span class="no">ISE</span><span class="p">,</span><span class="no">CHX</span><span class="p">,</span><span class="no">ARCA</span><span class="p">,</span><span class="no">ISLAND</span><span class="p">,</span><span class="no">DRCTEDGE</span><span class="p">,</span><span class="no">BEX</span><span class="p">,</span><span class="no">BATS</span><span class="p">,</span><span class="no">EDGEA</span><span class="p">,</span><span class="no">CSFBALGO</span><span class="p">,</span><span class="no">JEFFALGO</span><span class="p">,</span><span class="no">BYX</span><span class="p">,</span><span class="no">IEX</span><span class="p">,</span><span class="no">EDGX</span><span class="p">,</span><span class="no">FOXRIVER</span><span class="p">,</span><span class="no">PEARL</span><span class="p">,</span><span class="no">NYSENAT</span><span class="p">,</span><span class="no">LTSE</span><span class="p">,</span><span class="no">MEMX</span><span class="p">,</span><span class="no">PSX</span><span class="p">;</span> <span class="n">order</span> <span class="ss">types: </span><span class="no">ACTIVETIM</span><span class="p">,</span><span class="no">AD</span><span class="p">,</span><span class="no">ADJUST</span><span class="p">,</span><span class="no">ALERT</span><span class="p">,</span><span class="no">ALGO</span><span class="p">,</span><span class="no">ALLOC</span><span class="p">,</span><span class="no">AON</span><span class="p">,</span><span class="no">AVGCOST</span><span class="p">,</span><span class="no">BASKET</span><span class="p">,</span><span class="no">BENCHPX</span><span class="p">,</span><span class="no">CASHQTY</span><span class="p">,</span><span class="no">COND</span><span class="p">,</span><span class="no">CONDORDER</span><span class="p">,</span><span class="no">DARKONLY</span><span class="p">,</span><span class="no">DARKPOLL</span><span class="p">,</span><span class="no">DAY</span><span class="p">,</span><span class="no">DEACT</span><span class="p">,</span><span class="no">DEACTDIS</span><span class="p">,</span><span class="no">DEACTEOD</span><span class="p">,</span><span class="no">DIS</span><span class="p">,</span><span class="no">GAT</span><span class="p">,</span><span class="no">GTC</span><span class="p">,</span><span class="no">GTD</span><span class="p">,</span><span class="no">GTT</span><span class="p">,</span><span class="no">HID</span><span class="p">,</span><span class="no">IBKRATS</span><span class="p">,</span><span class="no">ICE</span><span class="p">,</span><span class="no">IMB</span><span class="p">,</span><span class="no">IOC</span><span class="p">,</span><span class="no">LIT</span><span class="p">,</span><span class="no">LMT</span><span class="p">,</span><span class="no">LOC</span><span class="p">,</span><span class="no">MIDPX</span><span class="p">,</span><span class="no">MIT</span><span class="p">,</span><span class="no">MKT</span><span class="p">,</span><span class="no">MOC</span><span class="p">,</span><span class="no">MTL</span><span class="p">,</span><span class="no">NGCOMB</span><span class="p">,</span><span class="no">NODARK</span><span class="p">,</span><span class="no">NONALGO</span><span class="p">,</span><span class="no">OCA</span><span class="p">,</span><span class="no">OPG</span><span class="p">,</span><span class="no">OPGREROUT</span><span class="p">,</span><span class="no">PEGBENCH</span><span class="p">,</span><span class="no">POSTONLY</span><span class="p">,</span><span class="no">PREOPGRTH</span><span class="p">,</span><span class="no">PRICECHK</span><span class="p">,</span><span class="no">REL</span><span class="p">,</span><span class="no">RELPCTOFS</span><span class="p">,</span><span class="no">RPI</span><span class="p">,</span><span class="no">RTH</span><span class="p">,</span><span class="no">RTHIGNOPG</span><span class="p">,</span><span class="no">SCALE</span><span class="p">,</span><span class="no">SCALEODD</span><span class="p">,</span><span class="no">SCALERST</span><span class="p">,</span><span class="no">SIZECHK</span><span class="p">,</span><span class="no">SNAPMID</span><span class="p">,</span><span class="no">SNAPMKT</span><span class="p">,</span><span class="no">SNAPREL</span><span class="p">,</span><span class="no">STP</span><span class="p">,</span><span class="no">STPLMT</span><span class="p">,</span><span class="no">SWEEP</span><span class="p">,</span><span class="no">TRAIL</span><span class="p">,</span><span class="no">TRAILLIT</span><span class="p">,</span><span class="no">TRAILLMT</span><span class="p">,</span><span class="no">TRAILMIT</span><span class="p">,</span><span class="no">WHATIF</span> 
+</code></pre></div></div>
+
+<div class="alert alert-info" role="alert"><i class="fa fa-bars"></i> The use of <em>terminal tables</em> is covered in the <code class="language-plaintext highlighter-rouge">ib-examples-Notebook</code>: [/account/inspect_portfolio.ipynb] (https://github.com/ib-ruby/ib-examples/blob/main/account/inspect_portfolio.ipynb) </div>
+
 
 
     <div class="tags">
-        
-        <b>Tags: </b>
-        
-        
-        
-        
         
     </div>
 
@@ -667,7 +661,7 @@ You can either specify the <code class="language-plaintext highlighter-rouge">id
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2021 IB-Ruby. All rights reserved. <br />
-<span>Page last updated:</span> October 29, 2020<br/> Site last generated: Jun 18, 2021 <br />
+ Site last generated: Jun 18, 2021 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>
