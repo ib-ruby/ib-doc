@@ -597,20 +597,28 @@ in your scripts.
       <td>connect</td>
       <td>disconnect</td>
       <td>reconnect</td>
+      <td> </td>
+      <td>check_connection</td>
     </tr>
     <tr>
-      <td>check_conection</td>
-      <td> </td>
       <td>tws</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
     </tr>
     <tr>
       <td>get_account_data</td>
       <td>update_orders</td>
       <td>all_contracts</td>
+      <td> </td>
+      <td> </td>
     </tr>
     <tr>
       <td>advisor</td>
       <td>clients</td>
+      <td> </td>
+      <td> </td>
       <td> </td>
     </tr>
   </tbody>
@@ -659,7 +667,6 @@ and provides account-based trading tools.</div>
 <span class="o">&gt;</span> <span class="nb">puts</span> <span class="n">gw</span><span class="p">.</span><span class="nf">clients</span><span class="p">.</span><span class="nf">to_human</span>
 <span class="o">&lt;</span><span class="n">demo_user</span> <span class="no">DU167348</span><span class="o">&gt;</span>
 <span class="o">&lt;</span><span class="n">demo_user</span> <span class="no">DU167349</span><span class="o">&gt;</span>
-
 </code></pre></div></div>
 <p>In single user mode Advisor and Client are identical:</p>
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">gw</span> <span class="o">=</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Gateway</span><span class="p">.</span><span class="nf">current</span>
@@ -667,7 +674,6 @@ and provides account-based trading tools.</div>
  <span class="o">=&gt;</span> <span class="s2">"&lt;user U1274612&gt;"</span> 
 <span class="o">&gt;</span> <span class="nb">puts</span> <span class="n">gw</span><span class="p">.</span><span class="nf">clients</span><span class="p">.</span><span class="nf">to_human</span>
 <span class="o">&lt;</span><span class="n">user</span> <span class="no">U1274612</span><span class="o">&gt;</span>
-
 </code></pre></div></div>
 
 <ul>
@@ -679,8 +685,21 @@ and provides account-based trading tools.</div>
   </li>
 </ul>
 
-<p><code class="language-plaintext highlighter-rouge">IB::Gateway.clients</code>  contain  <code class="language-plaintext highlighter-rouge">Account-Positions</code> and <code class="language-plaintext highlighter-rouge">Portfolio-Values</code>. They are synchronized with the <em>TWS</em> by
-<code class="language-plaintext highlighter-rouge">IB::Gateway.get_account_data {the account}</code>. Visit <a href="/account_overview">Account Overview</a> for further details.</p>
+<p><code class="language-plaintext highlighter-rouge">IB::Gateway.current.clients</code>  contain  <code class="language-plaintext highlighter-rouge">Account-Positions</code> and <code class="language-plaintext highlighter-rouge">Portfolio-Values</code>. They are synchronized with the <em>TWS</em> by
+<code class="language-plaintext highlighter-rouge">IB::Gateway.current.get_account_data {the account}</code>. Visit <a href="account_overview">Account Overview</a> for further details.</p>
+
+<p>and beeing accessed via</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">g</span> <span class="o">=</span> <span class="no">IB</span><span class="o">::</span><span class="no">Gateway</span><span class="p">.</span><span class="nf">current</span>
+<span class="c1"># thread safe access</span>
+<span class="n">g</span><span class="p">.</span><span class="nf">account_data</span> <span class="o">&amp;</span><span class="ss">:portfolio_values</span>
+
+<span class="n">g</span><span class="p">.</span><span class="nf">account_data</span> <span class="o">&amp;</span><span class="ss">:account_values</span>
+
+<span class="c1"># primitive access</span>
+<span class="n">g</span><span class="p">.</span><span class="nf">clients</span><span class="p">.</span><span class="nf">map</span> <span class="o">&amp;</span><span class="ss">:portfolio_values</span>
+<span class="n">g</span><span class="p">.</span><span class="nf">clients</span><span class="p">.</span><span class="nf">map</span> <span class="o">&amp;</span><span class="ss">:account_values</span>
+</code></pre></div></div>
 
 <h3 id="order-management">Order Management</h3>
 
