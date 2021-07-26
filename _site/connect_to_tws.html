@@ -5,8 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
-<meta name="keywords" content="message,  messages">
-<title>Usage of Request_ID | IB-Ruby documentation</title>
+<meta name="keywords" content="connection,  ">
+<title>Connect to the TWS | IB-Ruby documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -144,7 +144,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Usage of Request_ID">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Connect to the TWS">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -240,7 +240,7 @@
           
           
           
-          <li><a title="Connect to the TWS" href="connect_to_tws.html">Connect to the TWS</a></li>
+          <li class="active"><a title="Connect to the TWS" href="connect_to_tws.html">Connect to the TWS</a></li>
           
           
           
@@ -291,7 +291,7 @@
           
           
           
-          <li class="active"><a title="Request-ID" href="message_request_id.html">Request-ID</a></li>
+          <li><a title="Request-ID" href="message_request_id.html">Request-ID</a></li>
           
           
           
@@ -541,7 +541,7 @@
         <!-- Content Column -->
         <div class="col-md-9" id="tg-sb-content">
             <div class="post-header">
-   <h1 class="post-title-main">Usage of Request_ID</h1>
+   <h1 class="post-title-main">Connect to the TWS</h1>
 </div>
 
 
@@ -578,72 +578,90 @@ $('#toc').on('click', 'a', function() {
 
     
 
-   <p>Several message-calls use <code class="language-plaintext highlighter-rouge">:id</code>, <code class="language-plaintext highlighter-rouge">:ticker_id</code> or <code class="language-plaintext highlighter-rouge">:request_id</code> to distinguish between separate requests.<br />
-You can either specify the <code class="language-plaintext highlighter-rouge">id</code> or delegate it to <strong><em>IB-Ruby</em></strong>.</p>
+   <div class="bs-callout bs-callout-info">
+The <em>ib-api</em> Gem includes the <em>Connecton</em> application.    
+<br />
+Include  
+<pre> 
+require 'ib-api' 
+</pre>
 
-<p>To delegate, just omit the specification of an <code class="language-plaintext highlighter-rouge">:id</code> of any kind.</p>
+in your scripts.
+</div>
 
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">C</span><span class="p">.</span><span class="nf">send_message</span> <span class="ss">:RequestContractData</span><span class="p">,</span> <span class="ss">contract: </span><span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Stocks</span><span class="p">.</span><span class="nf">aapl</span>
- <span class="o">=&gt;</span> <span class="mi">171</span> 
-<span class="mo">06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">31.555</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">10</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ContractData</span><span class="p">)</span>
-<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">31.556812</span> <span class="vg">$1969</span><span class="p">]</span>  <span class="no">INFO</span> <span class="o">--</span> <span class="p">:</span> <span class="o">&lt;</span><span class="no">Stock</span><span class="p">:</span> <span class="no">AAPL</span> <span class="no">USD</span><span class="o">&gt;</span>
-<span class="mo">06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">31.557</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">52</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ContractDataEnd</span><span class="p">)</span>
-<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">31.557438</span> <span class="vg">$1969</span><span class="p">]</span>  <span class="no">INFO</span> <span class="o">--</span> <span class="p">:</span> <span class="o">&lt;</span><span class="no">ContractDataEnd</span><span class="p">:</span> <span class="n">request_id</span> <span class="mi">171</span> <span class="o">&gt;</span>
+<h2 id="ibconnection">IB::Connection</h2>
+
+<p><code class="language-plaintext highlighter-rouge">IB::Connection.new</code> instantiates the  connection.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">Connection</code>-instance provides</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>connect</td>
+      <td>connected?</td>
+      <td>disconnect</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>to manage the connection.</p>
+
+<h2 id="ibgateway">IB::Gateway</h2>
+
+<p>In the WAN-World many things can go terribly wrong.<br />
+Even a super stable cable connection can suddenly vanish. Then a reconnection may be necessary.
+`ib-api’ implements the basics to connect to the TWS-Server.</p>
+
+<p>This is performed in <code class="language-plaintext highlighter-rouge">IB::Connection.connect</code>, simply by opening a port</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>self.socket = IBSocket.open(@host, @port)  
 </code></pre></div></div>
-<p>The <code class="language-plaintext highlighter-rouge">:send_message</code>-method returns the generated »request_id«. The corresponding <code class="language-plaintext highlighter-rouge">:ContractDataEnd</code> message finishes the request.</p>
+<p><code class="language-plaintext highlighter-rouge">IBSocket</code> is in fact a specialized <code class="language-plaintext highlighter-rouge">TCPSocket</code>. It inherits  its complete error-handling repertoire.</p>
 
-<p>If you want to control the <code class="language-plaintext highlighter-rouge">:request_id</code>, just specify it. The autogeneration mechanism is simply overridden.</p>
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="no">C</span><span class="p">.</span><span class="nf">send_message</span> <span class="ss">:RequestContractData</span><span class="p">,</span> <span class="ss">contract: </span><span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Stocks</span><span class="p">.</span><span class="nf">aapl</span><span class="p">,</span> <span class="ss">:id</span> <span class="o">=&gt;</span> <span class="mi">456</span>
-  <span class="o">=&gt;</span> <span class="mi">456</span> 
-<span class="mo">06</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">53.247</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">10</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ContractData</span><span class="p">)</span>
-<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T06</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">53.248262</span> <span class="vg">$1969</span><span class="p">]</span>  <span class="no">INFO</span> <span class="o">--</span> <span class="p">:</span> <span class="o">&lt;</span><span class="no">Stock</span><span class="p">:</span> <span class="no">AAPL</span> <span class="no">USD</span><span class="o">&gt;</span>
-<span class="mo">06</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">53.248</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">52</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ContractDataEnd</span><span class="p">)</span>
-<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T06</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">53.248435</span> <span class="vg">$1969</span><span class="p">]</span>  <span class="no">INFO</span> <span class="o">--</span> <span class="p">:</span> <span class="o">&lt;</span><span class="no">ContractDataEnd</span><span class="p">:</span> <span class="n">request_id</span> <span class="mi">456</span> <span class="o">&gt;</span>
+<p>If the connection cannot be established,  <code class="language-plaintext highlighter-rouge">Errno::ECONNREFUSED</code>  is fired. Its up to the user 
+to handle this error. <code class="language-plaintext highlighter-rouge">IB-Gateway</code> does handle most common failures.</p>
+
+<div class="bs-callout bs-callout-info">
+The <em>ib-extensions</em> Gem includes the <em>Gateway</em> application.    
+<br />
+Include  
+<pre> 
+require 'ib-api' 
+require 'ib/gateway' 
+</pre>
+
+in your scripts.
+</div>
+
+<p><code class="language-plaintext highlighter-rouge">IB::Gateway#Connect</code>  covers <code class="language-plaintext highlighter-rouge">Errno::ECONNREFUSED</code>, <code class="language-plaintext highlighter-rouge">Errno::EHOSTUNREACH</code> and  the unspecified <code class="language-plaintext highlighter-rouge">SocketError</code>. It’s designed to manage uncertain and often interrupted connections via DSL, WLAN or even GSM.</p>
+
+<p>If the Host is not reached, it tries to reconnect for at least one hour.</p>
+
+<div class="alert alert-info" role="alert"><i class="fa fa-bars"></i> 
+<b><code class="language-plaintext highlighter-rouge">IB::Gateway.check_connection:</code></b> Method to ensure a valid connection to the Interactive Brokers Data Centers. 
+</div>
+
+<p>If a Connection has been established, one cannot be sure, that its not interrupted by IB. 
+Then an error-message is transmitted:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>05:37:29 TWS System 1102: Connectivity between IB and Trader Workstation has been restored - data maintained.
 </code></pre></div></div>
-
-<h2 id="examples-using-this-feature">Examples using this feature</h2>
-
-<ul>
-  <li><a href="https://github.com/ib-ruby/ib-examples/blob/main/contract/contract_details">contract details</a></li>
-  <li><a href="https://github.com/ib-ruby/ib-examples/blob/main/contract/historic-data">historic data</a></li>
-  <li><a href="https://github.com/ib-ruby/ib-examples/blob/main/contract/option_data">option data</a></li>
-  <li><a href="https://github.com/ib-ruby/ib-examples/blob/main/contract/option-greeks">option-greeks</a></li>
-</ul>
-
-<h2 id="list-of-messages-supporting-auto-generated-request_ids">List of Messages supporting auto-generated request_id’s</h2>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>:RequestAccountSummary
-
-:RequestPositionsMulti
-
-:RequestAccountUpdatesMulti
-
-:RequestContractDetails = :RequestContractData
-
-:RequestExecutions
-
-:RequestFundamentalData
-
-:RequestHeadTimeStamp
-
-:RequestHistogramData
-
-:RequestHistoricalData
-
-:RequestRealTimeBars
-
-:RequestCalculateImpliedVolatility = :CalculateImpliedVolatility 
-                                   = :RequestImpliedVolatility 
-
-:RequestCalculateOptionPrice = :CalculateOptionPrice 
-                             = :RequestOptionPrice 
-
-:RequestScannerSubscription 
-
-:RequestSecurityDefinitionOptionParameters = :ReqSecDefOptParams  
-                                           = :RequestOptionChainDefinition 
-
+<p>The standard answer of the <code class="language-plaintext highlighter-rouge">IB::Gateway</code> is defined in the <code class="language-plaintext highlighter-rouge">Alert</code>-class</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="k">def</span> <span class="nf">IB</span><span class="o">::</span><span class="no">Alert</span><span class="p">.</span><span class="nf">alert_2102</span>
+       <span class="nb">sleep</span> <span class="mf">0.1</span>  <span class="c1">#  no need to wait too long.</span>
+       <span class="k">if</span> <span class="no">IB</span><span class="o">::</span><span class="no">Gateway</span><span class="p">.</span><span class="nf">current</span><span class="p">.</span><span class="nf">check_connection</span>
+          <span class="no">IB</span><span class="o">::</span><span class="no">Gateway</span><span class="p">.</span><span class="nf">logger</span><span class="p">.</span><span class="nf">debug</span> <span class="p">{</span> <span class="s2">"Alert 2102: Connection stable"</span>  <span class="p">}</span>
+       <span class="k">else</span>
+         <span class="no">IB</span><span class="o">::</span><span class="no">Gateway</span><span class="p">.</span><span class="nf">current</span><span class="p">.</span><span class="nf">reconnect</span>
+       <span class="k">end</span>
+    <span class="k">end</span>
 </code></pre></div></div>
+<p>Simple and efficient.</p>
+
+<div class="alert alert-info" role="alert"><i class="fa fa-bars"></i> IB::Gateway#CheckConnection` requests the current time. If this simple message is not answered properly,  the client is disconnected and the program tries to reestablish the connection.</div>
+
+<p>Its safe to call <code class="language-plaintext highlighter-rouge">IB::Gateway#CheckConnection</code> prior to every critical message, as order-placement or contract-verification. It delays the process by approx. 7 ms.</p>
+
 
 
     <div class="tags">
@@ -667,7 +685,7 @@ You can either specify the <code class="language-plaintext highlighter-rouge">id
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2021 IB-Ruby. All rights reserved. <br />
-<span>Page last updated:</span> October 29, 2020<br/> Site last generated: Jul 26, 2021 <br />
+ Site last generated: Jul 26, 2021 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>

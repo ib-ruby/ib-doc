@@ -5,8 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
-<meta name="keywords" content="message,  messages">
-<title>Usage of Request_ID | IB-Ruby documentation</title>
+<meta name="keywords" content="dborientdb,  database">
+<title>Overview | IB-Ruby documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -144,7 +144,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Usage of Request_ID">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Overview">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -254,13 +254,6 @@
           
           
           
-          <li><a title="IB-Gateway" href="gateway.html">IB-Gateway</a></li>
-          
-          
-          
-          
-          
-          
           <li><a title="IB-Ruby Console" href="console.html">IB-Ruby Console</a></li>
           
           
@@ -268,7 +261,7 @@
           
           
           
-          <li><a title="Jupyter Notebooks" href="notebook.html">Jupyter Notebooks</a></li>
+          <li><a title="IB-Gateway" href="gateway.html">IB-Gateway</a></li>
           
           
           
@@ -291,7 +284,7 @@
           
           
           
-          <li class="active"><a title="Request-ID" href="message_request_id.html">Request-ID</a></li>
+          <li><a title="Request-ID" href="message_request_id.html">Request-ID</a></li>
           
           
           
@@ -342,13 +335,6 @@
           
           
           
-          <li><a title="Options rolling" href="roll-options.html">Options rolling</a></li>
-          
-          
-          
-          
-          
-          
           <li><a title="Verify" href="Verify_contracts.html">Verify</a></li>
           
           
@@ -370,14 +356,7 @@
           
           
           
-          <li><a title="Option-Chains" href="atm_options.html">Option-Chains</a></li>
-          
-          
-          
-          
-          
-          
-          <li><a title="Option-Greeks" href="option_greeks.html">Option-Greeks</a></li>
+          <li><a title="Option-Chains  and -Greeks" href="atm_options.html">Option-Chains  and -Greeks</a></li>
           
           
           
@@ -459,39 +438,12 @@
       
   
   <li>
-      <a title="Database  & Rails Integration" href="#">Database  & Rails Integration</a>
+      <a title="Database Integration" href="#">Database Integration</a>
       <ul>
           
           
           
-          <li><a title="Overview" href="database_overview.html">Overview</a></li>
-          
-          
-          
-          <li class="subfolders">
-              <a title="OrientDB" href="#">OrientDB</a>
-              <ul>
-                  
-                  
-                  
-                  <li><a title="Introduction" href="orientdb_introduction.html">Introduction</a></li>
-                  
-                  
-                  
-                  
-                  
-                  <li><a title="Setup" href="orientdb_setup.html">Setup</a></li>
-                  
-                  
-                  
-                  
-                  
-                  <li><a title="Working with Data" href="orientdb_working_with_data.html">Working with Data</a></li>
-                  
-                  
-                  
-              </ul>
-          </li>
+          <li class="active"><a title="OrientDB" href="orientdb_overview.html">OrientDB</a></li>
           
           
           
@@ -541,7 +493,7 @@
         <!-- Content Column -->
         <div class="col-md-9" id="tg-sb-content">
             <div class="post-header">
-   <h1 class="post-title-main">Usage of Request_ID</h1>
+   <h1 class="post-title-main">Overview</h1>
 </div>
 
 
@@ -578,77 +530,68 @@ $('#toc').on('click', 'a', function() {
 
     
 
-   <p>Several message-calls use <code class="language-plaintext highlighter-rouge">:id</code>, <code class="language-plaintext highlighter-rouge">:ticker_id</code> or <code class="language-plaintext highlighter-rouge">:request_id</code> to distinguish between separate requests.<br />
-You can either specify the <code class="language-plaintext highlighter-rouge">id</code> or delegate it to <strong><em>IB-Ruby</em></strong>.</p>
+   <div class="bs-callout bs-callout-info">
+To use the features described, include the <em>ib-orientdb</em> Gem  in the Gemfile.
 
-<p>To delegate, just omit the specification of an <code class="language-plaintext highlighter-rouge">:id</code> of any kind.</p>
+</div>
 
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">C</span><span class="p">.</span><span class="nf">send_message</span> <span class="ss">:RequestContractData</span><span class="p">,</span> <span class="ss">contract: </span><span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Stocks</span><span class="p">.</span><span class="nf">aapl</span>
- <span class="o">=&gt;</span> <span class="mi">171</span> 
-<span class="mo">06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">31.555</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">10</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ContractData</span><span class="p">)</span>
-<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">31.556812</span> <span class="vg">$1969</span><span class="p">]</span>  <span class="no">INFO</span> <span class="o">--</span> <span class="p">:</span> <span class="o">&lt;</span><span class="no">Stock</span><span class="p">:</span> <span class="no">AAPL</span> <span class="no">USD</span><span class="o">&gt;</span>
-<span class="mo">06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">31.557</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">52</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ContractDataEnd</span><span class="p">)</span>
-<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">31.557438</span> <span class="vg">$1969</span><span class="p">]</span>  <span class="no">INFO</span> <span class="o">--</span> <span class="p">:</span> <span class="o">&lt;</span><span class="no">ContractDataEnd</span><span class="p">:</span> <span class="n">request_id</span> <span class="mi">171</span> <span class="o">&gt;</span>
-</code></pre></div></div>
-<p>The <code class="language-plaintext highlighter-rouge">:send_message</code>-method returns the generated »request_id«. The corresponding <code class="language-plaintext highlighter-rouge">:ContractDataEnd</code> message finishes the request.</p>
+<p><strong><em>OrientDB</em></strong> is a <strong>N</strong>ot <strong>O</strong>nly <strong>SQL</strong> Database owned and maintained by <em>SAP</em>.</p>
 
-<p>If you want to control the <code class="language-plaintext highlighter-rouge">:request_id</code>, just specify it. The autogeneration mechanism is simply overridden.</p>
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="no">C</span><span class="p">.</span><span class="nf">send_message</span> <span class="ss">:RequestContractData</span><span class="p">,</span> <span class="ss">contract: </span><span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Stocks</span><span class="p">.</span><span class="nf">aapl</span><span class="p">,</span> <span class="ss">:id</span> <span class="o">=&gt;</span> <span class="mi">456</span>
-  <span class="o">=&gt;</span> <span class="mi">456</span> 
-<span class="mo">06</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">53.247</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">10</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ContractData</span><span class="p">)</span>
-<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T06</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">53.248262</span> <span class="vg">$1969</span><span class="p">]</span>  <span class="no">INFO</span> <span class="o">--</span> <span class="p">:</span> <span class="o">&lt;</span><span class="no">Stock</span><span class="p">:</span> <span class="no">AAPL</span> <span class="no">USD</span><span class="o">&gt;</span>
-<span class="mo">06</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">53.248</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">52</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ContractDataEnd</span><span class="p">)</span>
-<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T06</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">53.248435</span> <span class="vg">$1969</span><span class="p">]</span>  <span class="no">INFO</span> <span class="o">--</span> <span class="p">:</span> <span class="o">&lt;</span><span class="no">ContractDataEnd</span><span class="p">:</span> <span class="n">request_id</span> <span class="mi">456</span> <span class="o">&gt;</span>
-</code></pre></div></div>
+<p>It aims to be “the first Multi-Model Open Source NOSQL DBMS that brings together the power of graphs and the flexibility of documents into one scalable high-performance operational database.”</p>
 
-<h2 id="examples-using-this-feature">Examples using this feature</h2>
+<p>The <strong><em>IB-OrientDB</em></strong>-Gem  connects a running <strong><em>IB-api</em></strong>-client to a running OrientDB-Database-Server 
+and provides methods to store data provided by the Interactive Brokers TWS into the database.</p>
 
-<ul>
-  <li><a href="https://github.com/ib-ruby/ib-examples/blob/main/contract/contract_details">contract details</a></li>
-  <li><a href="https://github.com/ib-ruby/ib-examples/blob/main/contract/historic-data">historic data</a></li>
-  <li><a href="https://github.com/ib-ruby/ib-examples/blob/main/contract/option_data">option data</a></li>
-  <li><a href="https://github.com/ib-ruby/ib-examples/blob/main/contract/option-greeks">option-greeks</a></li>
-</ul>
+<div class="alert alert-info" role="alert"><i class="fa fa-bars"></i> The Database is initialized through the <code class="language-plaintext highlighter-rouge">Setup.init_database</code> script. Upon initialisation, <em><strong>IB-OrientDB</strong></em> 
+ fetches all database classes and assigns them to ruby classes. As a consequence, objects received from the TWS
+ are in fact unsaved database-entries and objects read from the database are suitable for tws-queries.</div>
 
-<h2 id="list-of-messages-supporting-auto-generated-request_ids">List of Messages supporting auto-generated request_id’s</h2>
+<p>This is shown in the following example. We create a <code class="language-plaintext highlighter-rouge">IB::Stock</code>-object, verify it through the <code class="language-plaintext highlighter-rouge">TWS</code> and 
+subsequently store
+it in the database. Secondly we use the database-entry to fetch some historical data.</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Create a new Contract</span>
+<span class="o">&gt;</span> <span class="n">f</span> <span class="o">=</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Stock</span><span class="p">.</span><span class="nf">new</span> <span class="ss">symbol: </span><span class="s1">'F'</span>
+<span class="c1"># Inspect its class hierarchy</span>
+<span class="o">&gt;</span> <span class="n">f</span><span class="p">.</span><span class="nf">class</span><span class="p">.</span><span class="nf">ancestors</span>
+ <span class="o">=&gt;</span> <span class="p">[</span><span class="no">IB</span><span class="o">::</span><span class="no">Stock</span><span class="p">,</span> <span class="no">IB</span><span class="o">::</span><span class="no">Contract</span><span class="p">,</span> <span class="no">IB</span><span class="o">::</span><span class="no">BaseProperties</span><span class="p">,</span> <span class="no">V</span><span class="p">,</span> <span class="no">ActiveOrient</span><span class="o">::</span><span class="no">Model</span><span class="p">,</span> <span class="no">ModelRecord</span><span class="p">,</span> <span class="no">ActiveOrient</span><span class="o">::</span><span class="no">BaseProperties</span><span class="p">,</span> <span class="no">ActiveOrient</span><span class="o">::</span><span class="no">Base</span><span class="p">,</span> <span class="no">Conversions</span><span class="p">,</span> <span class="p">(</span><span class="o">...</span><span class="p">)</span> <span class="p">]</span>
+<span class="c1"># Note the class hierarchy IB::Stock -- IB::Contract --V :: The Stock-Object is </span>
+<span class="c1"># indeed Child of a OrientDB Vertex-Class. </span>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>:RequestAccountSummary
+<span class="c1"># Now store it in the database and check its presence in the database </span>
+<span class="o">&gt;</span> <span class="n">f</span><span class="p">.</span><span class="nf">rid</span>              <span class="o">=&gt;</span> <span class="s2">":"</span>    <span class="c1">#  its not saved jet</span>
+<span class="o">&gt;</span> <span class="n">f</span><span class="p">.</span><span class="nf">save</span>             <span class="o">=&gt;</span> <span class="kp">false</span>  <span class="c1">#  it cannot be saved, because its not verified</span>
+                               <span class="c1">#  ( no con_id is present  )</span>
+<span class="o">&gt;</span> <span class="n">verified_f</span> <span class="o">=</span> <span class="n">f</span><span class="p">.</span><span class="nf">verify</span><span class="p">.</span><span class="nf">first</span>
+<span class="o">&gt;</span> <span class="n">verified_f</span><span class="p">.</span><span class="nf">save</span>
+<span class="o">&gt;</span> <span class="n">verified_f</span><span class="p">.</span><span class="nf">rid</span>    <span class="o">=&gt;</span> <span class="s2">"59:0"</span> <span class="c1"># the object is updated </span>
 
-:RequestPositionsMulti
-
-:RequestAccountUpdatesMulti
-
-:RequestContractDetails = :RequestContractData
-
-:RequestExecutions
-
-:RequestFundamentalData
-
-:RequestHeadTimeStamp
-
-:RequestHistogramData
-
-:RequestHistoricalData
-
-:RequestRealTimeBars
-
-:RequestCalculateImpliedVolatility = :CalculateImpliedVolatility 
-                                   = :RequestImpliedVolatility 
-
-:RequestCalculateOptionPrice = :CalculateOptionPrice 
-                             = :RequestOptionPrice 
-
-:RequestScannerSubscription 
-
-:RequestSecurityDefinitionOptionParameters = :ReqSecDefOptParams  
-                                           = :RequestOptionChainDefinition 
+<span class="o">&gt;</span> <span class="n">new_f</span> <span class="o">=</span>  <span class="no">V</span><span class="p">.</span><span class="nf">get</span> <span class="s2">"59:0"</span>       <span class="c1"># retrieve from the database. Note that we do not </span>
+                              <span class="c1"># have to specify the appropriate class. </span>
+<span class="o">&gt;</span> <span class="n">new_f</span><span class="p">.</span><span class="nf">class</span>       <span class="o">=&gt;</span> <span class="no">IB</span><span class="o">::</span><span class="no">Stock</span> 
+<span class="o">&gt;</span> <span class="n">new_f</span> <span class="o">==</span> <span class="n">verified_f</span>  <span class="o">=&gt;</span> <span class="kp">true</span> <span class="c1">#  its a copy of the original</span>
+<span class="c1"># Query the database and ask the TWS for historical data</span>
+<span class="o">&gt;</span> <span class="nb">puts</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Stock</span><span class="p">.</span><span class="nf">where</span><span class="p">(</span> <span class="ss">symbol: </span><span class="s1">'F'</span> <span class="p">).</span><span class="nf">first</span><span class="p">.</span><span class="nf">eod</span><span class="p">(</span> <span class="ss">duration: </span><span class="s1">'10 d'</span> <span class="p">).</span><span class="nf">to_human</span>
+<span class="c1"># INFO-&gt;MATCH {class: ib_stock, as: ib_stocks, where: ( symbol = 'F') } </span>
+<span class="o">&lt;</span><span class="no">Bar</span><span class="p">:</span> <span class="mi">2020</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">13</span> <span class="n">wap</span> <span class="mf">8.452</span> <span class="no">OHLC</span> <span class="mf">8.31</span> <span class="mf">8.57</span> <span class="mf">8.16</span> <span class="mf">8.52</span> <span class="n">trades</span> <span class="mi">79407</span> <span class="n">vol</span> <span class="mi">764141</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="no">Bar</span><span class="p">:</span> <span class="mi">2020</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">16</span> <span class="n">wap</span> <span class="mf">8.761</span> <span class="no">OHLC</span> <span class="mf">8.65</span> <span class="mf">8.91</span> <span class="mf">8.57</span> <span class="mf">8.8</span> <span class="n">trades</span> <span class="mi">90727</span> <span class="n">vol</span> <span class="mi">826969</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="no">Bar</span><span class="p">:</span> <span class="mi">2020</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">17</span> <span class="n">wap</span> <span class="mf">8.739</span> <span class="no">OHLC</span> <span class="mf">8.75</span> <span class="mf">8.85</span> <span class="mf">8.63</span> <span class="mf">8.73</span> <span class="n">trades</span> <span class="mi">54007</span> <span class="n">vol</span> <span class="mi">455313</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="no">Bar</span><span class="p">:</span> <span class="mi">2020</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">18</span> <span class="n">wap</span> <span class="mf">8.951</span> <span class="no">OHLC</span> <span class="mf">8.76</span> <span class="mf">9.05</span> <span class="mf">8.74</span> <span class="mf">8.9</span> <span class="n">trades</span> <span class="mi">75730</span> <span class="n">vol</span> <span class="mi">724330</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="no">Bar</span><span class="p">:</span> <span class="mi">2020</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">19</span> <span class="n">wap</span> <span class="mf">8.802</span> <span class="no">OHLC</span> <span class="mf">8.87</span> <span class="mf">8.94</span> <span class="mf">8.74</span> <span class="mf">8.77</span> <span class="n">trades</span> <span class="mi">54895</span> <span class="n">vol</span> <span class="mi">545472</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="no">Bar</span><span class="p">:</span> <span class="mi">2020</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">20</span> <span class="n">wap</span> <span class="mf">8.742</span> <span class="no">OHLC</span> <span class="mf">8.73</span> <span class="mf">8.87</span> <span class="mf">8.68</span> <span class="mf">8.76</span> <span class="n">trades</span> <span class="mi">66661</span> <span class="n">vol</span> <span class="mi">550186</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="no">Bar</span><span class="p">:</span> <span class="mi">2020</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">23</span> <span class="n">wap</span> <span class="mf">8.885</span> <span class="no">OHLC</span> <span class="mf">8.76</span> <span class="mf">8.98</span> <span class="mf">8.75</span> <span class="mf">8.93</span> <span class="n">trades</span> <span class="mi">75533</span> <span class="n">vol</span> <span class="mi">662582</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="no">Bar</span><span class="p">:</span> <span class="mi">2020</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">24</span> <span class="n">wap</span> <span class="mf">9.386</span> <span class="no">OHLC</span> <span class="mf">8.92</span> <span class="mf">9.56</span> <span class="mf">8.91</span> <span class="mf">9.56</span> <span class="n">trades</span> <span class="mi">110795</span> <span class="n">vol</span> <span class="mi">959114</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="no">Bar</span><span class="p">:</span> <span class="mi">2020</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">25</span> <span class="n">wap</span> <span class="mf">9.089</span> <span class="no">OHLC</span> <span class="mf">9.33</span> <span class="mf">9.41</span> <span class="mf">9.0</span> <span class="mf">9.12</span> <span class="n">trades</span> <span class="mi">98761</span> <span class="n">vol</span> <span class="mi">925084</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="no">Bar</span><span class="p">:</span> <span class="mi">2020</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">27</span> <span class="n">wap</span> <span class="mf">9.078</span> <span class="no">OHLC</span> <span class="mf">9.13</span> <span class="mf">9.15</span> <span class="mf">9.03</span> <span class="mf">9.1</span> <span class="n">trades</span> <span class="mi">32327</span> <span class="n">vol</span> <span class="mi">270936</span><span class="o">&gt;</span>
 
 </code></pre></div></div>
+
 
 
     <div class="tags">
         
         <b>Tags: </b>
+        
+        
         
         
         
@@ -666,8 +609,8 @@ You can either specify the <code class="language-plaintext highlighter-rouge">id
 <footer>
             <div class="row">
                 <div class="col-lg-12 footer">
-               &copy;2021 IB-Ruby. All rights reserved. <br />
-<span>Page last updated:</span> October 29, 2020<br/> Site last generated: Jul 26, 2021 <br />
+               &copy;2020 IB-Ruby. All rights reserved. <br />
+<span>Page last updated:</span> November 26, 2020<br/> Site last generated: Nov 30, 2020 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>

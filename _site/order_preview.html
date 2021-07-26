@@ -5,8 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
-<meta name="keywords" content="message,  messages">
-<title>Usage of Request_ID | IB-Ruby documentation</title>
+<meta name="keywords" content="orders,  orders, messages">
+<title>Preview and Margin Impact | IB-Ruby documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -144,7 +144,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Usage of Request_ID">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Preview and Margin Impact">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -291,7 +291,7 @@
           
           
           
-          <li class="active"><a title="Request-ID" href="message_request_id.html">Request-ID</a></li>
+          <li><a title="Request-ID" href="message_request_id.html">Request-ID</a></li>
           
           
           
@@ -407,7 +407,7 @@
           
           
           
-          <li><a title="Preview and Margin Impact" href="order_preview.html">Preview and Margin Impact</a></li>
+          <li class="active"><a title="Preview and Margin Impact" href="order_preview.html">Preview and Margin Impact</a></li>
           
           
           
@@ -541,7 +541,7 @@
         <!-- Content Column -->
         <div class="col-md-9" id="tg-sb-content">
             <div class="post-header">
-   <h1 class="post-title-main">Usage of Request_ID</h1>
+   <h1 class="post-title-main">Preview and Margin Impact</h1>
 </div>
 
 
@@ -578,70 +578,78 @@ $('#toc').on('click', 'a', function() {
 
     
 
-   <p>Several message-calls use <code class="language-plaintext highlighter-rouge">:id</code>, <code class="language-plaintext highlighter-rouge">:ticker_id</code> or <code class="language-plaintext highlighter-rouge">:request_id</code> to distinguish between separate requests.<br />
-You can either specify the <code class="language-plaintext highlighter-rouge">id</code> or delegate it to <strong><em>IB-Ruby</em></strong>.</p>
+   <div class="bs-callout bs-callout-info">
+To use the features described, include the <em>ib-extensions</em> Gem  in the Gemfile and use    
 
-<p>To delegate, just omit the specification of an <code class="language-plaintext highlighter-rouge">:id</code> of any kind.</p>
 
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">C</span><span class="p">.</span><span class="nf">send_message</span> <span class="ss">:RequestContractData</span><span class="p">,</span> <span class="ss">contract: </span><span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Stocks</span><span class="p">.</span><span class="nf">aapl</span>
- <span class="o">=&gt;</span> <span class="mi">171</span> 
-<span class="mo">06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">31.555</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">10</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ContractData</span><span class="p">)</span>
-<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">31.556812</span> <span class="vg">$1969</span><span class="p">]</span>  <span class="no">INFO</span> <span class="o">--</span> <span class="p">:</span> <span class="o">&lt;</span><span class="no">Stock</span><span class="p">:</span> <span class="no">AAPL</span> <span class="no">USD</span><span class="o">&gt;</span>
-<span class="mo">06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">31.557</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">52</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ContractDataEnd</span><span class="p">)</span>
-<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">31.557438</span> <span class="vg">$1969</span><span class="p">]</span>  <span class="no">INFO</span> <span class="o">--</span> <span class="p">:</span> <span class="o">&lt;</span><span class="no">ContractDataEnd</span><span class="p">:</span> <span class="n">request_id</span> <span class="mi">171</span> <span class="o">&gt;</span>
+<pre> 
+require 'ib-api' 
+require 'ib/symbols' 
+require 'ib/order-prototypes' 
+require 'ib/gateway' 
+</pre>
+
+in your scripts.
+</div>
+
+<h2 id="ibaccountpreview">IB::Account.preview</h2>
+
+<p>The TWS displays the margin-impact of an order  via »Order -&gt; Preview«.</p>
+
+<p><code class="language-plaintext highlighter-rouge">IB::Gateway</code> keeps this methodology.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> Account.preview order: {IB::Order} , contract: {IB::Contract}
+  ==&gt; Hash: { :init_margin , :maint_margin, :equity_with_loan, 
+              :commission, :commission_currency, :warning  }
 </code></pre></div></div>
-<p>The <code class="language-plaintext highlighter-rouge">:send_message</code>-method returns the generated »request_id«. The corresponding <code class="language-plaintext highlighter-rouge">:ContractDataEnd</code> message finishes the request.</p>
 
-<p>If you want to control the <code class="language-plaintext highlighter-rouge">:request_id</code>, just specify it. The autogeneration mechanism is simply overridden.</p>
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="no">C</span><span class="p">.</span><span class="nf">send_message</span> <span class="ss">:RequestContractData</span><span class="p">,</span> <span class="ss">contract: </span><span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Stocks</span><span class="p">.</span><span class="nf">aapl</span><span class="p">,</span> <span class="ss">:id</span> <span class="o">=&gt;</span> <span class="mi">456</span>
-  <span class="o">=&gt;</span> <span class="mi">456</span> 
-<span class="mo">06</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">53.247</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">10</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ContractData</span><span class="p">)</span>
-<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T06</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">53.248262</span> <span class="vg">$1969</span><span class="p">]</span>  <span class="no">INFO</span> <span class="o">--</span> <span class="p">:</span> <span class="o">&lt;</span><span class="no">Stock</span><span class="p">:</span> <span class="no">AAPL</span> <span class="no">USD</span><span class="o">&gt;</span>
-<span class="mo">06</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">53.248</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">52</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ContractDataEnd</span><span class="p">)</span>
-<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T06</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">53.248435</span> <span class="vg">$1969</span><span class="p">]</span>  <span class="no">INFO</span> <span class="o">--</span> <span class="p">:</span> <span class="o">&lt;</span><span class="no">ContractDataEnd</span><span class="p">:</span> <span class="n">request_id</span> <span class="mi">456</span> <span class="o">&gt;</span>
+<p>Behind the scene, the <code class="language-plaintext highlighter-rouge">what_if</code>-Flag on the <code class="language-plaintext highlighter-rouge">Limit.order</code> is set. Then the order is placed the usual way.
+The response from the TWS is recognized through the <code class="language-plaintext highlighter-rouge">OpenOrder</code>-Message. Parts of the Order-State-Response 
+are returned.</p>
+
+<h2 id="use-the-tws-to-validate-and-inspect-complex-orders">Use the TWS to validate and inspect Complex Orders</h2>
+
+<p>A neat feature of the TWS-Platform is the appearance of <code class="language-plaintext highlighter-rouge">whatIf</code>-Order-Requests in the <code class="language-plaintext highlighter-rouge">API</code>-Section of the Trading-Desk. After firing an <code class="language-plaintext highlighter-rouge">IB::Account.preview(order,contract)</code>-Request, one can comfortably inspect any part with TWS-Tools.</p>
+
+<h2 id="margin-impact">Margin Impact</h2>
+
+<p>Lets estimate the margin-impact of a limit-order for a S&amp;P 500 Mini-Future.
+For convenience we use the <code class="language-plaintext highlighter-rouge">IB::Gateway</code> variant.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="no">G</span> <span class="o">=</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Gateway</span><span class="p">.</span><span class="nf">current</span>
+<span class="o">&gt;</span> <span class="n">the_order</span> <span class="o">=</span>  <span class="no">Limit</span><span class="p">.</span><span class="nf">order</span> <span class="ss">action: :buy</span><span class="p">,</span> <span class="ss">size: </span><span class="mi">1</span><span class="p">,</span> <span class="ss">price: </span><span class="mi">3500</span><span class="p">,</span>
+                           <span class="ss">contract: </span><span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Futures</span><span class="p">.</span><span class="nf">es</span><span class="p">.</span><span class="nf">verify</span><span class="p">.</span><span class="nf">first</span>
+<span class="o">&gt;</span> <span class="no">G</span><span class="p">.</span><span class="nf">clients</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">preview</span> <span class="ss">order: </span><span class="n">the_order</span> 
+ <span class="o">=&gt;</span> <span class="p">{</span><span class="ss">:init_margin</span><span class="o">=&gt;</span><span class="mf">0.23887e5</span><span class="p">,</span> <span class="ss">:maint_margin</span><span class="o">=&gt;</span><span class="mf">0.2079412e5</span><span class="p">,</span> 
+     <span class="ss">:equity_with_loan</span><span class="o">=&gt;</span><span class="mf">0.119007517e7</span><span class="p">,</span> <span class="ss">:commission</span><span class="o">=&gt;</span><span class="mf">0.21e1</span><span class="p">,</span> 
+		<span class="ss">:commission_currency</span><span class="o">=&gt;</span><span class="s2">"USD"</span><span class="p">,</span> <span class="ss">:warning</span><span class="o">=&gt;</span><span class="s2">""</span><span class="p">}</span> 
+<span class="o">&gt;</span> <span class="no">G</span><span class="p">.</span><span class="nf">active_accounts</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nf">place</span> <span class="ss">order: </span><span class="n">the_order</span>   
+  <span class="o">=&gt;</span> <span class="mi">123</span>   <span class="c1"># local_id</span>
 </code></pre></div></div>
 
-<h2 id="examples-using-this-feature">Examples using this feature</h2>
+<p>The <em>TWS</em> offers a comparison of current and projected values. This can be achieved through</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">z</span><span class="o">=</span> <span class="no">G</span><span class="p">.</span><span class="nf">clients</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">preview</span> <span class="ss">order: </span><span class="no">Limit</span><span class="p">.</span><span class="nf">order</span><span class="p">(</span> <span class="ss">total_quantity: </span><span class="mi">1</span><span class="p">,</span> <span class="ss">price: </span><span class="mi">3500</span><span class="p">,</span> <span class="ss">action: :sell</span><span class="p">,</span> <span class="ss">contract: </span><span class="no">Symbols</span><span class="o">::</span><span class="no">Futures</span><span class="p">.</span><span class="nf">es</span><span class="p">.</span><span class="nf">verify</span><span class="p">.</span><span class="nf">first</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="n">d</span><span class="o">=</span><span class="p">{}</span>
+<span class="o">&gt;</span> <span class="no">G</span><span class="p">.</span><span class="nf">clients</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">account_data_scan</span><span class="p">(</span> <span class="s1">'^Equity'</span> <span class="p">).</span><span class="nf">key</span> 
+  <span class="o">=&gt;</span> <span class="p">[</span><span class="ss">:EquityWithLoanValue</span><span class="p">,</span> <span class="ss">:"EquityWithLoanValue-C"</span><span class="p">,</span> <span class="ss">:"EquityWithLoanValue-S"</span><span class="p">]</span> 
+<span class="o">&gt;</span> <span class="n">e</span><span class="o">=</span> <span class="no">G</span><span class="p">.</span><span class="nf">clients</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">account_data_scan</span><span class="p">(</span> <span class="s1">'^Equity'</span> <span class="p">).</span><span class="nf">value</span>
+   <span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"1190427.52"</span><span class="p">,</span> <span class="s2">"99960.00"</span><span class="p">,</span> <span class="s2">"1090467.52"</span><span class="p">]</span>    <span class="c1">#  compare the first value with z</span>
+<span class="o">&gt;</span> <span class="n">f</span> <span class="o">=</span> <span class="no">G</span><span class="p">.</span><span class="nf">clients</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">account_data_scan</span><span class="p">(</span> <span class="s1">'^FullMaintMargin'</span> <span class="p">).</span><span class="nf">value</span>
+ <span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"7331.49"</span><span class="p">,</span> <span class="s2">"0.00"</span><span class="p">,</span> <span class="s2">"7331.49"</span><span class="p">]</span>      <span class="c1"># complete, commodity account, securities account</span>
+<span class="o">&gt;</span> <span class="n">g</span> <span class="o">=</span> <span class="no">G</span><span class="p">.</span><span class="nf">clients</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">account_data_scan</span><span class="p">(</span> <span class="s1">'^FullInitMargin'</span> <span class="p">).</span><span class="nf">value</span>
+ <span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"9092.67"</span><span class="p">,</span> <span class="s2">"0.00"</span><span class="p">,</span> <span class="s2">"9092.67"</span><span class="p">]</span>      <span class="c1"># complete, commodity account, securities account</span>
 
-<ul>
-  <li><a href="https://github.com/ib-ruby/ib-examples/blob/main/contract/contract_details">contract details</a></li>
-  <li><a href="https://github.com/ib-ruby/ib-examples/blob/main/contract/historic-data">historic data</a></li>
-  <li><a href="https://github.com/ib-ruby/ib-examples/blob/main/contract/option_data">option data</a></li>
-  <li><a href="https://github.com/ib-ruby/ib-examples/blob/main/contract/option-greeks">option-greeks</a></li>
-</ul>
 
-<h2 id="list-of-messages-supporting-auto-generated-request_ids">List of Messages supporting auto-generated request_id’s</h2>
+<span class="o">&gt;</span> <span class="n">d</span><span class="p">[</span><span class="ss">:equity_with_loan</span><span class="p">]</span><span class="o">=</span><span class="p">[</span><span class="n">e</span><span class="p">.</span><span class="nf">first</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">to_f</span> <span class="o">-</span> <span class="n">z</span><span class="p">[</span><span class="ss">:equity_with_loan</span><span class="p">].</span><span class="nf">to_f</span> <span class="p">,</span> <span class="n">z</span><span class="p">[</span><span class="ss">:equity_with_loan</span><span class="p">]]</span>              
+<span class="o">&gt;</span> <span class="n">d</span><span class="p">[</span><span class="ss">:maint_margin</span> <span class="p">]</span><span class="o">=</span>   <span class="p">[</span><span class="n">f</span><span class="p">.</span><span class="nf">first</span><span class="p">,</span> <span class="n">f</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">to_f</span> <span class="o">-</span> <span class="n">z</span><span class="p">[</span><span class="ss">:maint_margin</span><span class="p">].</span><span class="nf">to_f</span><span class="p">,</span> <span class="n">z</span><span class="p">[</span><span class="ss">:maint_margin</span><span class="p">]</span> <span class="p">]</span>                  
+<span class="o">&gt;</span> <span class="n">d</span><span class="p">[</span><span class="ss">:init_margin</span>  <span class="p">]</span><span class="o">=</span>   <span class="p">[</span><span class="n">g</span><span class="p">.</span><span class="nf">first</span><span class="p">,</span> <span class="n">g</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">to_f</span> <span class="o">-</span> <span class="n">z</span><span class="p">[</span><span class="ss">:init_margin</span><span class="p">].</span><span class="nf">to_f</span> <span class="p">,</span> <span class="n">z</span><span class="p">[</span><span class="ss">:init_margin</span><span class="p">]</span> <span class="p">]</span>
+<span class="o">&gt;</span> <span class="n">d</span><span class="p">.</span><span class="nf">each</span><span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="o">|</span> <span class="nb">puts</span> <span class="s2">"</span><span class="si">#{</span><span class="n">x</span><span class="si">}</span><span class="s2"> : </span><span class="se">\t</span><span class="s2"> </span><span class="si">#{</span> <span class="n">y</span><span class="p">.</span><span class="nf">map</span><span class="p">{</span><span class="o">|</span><span class="n">z</span><span class="o">|</span> <span class="n">z</span><span class="p">.</span><span class="nf">to_f</span><span class="p">.</span><span class="nf">round</span><span class="p">(</span><span class="mf">10.2</span><span class="p">)</span><span class="si">}</span><span class="s2">.join("</span> <span class="p">:</span> <span class="s2">")} "</span><span class="p">}</span>
+ <span class="o">--------------------</span> <span class="n">current</span>    <span class="o">---</span> <span class="n">change</span>  <span class="o">----</span> <span class="n">projection</span>
+ <span class="n">equity_with_loan</span> <span class="p">:</span> 	 <span class="mf">1190427.52</span> <span class="p">:</span> <span class="mf">352.3500000001</span> <span class="p">:</span> <span class="mf">1190075.17</span> 
+ <span class="n">maint_margin</span>     <span class="p">:</span> 	 <span class="mf">7331.49</span> <span class="p">:</span> <span class="o">-</span><span class="mf">13462.63</span> <span class="p">:</span> <span class="mf">20794.12</span> 
+ <span class="n">init_margin</span>      <span class="p">:</span> 	 <span class="mf">9092.67</span> <span class="p">:</span> <span class="o">-</span><span class="mf">14794.33</span> <span class="p">:</span> <span class="mf">23887.0</span> 
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>:RequestAccountSummary
 
-:RequestPositionsMulti
-
-:RequestAccountUpdatesMulti
-
-:RequestContractDetails = :RequestContractData
-
-:RequestExecutions
-
-:RequestFundamentalData
-
-:RequestHeadTimeStamp
-
-:RequestHistogramData
-
-:RequestHistoricalData
-
-:RequestRealTimeBars
-
-:RequestCalculateImpliedVolatility = :CalculateImpliedVolatility 
-                                   = :RequestImpliedVolatility 
-
-:RequestCalculateOptionPrice = :CalculateOptionPrice 
-                             = :RequestOptionPrice 
-
-:RequestScannerSubscription 
-
-:RequestSecurityDefinitionOptionParameters = :ReqSecDefOptParams  
-                                           = :RequestOptionChainDefinition 
 
 </code></pre></div></div>
 
@@ -667,7 +675,7 @@ You can either specify the <code class="language-plaintext highlighter-rouge">id
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2021 IB-Ruby. All rights reserved. <br />
-<span>Page last updated:</span> October 29, 2020<br/> Site last generated: Jul 26, 2021 <br />
+<span>Page last updated:</span> November 1, 2020<br/> Site last generated: Jul 26, 2021 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>

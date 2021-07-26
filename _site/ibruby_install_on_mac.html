@@ -4,9 +4,9 @@
     <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="">
-<meta name="keywords" content="message,  messages">
-<title>Usage of Request_ID | IB-Ruby documentation</title>
+<meta name="description" content="Installation of ib-ruby on Mac is usually less problematic than on Windows. However, you may run into permissions issues with Ruby that you must overcome. Yo...">
+<meta name="keywords" content="getting_startedtroubleshooting,  ">
+<title>Install ib-ruby on Mac | IB-Ruby documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -144,7 +144,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Usage of Request_ID">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Install ib-ruby on Mac">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -291,7 +291,7 @@
           
           
           
-          <li class="active"><a title="Request-ID" href="message_request_id.html">Request-ID</a></li>
+          <li><a title="Request-ID" href="message_request_id.html">Request-ID</a></li>
           
           
           
@@ -541,13 +541,15 @@
         <!-- Content Column -->
         <div class="col-md-9" id="tg-sb-content">
             <div class="post-header">
-   <h1 class="post-title-main">Usage of Request_ID</h1>
+   <h1 class="post-title-main">Install ib-ruby on Mac</h1>
 </div>
 
 
 
 <div class="post-content">
 
+   
+    <div class="summary">Installation of ib-ruby on Mac is usually less problematic than on Windows. However, you may run into permissions issues with Ruby that you must overcome. You should also use Bundler to be sure that you have all the required gems and other utilities on your computer to make the project run. </div>
    
 
     
@@ -578,72 +580,91 @@ $('#toc').on('click', 'a', function() {
 
     
 
-   <p>Several message-calls use <code class="language-plaintext highlighter-rouge">:id</code>, <code class="language-plaintext highlighter-rouge">:ticker_id</code> or <code class="language-plaintext highlighter-rouge">:request_id</code> to distinguish between separate requests.<br />
-You can either specify the <code class="language-plaintext highlighter-rouge">id</code> or delegate it to <strong><em>IB-Ruby</em></strong>.</p>
+   <h2 id="ruby-and-rubygems">Ruby and RubyGems</h2>
 
-<p>To delegate, just omit the specification of an <code class="language-plaintext highlighter-rouge">:id</code> of any kind.</p>
+<p>Ruby and <a href="https://rubygems.org/pages/download">RubyGems</a> are usually installed by default on Macs. Open your Terminal and type <code class="language-plaintext highlighter-rouge">which ruby</code> and  <code class="language-plaintext highlighter-rouge">which gem</code> to confirm that you have Ruby and Rubygems. You should get a response indicating the location of Ruby and Rubygems.</p>
 
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">C</span><span class="p">.</span><span class="nf">send_message</span> <span class="ss">:RequestContractData</span><span class="p">,</span> <span class="ss">contract: </span><span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Stocks</span><span class="p">.</span><span class="nf">aapl</span>
- <span class="o">=&gt;</span> <span class="mi">171</span> 
-<span class="mo">06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">31.555</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">10</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ContractData</span><span class="p">)</span>
-<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">31.556812</span> <span class="vg">$1969</span><span class="p">]</span>  <span class="no">INFO</span> <span class="o">--</span> <span class="p">:</span> <span class="o">&lt;</span><span class="no">Stock</span><span class="p">:</span> <span class="no">AAPL</span> <span class="no">USD</span><span class="o">&gt;</span>
-<span class="mo">06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">31.557</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">52</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ContractDataEnd</span><span class="p">)</span>
-<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">31.557438</span> <span class="vg">$1969</span><span class="p">]</span>  <span class="no">INFO</span> <span class="o">--</span> <span class="p">:</span> <span class="o">&lt;</span><span class="no">ContractDataEnd</span><span class="p">:</span> <span class="n">request_id</span> <span class="mi">171</span> <span class="o">&gt;</span>
-</code></pre></div></div>
-<p>The <code class="language-plaintext highlighter-rouge">:send_message</code>-method returns the generated »request_id«. The corresponding <code class="language-plaintext highlighter-rouge">:ContractDataEnd</code> message finishes the request.</p>
+<p>If you get responses that look like this:</p>
 
-<p>If you want to control the <code class="language-plaintext highlighter-rouge">:request_id</code>, just specify it. The autogeneration mechanism is simply overridden.</p>
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="no">C</span><span class="p">.</span><span class="nf">send_message</span> <span class="ss">:RequestContractData</span><span class="p">,</span> <span class="ss">contract: </span><span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Stocks</span><span class="p">.</span><span class="nf">aapl</span><span class="p">,</span> <span class="ss">:id</span> <span class="o">=&gt;</span> <span class="mi">456</span>
-  <span class="o">=&gt;</span> <span class="mi">456</span> 
-<span class="mo">06</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">53.247</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">10</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ContractData</span><span class="p">)</span>
-<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T06</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">53.248262</span> <span class="vg">$1969</span><span class="p">]</span>  <span class="no">INFO</span> <span class="o">--</span> <span class="p">:</span> <span class="o">&lt;</span><span class="no">Stock</span><span class="p">:</span> <span class="no">AAPL</span> <span class="no">USD</span><span class="o">&gt;</span>
-<span class="mo">06</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">53.248</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">52</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ContractDataEnd</span><span class="p">)</span>
-<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T06</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">53.248435</span> <span class="vg">$1969</span><span class="p">]</span>  <span class="no">INFO</span> <span class="o">--</span> <span class="p">:</span> <span class="o">&lt;</span><span class="no">ContractDataEnd</span><span class="p">:</span> <span class="n">request_id</span> <span class="mi">456</span> <span class="o">&gt;</span>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/usr/local/bin/ruby
 </code></pre></div></div>
 
-<h2 id="examples-using-this-feature">Examples using this feature</h2>
+<p>and</p>
 
-<ul>
-  <li><a href="https://github.com/ib-ruby/ib-examples/blob/main/contract/contract_details">contract details</a></li>
-  <li><a href="https://github.com/ib-ruby/ib-examples/blob/main/contract/historic-data">historic data</a></li>
-  <li><a href="https://github.com/ib-ruby/ib-examples/blob/main/contract/option_data">option data</a></li>
-  <li><a href="https://github.com/ib-ruby/ib-examples/blob/main/contract/option-greeks">option-greeks</a></li>
-</ul>
-
-<h2 id="list-of-messages-supporting-auto-generated-request_ids">List of Messages supporting auto-generated request_id’s</h2>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>:RequestAccountSummary
-
-:RequestPositionsMulti
-
-:RequestAccountUpdatesMulti
-
-:RequestContractDetails = :RequestContractData
-
-:RequestExecutions
-
-:RequestFundamentalData
-
-:RequestHeadTimeStamp
-
-:RequestHistogramData
-
-:RequestHistoricalData
-
-:RequestRealTimeBars
-
-:RequestCalculateImpliedVolatility = :CalculateImpliedVolatility 
-                                   = :RequestImpliedVolatility 
-
-:RequestCalculateOptionPrice = :CalculateOptionPrice 
-                             = :RequestOptionPrice 
-
-:RequestScannerSubscription 
-
-:RequestSecurityDefinitionOptionParameters = :ReqSecDefOptParams  
-                                           = :RequestOptionChainDefinition 
-
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/usr/local/bin/gem
 </code></pre></div></div>
+
+<p>Great! Skip down to the <a href="#bundler">Bundler</a> section.</p>
+
+<p>However, if your location is something like <code class="language-plaintext highlighter-rouge">/Users/MacBookPro/.rvm/rubies/ruby-2.2.1/bin/gem</code>, which points to your system location of Rubygems, you will likely run into permissions errors when trying to get a gem. A sample permissions error (triggered when you try to install the jekyll gem such as <code class="language-plaintext highlighter-rouge">gem install jekyll</code>) might look like this for Rubygems:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> &gt;ERROR:  While executing gem ... (Gem::FilePermissionError)
+  You don't have write permissions for the /Library/Ruby/Gems/2.0.0 directory.
+</code></pre></div></div>
+
+<p>Instead of changing the write permissions on your operating system’s version of Ruby and Rubygems (which could pose security issues), you can install another instance of Ruby (one that is writable) to get around this.</p>
+
+<h2 id="install-homebrew">Install Homebrew</h2>
+
+<p>Homebrew is a package manager for the Mac, and you can use it to install an alternative instance of Ruby code. To install Homebrew, run this command:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+</code></pre></div></div>
+
+<p>If you already had Homebrew installed on your computer, be sure to update it:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew update
+</code></pre></div></div>
+
+<h2 id="install-ruby-through-homebrew">Install Ruby through Homebrew</h2>
+
+<p>Now use Homebrew to install Ruby:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew install ruby
+</code></pre></div></div>
+
+<p>Log out of terminal, and then then log back in.</p>
+
+<p>When you type <code class="language-plaintext highlighter-rouge">which ruby</code> and <code class="language-plaintext highlighter-rouge">which gem</code>, you should get responses like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/usr/local/bin/ruby
+</code></pre></div></div>
+
+<p>And this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/usr/local/bin/gem
+</code></pre></div></div>
+
+<p>Now Ruby and Rubygems are installed under your username, so these directories are writeable.</p>
+
+<p>Note that if you don’t see these paths, try restarting your computer or try installing rbenv, which is a Ruby version management tool. If you still have issues getting a writeable version of Ruby, you need to resolve them before installing Bundler.</p>
+
+<h2 id="bundler">Install the ib-api gem</h2>
+
+<p>At this point you should have a writeable version of Ruby and Rubygem on your machine.</p>
+
+<p>Now use <code class="language-plaintext highlighter-rouge">gem</code> to install Jekyll:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gem install ib-api
+</code></pre></div></div>
+
+<p>You can now use Jekyll to create new Jekyll sites following the quick-start instructions on <a href="http://jekyllrb.com">Jekyllrb.com</a>.</p>
+
+<h2 id="installing-dependencies-through-bundler">Installing dependencies through Bundler</h2>
+
+<p><a href="http://bundler.io/">Bundler</a> is a package manager for RubyGems. You can use it to get all the gems (or Ruby plugins) that you need for your  project.</p>
+
+<p>You install Bundler by using the gem command with RubyGems:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gem install bundler
+</code></pre></div></div>
+
+<p>If you’re prompted to switch to superuser mode (<code class="language-plaintext highlighter-rouge">sudo</code>) to get the correct permissions to install Bundler in that directory, avoid doing this. All other applications that need to use Bundler will likely not have the needed permissions to run.</p>
+
+<p>Bundler goes out and retreives all the gems that are specified in the Gemfile. If you have a gem that depends on other gems to work, Bundler will go out and retrieve all of the dependencies as well. (To learn more about Bundler, see [About Ruby Gems][mydoc_about_ruby_gems_etc].</p>
+
+<div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> <b>::</b>  Revision of the steps described above is required </div>
+
 
 
     <div class="tags">
@@ -651,6 +672,12 @@ You can either specify the <code class="language-plaintext highlighter-rouge">id
         <b>Tags: </b>
         
         
+        
+        <a href="tag_getting_started.html" class="btn btn-default navbar-btn cursorNorm" role="button">getting_started</a>
+        
+        
+        
+        <a href="tag_troubleshooting.html" class="btn btn-default navbar-btn cursorNorm" role="button">troubleshooting</a>
         
         
         
@@ -667,7 +694,7 @@ You can either specify the <code class="language-plaintext highlighter-rouge">id
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2021 IB-Ruby. All rights reserved. <br />
-<span>Page last updated:</span> October 29, 2020<br/> Site last generated: Jul 26, 2021 <br />
+ Site last generated: Jul 26, 2021 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>

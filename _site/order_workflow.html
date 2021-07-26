@@ -5,8 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
-<meta name="keywords" content="message,  messages">
-<title>Usage of Request_ID | IB-Ruby documentation</title>
+<meta name="keywords" content="orders,  orders, messages">
+<title>Workflow | IB-Ruby documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -144,7 +144,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Usage of Request_ID">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Workflow">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -291,7 +291,7 @@
           
           
           
-          <li class="active"><a title="Request-ID" href="message_request_id.html">Request-ID</a></li>
+          <li><a title="Request-ID" href="message_request_id.html">Request-ID</a></li>
           
           
           
@@ -414,7 +414,7 @@
           
           
           
-          <li><a title="Workflow" href="order_workflow.html">Workflow</a></li>
+          <li class="active"><a title="Workflow" href="order_workflow.html">Workflow</a></li>
           
           
           
@@ -541,7 +541,7 @@
         <!-- Content Column -->
         <div class="col-md-9" id="tg-sb-content">
             <div class="post-header">
-   <h1 class="post-title-main">Usage of Request_ID</h1>
+   <h1 class="post-title-main">Workflow</h1>
 </div>
 
 
@@ -578,72 +578,84 @@ $('#toc').on('click', 'a', function() {
 
     
 
-   <p>Several message-calls use <code class="language-plaintext highlighter-rouge">:id</code>, <code class="language-plaintext highlighter-rouge">:ticker_id</code> or <code class="language-plaintext highlighter-rouge">:request_id</code> to distinguish between separate requests.<br />
-You can either specify the <code class="language-plaintext highlighter-rouge">id</code> or delegate it to <strong><em>IB-Ruby</em></strong>.</p>
+   <div class="bs-callout bs-callout-info">
+To use the features described, include the <em>ib-extensions</em> Gem  in the Gemfile and use    
 
-<p>To delegate, just omit the specification of an <code class="language-plaintext highlighter-rouge">:id</code> of any kind.</p>
 
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">C</span><span class="p">.</span><span class="nf">send_message</span> <span class="ss">:RequestContractData</span><span class="p">,</span> <span class="ss">contract: </span><span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Stocks</span><span class="p">.</span><span class="nf">aapl</span>
- <span class="o">=&gt;</span> <span class="mi">171</span> 
-<span class="mo">06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">31.555</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">10</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ContractData</span><span class="p">)</span>
-<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">31.556812</span> <span class="vg">$1969</span><span class="p">]</span>  <span class="no">INFO</span> <span class="o">--</span> <span class="p">:</span> <span class="o">&lt;</span><span class="no">Stock</span><span class="p">:</span> <span class="no">AAPL</span> <span class="no">USD</span><span class="o">&gt;</span>
-<span class="mo">06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">31.557</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">52</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ContractDataEnd</span><span class="p">)</span>
-<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">31.557438</span> <span class="vg">$1969</span><span class="p">]</span>  <span class="no">INFO</span> <span class="o">--</span> <span class="p">:</span> <span class="o">&lt;</span><span class="no">ContractDataEnd</span><span class="p">:</span> <span class="n">request_id</span> <span class="mi">171</span> <span class="o">&gt;</span>
+<pre> 
+require 'ib-api' 
+require 'ib/symbols' 
+require 'ib/order-prototypes' 
+require 'ib/gateway' 
+</pre>
+
+in your scripts.
+</div>
+<p>The <code class="language-plaintext highlighter-rouge">IB::Gateway</code> aims to provide an intuitive interface for order-placement and -management</p>
+
+<h4 id="step-1-create-an-order-object">Step 1: Create an order-object</h4>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="no">G</span> <span class="o">=</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Gateway</span><span class="p">.</span><span class="nf">new</span>                      <span class="c1"># initialize with default parameter </span>
+                                            <span class="c1"># omit this step in the interactive gateway-console</span>
+<span class="o">&gt;</span> <span class="n">the_contract</span> <span class="o">=</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Stocks</span><span class="p">.</span><span class="nf">msft</span>  <span class="c1"># Microsoft</span>
+<span class="o">&gt;</span> <span class="n">the_order</span> <span class="o">=</span> <span class="no">Limit</span><span class="p">.</span><span class="nf">order</span> <span class="ss">size: </span><span class="mi">100</span><span class="p">,</span> <span class="ss">price: </span><span class="n">the_contract</span><span class="p">.</span><span class="nf">market_price</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">,</span>
+<span class="o">&gt;</span> <span class="n">the_order</span><span class="p">.</span><span class="nf">to_human</span>
+ <span class="o">=&gt;</span> <span class="s2">"&lt;Order: LMT GTC buy 100  @ 201.33 New #/ from &gt;"</span> 
 </code></pre></div></div>
-<p>The <code class="language-plaintext highlighter-rouge">:send_message</code>-method returns the generated »request_id«. The corresponding <code class="language-plaintext highlighter-rouge">:ContractDataEnd</code> message finishes the request.</p>
 
-<p>If you want to control the <code class="language-plaintext highlighter-rouge">:request_id</code>, just specify it. The autogeneration mechanism is simply overridden.</p>
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="no">C</span><span class="p">.</span><span class="nf">send_message</span> <span class="ss">:RequestContractData</span><span class="p">,</span> <span class="ss">contract: </span><span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Stocks</span><span class="p">.</span><span class="nf">aapl</span><span class="p">,</span> <span class="ss">:id</span> <span class="o">=&gt;</span> <span class="mi">456</span>
-  <span class="o">=&gt;</span> <span class="mi">456</span> 
-<span class="mo">06</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">53.247</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">10</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ContractData</span><span class="p">)</span>
-<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T06</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">53.248262</span> <span class="vg">$1969</span><span class="p">]</span>  <span class="no">INFO</span> <span class="o">--</span> <span class="p">:</span> <span class="o">&lt;</span><span class="no">Stock</span><span class="p">:</span> <span class="no">AAPL</span> <span class="no">USD</span><span class="o">&gt;</span>
-<span class="mo">06</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">53.248</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">52</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ContractDataEnd</span><span class="p">)</span>
-<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T06</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">53.248435</span> <span class="vg">$1969</span><span class="p">]</span>  <span class="no">INFO</span> <span class="o">--</span> <span class="p">:</span> <span class="o">&lt;</span><span class="no">ContractDataEnd</span><span class="p">:</span> <span class="n">request_id</span> <span class="mi">456</span> <span class="o">&gt;</span>
-</code></pre></div></div>
+<p><strong>notice:</strong> The fetched (and modified) market price is included. The account to deal with is missing.</p>
 
-<h2 id="examples-using-this-feature">Examples using this feature</h2>
+<h4 id="step-2-select-an-account-and-get-the-margin-requirements">Step 2: Select an account and get the margin requirements</h4>
 
-<ul>
-  <li><a href="https://github.com/ib-ruby/ib-examples/blob/main/contract/contract_details">contract details</a></li>
-  <li><a href="https://github.com/ib-ruby/ib-examples/blob/main/contract/historic-data">historic data</a></li>
-  <li><a href="https://github.com/ib-ruby/ib-examples/blob/main/contract/option_data">option data</a></li>
-  <li><a href="https://github.com/ib-ruby/ib-examples/blob/main/contract/option-greeks">option-greeks</a></li>
-</ul>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">the_account</span>  <span class="o">=</span>  <span class="no">G</span><span class="p">.</span><span class="nf">clients</span><span class="p">.</span><span class="nf">first</span>
 
-<h2 id="list-of-messages-supporting-auto-generated-request_ids">List of Messages supporting auto-generated request_id’s</h2>
+<span class="o">&gt;</span> <span class="n">z</span><span class="o">=</span> <span class="n">the_account</span><span class="p">.</span><span class="nf">preview</span> <span class="ss">order: </span><span class="n">the_order</span><span class="p">,</span> <span class="ss">contract: </span><span class="n">the_contract</span>
+  <span class="o">=&gt;</span> <span class="p">{</span><span class="ss">:init_margin</span><span class="o">=&gt;</span><span class="mf">0.1344327e5</span><span class="p">,</span> <span class="ss">:maint_margin</span><span class="o">=&gt;</span><span class="mf">0.1168288e5</span><span class="p">,</span> <span class="ss">:equity_with_loan</span><span class="o">=&gt;</span><span class="mf">0.118936284e7</span><span class="p">,</span> <span class="ss">:commission</span><span class="o">=&gt;</span><span class="kp">nil</span><span class="p">,</span> <span class="ss">:commission_currency</span><span class="o">=&gt;</span><span class="s2">"USD"</span><span class="p">,</span> <span class="ss">:warning</span><span class="o">=&gt;</span><span class="s2">""</span><span class="p">}</span> 
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>:RequestAccountSummary
-
-:RequestPositionsMulti
-
-:RequestAccountUpdatesMulti
-
-:RequestContractDetails = :RequestContractData
-
-:RequestExecutions
-
-:RequestFundamentalData
-
-:RequestHeadTimeStamp
-
-:RequestHistogramData
-
-:RequestHistoricalData
-
-:RequestRealTimeBars
-
-:RequestCalculateImpliedVolatility = :CalculateImpliedVolatility 
-                                   = :RequestImpliedVolatility 
-
-:RequestCalculateOptionPrice = :CalculateOptionPrice 
-                             = :RequestOptionPrice 
-
-:RequestScannerSubscription 
-
-:RequestSecurityDefinitionOptionParameters = :ReqSecDefOptParams  
-                                           = :RequestOptionChainDefinition 
+<span class="o">&gt;</span> <span class="n">z</span><span class="p">[</span><span class="ss">:init_margin</span><span class="p">].</span><span class="nf">to_f</span>                        <span class="o">=&gt;</span> <span class="mf">13443.27</span> 
+<span class="o">&gt;</span> <span class="c1"># compare to available net liquidity</span>
+<span class="o">&gt;</span> <span class="n">the_account</span><span class="p">.</span><span class="nf">account_data_scan</span><span class="p">(</span> <span class="sr">/^NetLiquidation$/</span><span class="p">).</span><span class="nf">value</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">to_f</span> <span class="o">-</span> 
+      <span class="n">the_account</span><span class="p">.</span><span class="nf">account_data_scan</span><span class="p">(</span><span class="sr">/InitMarginReq$/</span><span class="p">).</span><span class="nf">value</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">to_f</span>
+ <span class="o">=&gt;</span> <span class="mf">1180035.98</span>
 
 </code></pre></div></div>
+
+<p>see also <a href="/order_preview">Preview Orders</a></p>
+
+<p><code class="language-plaintext highlighter-rouge">IB::Account.preview</code>  transmits a <em>What-if</em> message. To determine, if its possible to place the
+order, just  subtract the <em>margin impact</em> from <em>NetLiquidation</em>.</p>
+
+<h4 id="step-3-place-and-modify-the-order">Step 3: Place and modify the order</h4>
+
+<p>After an order is previewed or placed, the contract is associated and does not have to be specified anymore.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">the_account</span><span class="p">.</span><span class="nf">place</span> <span class="ss">order: </span><span class="n">the_order</span>            <span class="o">=&gt;</span> <span class="mi">19</span>  <span class="c1">#  local_id, identifies the order</span>
+<span class="o">&gt;</span> <span class="n">the_order</span><span class="p">.</span><span class="nf">to_human</span>
+ <span class="o">=&gt;</span> <span class="s2">"&lt;Order: LMT GTC buy 100  @ 201.33 New #19/ from 2000/DU167348&gt;"</span> 
+
+<span class="o">&gt;</span> <span class="n">the_account</span><span class="p">.</span><span class="nf">orders</span><span class="p">.</span><span class="nf">to_human</span>
+ <span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"&lt;Order: LMT GTC buy 100.0  @ 201.33 PreSubmitted #18/1729171645 from 0/DU167348&gt;"</span><span class="p">,</span>    <span class="c1"># preview</span>
+     <span class="s2">"&lt;Order: LMT GTC buy 100.0  @ 201.33 PreSubmitted #19/1729171646 from 2000/DU167348&gt;"</span><span class="p">]</span> <span class="c1"># placed</span>
+
+<span class="o">&gt;</span> <span class="n">the_order</span><span class="p">.</span><span class="nf">limit_price</span> <span class="o">=</span> <span class="mi">198</span>                   <span class="c1"># set a new price</span>
+<span class="o">&gt;</span> <span class="n">the_account</span><span class="p">.</span><span class="nf">modify</span> <span class="ss">order: </span><span class="n">the_order</span>           <span class="o">=&gt;</span> <span class="mi">19</span> 
+<span class="o">&gt;</span> <span class="n">the_account</span><span class="p">.</span><span class="nf">orders</span><span class="p">.</span><span class="nf">to_human</span>
+ <span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"&lt;Order: LMT GTC buy 100.0  @ 201.33 PreSubmitted #18/1729171645 from 0/DU167348&gt;"</span><span class="p">,</span> 
+     <span class="s2">"&lt;Order: LMT GTC buy 100.0  @ 198.0 PreSubmitted #19/1729171646 from 2000/DU167348&gt;"</span><span class="p">]</span>  <span class="c1"># modified</span>
+
+</code></pre></div></div>
+
+<h4 id="step-4-cancel-the-order">Step 4: Cancel the order</h4>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">the_account</span><span class="p">.</span><span class="nf">cancel</span>  <span class="n">the_order</span>
+<span class="o">&gt;</span> <span class="n">the_account</span><span class="p">.</span><span class="nf">orders</span><span class="p">.</span><span class="nf">to_human</span>
+ <span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"&lt;Order: LMT GTC buy 100.0  @ 201.33 PreSubmitted #18/1729171645 from 0/DU167348&gt;"</span><span class="p">,</span> 
+ <span class="s2">"&lt;Order: LMT GTC buy 100.0  @ 198.0 Cancelled #19/1729171646 from 2000/DU167348&gt;"</span><span class="p">]</span>         <span class="c1"># cancelled</span>
+
+</code></pre></div></div>
+
+<p><strong>Notice:</strong>  The order-object is updated in the process. It’s OK to use the same order-object for each step. Then the history is kept in <code class="language-plaintext highlighter-rouge">OrderState</code>-Objects. <strong>But <em>never</em> use the same order object for different users.</strong></p>
+
 
 
     <div class="tags">
@@ -667,7 +679,7 @@ You can either specify the <code class="language-plaintext highlighter-rouge">id
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2021 IB-Ruby. All rights reserved. <br />
-<span>Page last updated:</span> October 29, 2020<br/> Site last generated: Jul 26, 2021 <br />
+<span>Page last updated:</span> November 3, 2020<br/> Site last generated: Jul 26, 2021 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>

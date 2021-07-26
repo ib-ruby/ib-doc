@@ -5,8 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
-<meta name="keywords" content="message,  messages">
-<title>Usage of Request_ID | IB-Ruby documentation</title>
+<meta name="keywords" content="case-study,  contract, option">
+<title>Option-Greeks | IB-Ruby documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -144,7 +144,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Usage of Request_ID">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Option-Greeks">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -291,7 +291,7 @@
           
           
           
-          <li class="active"><a title="Request-ID" href="message_request_id.html">Request-ID</a></li>
+          <li><a title="Request-ID" href="message_request_id.html">Request-ID</a></li>
           
           
           
@@ -377,7 +377,7 @@
           
           
           
-          <li><a title="Option-Greeks" href="option_greeks.html">Option-Greeks</a></li>
+          <li class="active"><a title="Option-Greeks" href="option_greeks.html">Option-Greeks</a></li>
           
           
           
@@ -541,7 +541,7 @@
         <!-- Content Column -->
         <div class="col-md-9" id="tg-sb-content">
             <div class="post-header">
-   <h1 class="post-title-main">Usage of Request_ID</h1>
+   <h1 class="post-title-main">Option-Greeks</h1>
 </div>
 
 
@@ -578,70 +578,42 @@ $('#toc').on('click', 'a', function() {
 
     
 
-   <p>Several message-calls use <code class="language-plaintext highlighter-rouge">:id</code>, <code class="language-plaintext highlighter-rouge">:ticker_id</code> or <code class="language-plaintext highlighter-rouge">:request_id</code> to distinguish between separate requests.<br />
-You can either specify the <code class="language-plaintext highlighter-rouge">id</code> or delegate it to <strong><em>IB-Ruby</em></strong>.</p>
+   <div class="bs-callout bs-callout-info">
+To use the features described below, include the <em>ib-extensions</em> Gem  in the Gemfile and use    
 
-<p>To delegate, just omit the specification of an <code class="language-plaintext highlighter-rouge">:id</code> of any kind.</p>
 
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">C</span><span class="p">.</span><span class="nf">send_message</span> <span class="ss">:RequestContractData</span><span class="p">,</span> <span class="ss">contract: </span><span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Stocks</span><span class="p">.</span><span class="nf">aapl</span>
- <span class="o">=&gt;</span> <span class="mi">171</span> 
-<span class="mo">06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">31.555</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">10</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ContractData</span><span class="p">)</span>
-<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">31.556812</span> <span class="vg">$1969</span><span class="p">]</span>  <span class="no">INFO</span> <span class="o">--</span> <span class="p">:</span> <span class="o">&lt;</span><span class="no">Stock</span><span class="p">:</span> <span class="no">AAPL</span> <span class="no">USD</span><span class="o">&gt;</span>
-<span class="mo">06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">31.557</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">52</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ContractDataEnd</span><span class="p">)</span>
-<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">31.557438</span> <span class="vg">$1969</span><span class="p">]</span>  <span class="no">INFO</span> <span class="o">--</span> <span class="p">:</span> <span class="o">&lt;</span><span class="no">ContractDataEnd</span><span class="p">:</span> <span class="n">request_id</span> <span class="mi">171</span> <span class="o">&gt;</span>
-</code></pre></div></div>
-<p>The <code class="language-plaintext highlighter-rouge">:send_message</code>-method returns the generated »request_id«. The corresponding <code class="language-plaintext highlighter-rouge">:ContractDataEnd</code> message finishes the request.</p>
+<pre> 
+require 'ib-api' 
+require 'ib/verify'
+require 'ib/option-greeks'
+</pre>
 
-<p>If you want to control the <code class="language-plaintext highlighter-rouge">:request_id</code>, just specify it. The autogeneration mechanism is simply overridden.</p>
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="no">C</span><span class="p">.</span><span class="nf">send_message</span> <span class="ss">:RequestContractData</span><span class="p">,</span> <span class="ss">contract: </span><span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Stocks</span><span class="p">.</span><span class="nf">aapl</span><span class="p">,</span> <span class="ss">:id</span> <span class="o">=&gt;</span> <span class="mi">456</span>
-  <span class="o">=&gt;</span> <span class="mi">456</span> 
-<span class="mo">06</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">53.247</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">10</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ContractData</span><span class="p">)</span>
-<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T06</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">53.248262</span> <span class="vg">$1969</span><span class="p">]</span>  <span class="no">INFO</span> <span class="o">--</span> <span class="p">:</span> <span class="o">&lt;</span><span class="no">Stock</span><span class="p">:</span> <span class="no">AAPL</span> <span class="no">USD</span><span class="o">&gt;</span>
-<span class="mo">06</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">53.248</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">52</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ContractDataEnd</span><span class="p">)</span>
-<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T06</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">53.248435</span> <span class="vg">$1969</span><span class="p">]</span>  <span class="no">INFO</span> <span class="o">--</span> <span class="p">:</span> <span class="o">&lt;</span><span class="no">ContractDataEnd</span><span class="p">:</span> <span class="n">request_id</span> <span class="mi">456</span> <span class="o">&gt;</span>
-</code></pre></div></div>
+in your scripts.
+</div>
 
-<h2 id="examples-using-this-feature">Examples using this feature</h2>
+<h2 id="greeks">Greeks</h2>
 
-<ul>
-  <li><a href="https://github.com/ib-ruby/ib-examples/blob/main/contract/contract_details">contract details</a></li>
-  <li><a href="https://github.com/ib-ruby/ib-examples/blob/main/contract/historic-data">historic data</a></li>
-  <li><a href="https://github.com/ib-ruby/ib-examples/blob/main/contract/option_data">option data</a></li>
-  <li><a href="https://github.com/ib-ruby/ib-examples/blob/main/contract/option-greeks">option-greeks</a></li>
-</ul>
+<p>If we ask for market-data of an IB::Option, the TWS returns price data and  <em>Option Greeks</em>.</p>
 
-<h2 id="list-of-messages-supporting-auto-generated-request_ids">List of Messages supporting auto-generated request_id’s</h2>
+<p><code class="language-plaintext highlighter-rouge">IB::Option.request_greeks</code> populates the    <code class="language-plaintext highlighter-rouge">IB::Option.greek</code> property ( and returns the greeks as hash ).</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>:RequestAccountSummary
+<p>It accepts the parameter <code class="language-plaintext highlighter-rouge">:what</code>  { :model, :bid, :ask, :last, :bidask, :all }, default is <code class="language-plaintext highlighter-rouge">model</code>, 
+ie. the calculated Greeks. For batch-processing, a threaded approach is supported via the parameter <code class="language-plaintext highlighter-rouge">thread: true</code>.</p>
 
-:RequestPositionsMulti
+<p>The processing is <em>expensive</em>, it takes about 2 seconds to receive the data from the tws-server.</p>
 
-:RequestAccountUpdatesMulti
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">cien</span> <span class="o">=</span>  <span class="no">Option</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span> <span class="ss">symbol: </span><span class="s1">'CIEN'</span><span class="p">,</span> <span class="ss">strike: </span><span class="mi">50</span><span class="p">,</span> <span class="ss">expiry: </span><span class="mi">202107</span><span class="p">,</span> <span class="ss">right: :put</span><span class="p">,</span> <span class="ss">exchange: :smart</span> <span class="p">).</span><span class="nf">verify</span><span class="p">.</span><span class="nf">first</span>
+  <span class="o">--&gt;</span> <span class="no">INFO</span><span class="o">::&lt;</span><span class="no">Option</span><span class="p">:</span> <span class="no">CIEN</span> <span class="mi">20210716</span> <span class="n">put</span> <span class="mf">50.0</span> <span class="no">SMART</span> <span class="no">USD</span><span class="o">&gt;</span>
+  <span class="n">cien</span><span class="p">.</span><span class="nf">request_greeks</span>
+	 <span class="o">=&gt;</span> <span class="p">{</span><span class="ss">:tick_type</span><span class="o">=&gt;</span><span class="mi">83</span><span class="p">,</span> <span class="ss">:implied_volatility</span><span class="o">=&gt;</span><span class="mf">0.3860515283461521e0</span><span class="p">,</span> 
+       <span class="ss">:delta</span><span class="o">=&gt;-</span><span class="mf">0.3163006034515305e0</span><span class="p">,</span> <span class="ss">:option_price</span><span class="o">=&gt;</span><span class="mf">0.16924407617796515e1</span><span class="p">,</span> <span class="ss">:pv_dividend</span><span class="o">=&gt;</span><span class="mf">0.0</span><span class="p">,</span> 
+       <span class="ss">:gamma</span><span class="o">=&gt;</span><span class="mf">0.4684449764772187e-1</span><span class="p">,</span> 
+       <span class="ss">:vega</span><span class="o">=&gt;</span><span class="mf">0.7141634363804972e-1</span><span class="p">,</span> 
+       <span class="ss">:theta</span><span class="o">=&gt;-</span><span class="mf">0.2681911830789842e-1</span><span class="p">,</span> <span class="ss">:under_price</span><span class="o">=&gt;</span><span class="mf">0.53e2</span><span class="p">}</span> 
 
-:RequestContractDetails = :RequestContractData
-
-:RequestExecutions
-
-:RequestFundamentalData
-
-:RequestHeadTimeStamp
-
-:RequestHistogramData
-
-:RequestHistoricalData
-
-:RequestRealTimeBars
-
-:RequestCalculateImpliedVolatility = :CalculateImpliedVolatility 
-                                   = :RequestImpliedVolatility 
-
-:RequestCalculateOptionPrice = :CalculateOptionPrice 
-                             = :RequestOptionPrice 
-
-:RequestScannerSubscription 
-
-:RequestSecurityDefinitionOptionParameters = :ReqSecDefOptParams  
-                                           = :RequestOptionChainDefinition 
+  <span class="nb">puts</span> <span class="n">cien</span><span class="p">.</span><span class="nf">greek</span><span class="p">.</span><span class="nf">to_human</span>
+	<span class="o">&lt;</span>  <span class="ss">optionPrice: </span><span class="mf">1.70818</span><span class="p">,</span> <span class="no">UnderlyingPrice</span><span class="p">:</span> <span class="mf">52.95</span> <span class="n">impl</span><span class="o">.</span><span class="no">Vola</span><span class="p">:</span> <span class="mf">0.386052</span> <span class="p">;</span> <span class="ss">dividend: </span><span class="mi">0</span><span class="p">;</span> 
+     <span class="no">Greeks</span><span class="o">::</span>  <span class="ss">delta:  </span><span class="o">-</span><span class="mf">0.318621</span><span class="p">;</span> <span class="ss">gamma: </span><span class="mf">0.0470364</span><span class="p">,</span> <span class="ss">vega: </span><span class="mf">0.0733351</span><span class="p">;</span> <span class="ss">theta: </span><span class="o">-</span><span class="mf">0.026878</span> <span class="o">&gt;</span>
 
 </code></pre></div></div>
 
@@ -667,7 +639,7 @@ You can either specify the <code class="language-plaintext highlighter-rouge">id
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2021 IB-Ruby. All rights reserved. <br />
-<span>Page last updated:</span> October 29, 2020<br/> Site last generated: Jul 26, 2021 <br />
+<span>Page last updated:</span> May 27, 2021<br/> Site last generated: Jul 26, 2021 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>

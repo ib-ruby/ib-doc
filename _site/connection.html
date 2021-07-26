@@ -5,8 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
-<meta name="keywords" content="message,  messages">
-<title>Usage of Request_ID | IB-Ruby documentation</title>
+<meta name="keywords" content="connection,  ">
+<title>IB-Connection | IB-Ruby documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -144,7 +144,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Usage of Request_ID">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="IB-Connection">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -247,7 +247,7 @@
           
           
           
-          <li><a title="IB-Connection" href="connection.html">IB-Connection</a></li>
+          <li class="active"><a title="IB-Connection" href="connection.html">IB-Connection</a></li>
           
           
           
@@ -291,7 +291,7 @@
           
           
           
-          <li class="active"><a title="Request-ID" href="message_request_id.html">Request-ID</a></li>
+          <li><a title="Request-ID" href="message_request_id.html">Request-ID</a></li>
           
           
           
@@ -541,7 +541,7 @@
         <!-- Content Column -->
         <div class="col-md-9" id="tg-sb-content">
             <div class="post-header">
-   <h1 class="post-title-main">Usage of Request_ID</h1>
+   <h1 class="post-title-main">IB-Connection</h1>
 </div>
 
 
@@ -578,72 +578,105 @@ $('#toc').on('click', 'a', function() {
 
     
 
-   <p>Several message-calls use <code class="language-plaintext highlighter-rouge">:id</code>, <code class="language-plaintext highlighter-rouge">:ticker_id</code> or <code class="language-plaintext highlighter-rouge">:request_id</code> to distinguish between separate requests.<br />
-You can either specify the <code class="language-plaintext highlighter-rouge">id</code> or delegate it to <strong><em>IB-Ruby</em></strong>.</p>
+   <div class="bs-callout bs-callout-info">
+<em>IB::Connection</em> is part of <em>ib-api</em>.    
 
-<p>To delegate, just omit the specification of an <code class="language-plaintext highlighter-rouge">:id</code> of any kind.</p>
+Include  
+<pre> 
+require 'ib-api' 
+</pre>
 
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">C</span><span class="p">.</span><span class="nf">send_message</span> <span class="ss">:RequestContractData</span><span class="p">,</span> <span class="ss">contract: </span><span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Stocks</span><span class="p">.</span><span class="nf">aapl</span>
- <span class="o">=&gt;</span> <span class="mi">171</span> 
-<span class="mo">06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">31.555</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">10</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ContractData</span><span class="p">)</span>
-<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">31.556812</span> <span class="vg">$1969</span><span class="p">]</span>  <span class="no">INFO</span> <span class="o">--</span> <span class="p">:</span> <span class="o">&lt;</span><span class="no">Stock</span><span class="p">:</span> <span class="no">AAPL</span> <span class="no">USD</span><span class="o">&gt;</span>
-<span class="mo">06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">31.557</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">52</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ContractDataEnd</span><span class="p">)</span>
-<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">31.557438</span> <span class="vg">$1969</span><span class="p">]</span>  <span class="no">INFO</span> <span class="o">--</span> <span class="p">:</span> <span class="o">&lt;</span><span class="no">ContractDataEnd</span><span class="p">:</span> <span class="n">request_id</span> <span class="mi">171</span> <span class="o">&gt;</span>
+in your scripts.
+</div>
+<h2 id="ibconnection">IB::Connection</h2>
+
+<p><strong><em>ib-api</em></strong> provides <code class="language-plaintext highlighter-rouge">IB::Connection.new</code> to connect to the TWS/Gateway.</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">initialize</span> <span class="ss">host: </span><span class="s1">'127.0.0.1'</span><span class="p">,</span>
+               <span class="ss">port: </span><span class="s1">'4002'</span><span class="p">,</span> <span class="c1"># IB Gateway connection  4001:  production</span>
+                             <span class="c1"># TWS                    7496:  production</span>
+               <span class="ss">connect: </span><span class="kp">true</span><span class="p">,</span>         <span class="c1"># Connect at initialization</span>
+               <span class="ss">received:  </span><span class="kp">true</span><span class="p">,</span>       <span class="c1"># Keep all received messages in a @received Hash</span>
+               <span class="ss">logger: </span><span class="n">default_logger</span><span class="p">,</span>
+               <span class="ss">client_id:  </span><span class="nb">rand</span><span class="p">(</span> <span class="mi">1001</span> <span class="o">..</span> <span class="mi">9999</span> <span class="p">)</span> 
 </code></pre></div></div>
-<p>The <code class="language-plaintext highlighter-rouge">:send_message</code>-method returns the generated »request_id«. The corresponding <code class="language-plaintext highlighter-rouge">:ContractDataEnd</code> message finishes the request.</p>
 
-<p>If you want to control the <code class="language-plaintext highlighter-rouge">:request_id</code>, just specify it. The autogeneration mechanism is simply overridden.</p>
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="no">C</span><span class="p">.</span><span class="nf">send_message</span> <span class="ss">:RequestContractData</span><span class="p">,</span> <span class="ss">contract: </span><span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Stocks</span><span class="p">.</span><span class="nf">aapl</span><span class="p">,</span> <span class="ss">:id</span> <span class="o">=&gt;</span> <span class="mi">456</span>
-  <span class="o">=&gt;</span> <span class="mi">456</span> 
-<span class="mo">06</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">53.247</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">10</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ContractData</span><span class="p">)</span>
-<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T06</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">53.248262</span> <span class="vg">$1969</span><span class="p">]</span>  <span class="no">INFO</span> <span class="o">--</span> <span class="p">:</span> <span class="o">&lt;</span><span class="no">Stock</span><span class="p">:</span> <span class="no">AAPL</span> <span class="no">USD</span><span class="o">&gt;</span>
-<span class="mo">06</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">53.248</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">52</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ContractDataEnd</span><span class="p">)</span>
-<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T06</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">53.248435</span> <span class="vg">$1969</span><span class="p">]</span>  <span class="no">INFO</span> <span class="o">--</span> <span class="p">:</span> <span class="o">&lt;</span><span class="no">ContractDataEnd</span><span class="p">:</span> <span class="n">request_id</span> <span class="mi">456</span> <span class="o">&gt;</span>
+<p>If called without arguments, it connects through port 4002 to a  locally running gateway, prints 
+messages to the screen and saves the communication in a <code class="language-plaintext highlighter-rouge">received</code>-hash.</p>
+
+<div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> <b>::</b> The active Connection is always present via <code class="language-plaintext highlighter-rouge">IB::Connection.current</code></div>
+
+<h3 id="public-interface">public interface</h3>
+
+<table>
+  <tbody>
+    <tr>
+      <td>connect</td>
+      <td>connected?</td>
+      <td>disconnect</td>
+    </tr>
+    <tr>
+      <td>subscribe</td>
+      <td>unsubscribe</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>send_message</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>received</td>
+      <td>received?</td>
+      <td>clear_received</td>
+    </tr>
+    <tr>
+      <td>wait_for</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>place_order</td>
+      <td>modify_order</td>
+      <td>cancel_order</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Its usage is demonstrated by this small demonstration</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nb">require</span> <span class="s1">'bundler/setup'</span>
+ <span class="nb">require</span> <span class="s1">'ib-api'</span>
+ 
+ <span class="n">ib</span> <span class="o">=</span> <span class="no">IB</span><span class="o">::</span><span class="no">Connection</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span> <span class="ss">port: </span><span class="mi">7497</span> <span class="p">)</span> <span class="k">do</span> <span class="o">|</span> <span class="n">gw</span> <span class="o">|</span>
+      <span class="n">gw</span><span class="p">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="ss">:Alert</span><span class="p">,</span> <span class="ss">:AccountValue</span><span class="p">)</span> <span class="p">{</span> <span class="o">|</span><span class="n">msg</span><span class="o">|</span> <span class="nb">puts</span> <span class="n">msg</span><span class="p">.</span><span class="nf">to_human</span> <span class="p">}</span>
+      <span class="n">gw</span><span class="p">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="ss">:OpenOrder</span><span class="p">)</span> <span class="p">{</span> <span class="o">|</span><span class="n">msg</span><span class="o">|</span> <span class="nb">puts</span> <span class="s2">"Placed: </span><span class="si">#{</span><span class="n">msg</span><span class="p">.</span><span class="nf">order</span><span class="si">}</span><span class="s2">!"</span> <span class="p">}</span>
+      <span class="n">gw</span><span class="p">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="ss">:ExecutionData</span><span class="p">)</span> <span class="p">{</span> <span class="o">|</span><span class="n">msg</span><span class="o">|</span> <span class="nb">puts</span> <span class="s2">"Filled: </span><span class="si">#{</span><span class="n">msg</span><span class="p">.</span><span class="nf">execution</span><span class="si">}</span><span class="s2">!"</span> <span class="p">}</span>
+    <span class="k">end</span>
+
+ <span class="n">ib</span><span class="p">.</span><span class="nf">send_message</span> <span class="ss">:RequestAccountData</span><span class="p">,</span> <span class="ss">account_code: </span><span class="s1">'U123456'</span>
+ <span class="n">ib</span><span class="p">.</span><span class="nf">wait_for</span> <span class="ss">:AccountDownloadEnd</span>
+
+ <span class="n">contract</span> <span class="o">=</span> <span class="no">IB</span><span class="o">::</span><span class="no">Stock</span><span class="p">.</span><span class="nf">new</span> <span class="ss">symbol: </span><span class="s1">'WFC'</span>
+ <span class="n">buy_order</span> <span class="o">=</span> <span class="no">IB</span><span class="o">::</span><span class="no">Limit</span><span class="p">.</span><span class="nf">order</span> <span class="ss">size: </span><span class="mi">100</span><span class="p">,</span> <span class="ss">price: </span><span class="mf">21.00</span><span class="p">,</span> <span class="ss">action: :buy</span><span class="p">,</span>
+                                <span class="ss">tif: :good_till_cancelled</span><span class="p">,</span> <span class="ss">account_code: </span><span class="s1">'U123456'</span>
+
+ <span class="n">ib</span><span class="p">.</span><span class="nf">place_order</span> <span class="n">buy_order</span><span class="p">,</span> <span class="n">contract</span>
+ <span class="n">ib</span><span class="p">.</span><span class="nf">wait_for</span> <span class="ss">:ExecutionData</span>
+
 </code></pre></div></div>
 
-<h2 id="examples-using-this-feature">Examples using this feature</h2>
+<p>The main purpose of <code class="language-plaintext highlighter-rouge">IB::Connection</code> is connect to the tws/gateway,
+to submit <code class="language-plaintext highlighter-rouge">IB::Messages</code> to the <em>TWS-Api</em> and to receive 
+the response.
+Thus the centerpiece is its <code class="language-plaintext highlighter-rouge">send_message</code> method.</p>
 
-<ul>
-  <li><a href="https://github.com/ib-ruby/ib-examples/blob/main/contract/contract_details">contract details</a></li>
-  <li><a href="https://github.com/ib-ruby/ib-examples/blob/main/contract/historic-data">historic data</a></li>
-  <li><a href="https://github.com/ib-ruby/ib-examples/blob/main/contract/option_data">option data</a></li>
-  <li><a href="https://github.com/ib-ruby/ib-examples/blob/main/contract/option-greeks">option-greeks</a></li>
-</ul>
-
-<h2 id="list-of-messages-supporting-auto-generated-request_ids">List of Messages supporting auto-generated request_id’s</h2>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>:RequestAccountSummary
-
-:RequestPositionsMulti
-
-:RequestAccountUpdatesMulti
-
-:RequestContractDetails = :RequestContractData
-
-:RequestExecutions
-
-:RequestFundamentalData
-
-:RequestHeadTimeStamp
-
-:RequestHistogramData
-
-:RequestHistoricalData
-
-:RequestRealTimeBars
-
-:RequestCalculateImpliedVolatility = :CalculateImpliedVolatility 
-                                   = :RequestImpliedVolatility 
-
-:RequestCalculateOptionPrice = :CalculateOptionPrice 
-                             = :RequestOptionPrice 
-
-:RequestScannerSubscription 
-
-:RequestSecurityDefinitionOptionParameters = :ReqSecDefOptParams  
-                                           = :RequestOptionChainDefinition 
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">c</span> <span class="o">=</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Connection</span><span class="p">.</span><span class="nf">current</span>
+<span class="o">&gt;</span> <span class="n">c</span><span class="p">.</span><span class="nf">send_message</span> <span class="p">{</span><span class="n">message</span> <span class="n">symbol</span> <span class="p">},</span> <span class="p">[</span> <span class="n">optional</span> <span class="n">arguments</span> <span class="p">]</span>
 
 </code></pre></div></div>
+
+<p>Visit <a href="/ib-doc/message_correct_arguments">this page</a> for an overview of available messages and their arguments.</p>
+
 
 
     <div class="tags">
@@ -667,7 +700,7 @@ You can either specify the <code class="language-plaintext highlighter-rouge">id
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2021 IB-Ruby. All rights reserved. <br />
-<span>Page last updated:</span> October 29, 2020<br/> Site last generated: Jul 26, 2021 <br />
+ Site last generated: Jul 26, 2021 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>

@@ -5,8 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
-<meta name="keywords" content="message,  messages">
-<title>Usage of Request_ID | IB-Ruby documentation</title>
+<meta name="keywords" content="contract,  contracts, historical-data, eod">
+<title>Get Historical Data | IB-Ruby documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -144,7 +144,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Usage of Request_ID">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Get Historical Data">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -291,7 +291,7 @@
           
           
           
-          <li class="active"><a title="Request-ID" href="message_request_id.html">Request-ID</a></li>
+          <li><a title="Request-ID" href="message_request_id.html">Request-ID</a></li>
           
           
           
@@ -363,7 +363,7 @@
           
           
           
-          <li><a title="Historical Data" href="Historical_data.html">Historical Data</a></li>
+          <li class="active"><a title="Historical Data" href="Historical_data.html">Historical Data</a></li>
           
           
           
@@ -541,7 +541,7 @@
         <!-- Content Column -->
         <div class="col-md-9" id="tg-sb-content">
             <div class="post-header">
-   <h1 class="post-title-main">Usage of Request_ID</h1>
+   <h1 class="post-title-main">Get Historical Data</h1>
 </div>
 
 
@@ -578,72 +578,135 @@ $('#toc').on('click', 'a', function() {
 
     
 
-   <p>Several message-calls use <code class="language-plaintext highlighter-rouge">:id</code>, <code class="language-plaintext highlighter-rouge">:ticker_id</code> or <code class="language-plaintext highlighter-rouge">:request_id</code> to distinguish between separate requests.<br />
-You can either specify the <code class="language-plaintext highlighter-rouge">id</code> or delegate it to <strong><em>IB-Ruby</em></strong>.</p>
+   <div class="bs-callout bs-callout-info">
+To use the <em>End of Data Historical Data</em> feature, include the <em>ib-extensions</em> Gem  in the Gemfile and use    
 
-<p>To delegate, just omit the specification of an <code class="language-plaintext highlighter-rouge">:id</code> of any kind.</p>
+<pre> 
+require 'ib-api' 
+require 'ib/eod'  # or require 'ib-extensions'
+</pre>
 
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">C</span><span class="p">.</span><span class="nf">send_message</span> <span class="ss">:RequestContractData</span><span class="p">,</span> <span class="ss">contract: </span><span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Stocks</span><span class="p">.</span><span class="nf">aapl</span>
- <span class="o">=&gt;</span> <span class="mi">171</span> 
-<span class="mo">06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">31.555</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">10</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ContractData</span><span class="p">)</span>
-<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">31.556812</span> <span class="vg">$1969</span><span class="p">]</span>  <span class="no">INFO</span> <span class="o">--</span> <span class="p">:</span> <span class="o">&lt;</span><span class="no">Stock</span><span class="p">:</span> <span class="no">AAPL</span> <span class="no">USD</span><span class="o">&gt;</span>
-<span class="mo">06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">31.557</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">52</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ContractDataEnd</span><span class="p">)</span>
-<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">31.557438</span> <span class="vg">$1969</span><span class="p">]</span>  <span class="no">INFO</span> <span class="o">--</span> <span class="p">:</span> <span class="o">&lt;</span><span class="no">ContractDataEnd</span><span class="p">:</span> <span class="n">request_id</span> <span class="mi">171</span> <span class="o">&gt;</span>
-</code></pre></div></div>
-<p>The <code class="language-plaintext highlighter-rouge">:send_message</code>-method returns the generated »request_id«. The corresponding <code class="language-plaintext highlighter-rouge">:ContractDataEnd</code> message finishes the request.</p>
+in your scripts. 
+</div>
 
-<p>If you want to control the <code class="language-plaintext highlighter-rouge">:request_id</code>, just specify it. The autogeneration mechanism is simply overridden.</p>
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="no">C</span><span class="p">.</span><span class="nf">send_message</span> <span class="ss">:RequestContractData</span><span class="p">,</span> <span class="ss">contract: </span><span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Stocks</span><span class="p">.</span><span class="nf">aapl</span><span class="p">,</span> <span class="ss">:id</span> <span class="o">=&gt;</span> <span class="mi">456</span>
-  <span class="o">=&gt;</span> <span class="mi">456</span> 
-<span class="mo">06</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">53.247</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">10</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ContractData</span><span class="p">)</span>
-<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T06</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">53.248262</span> <span class="vg">$1969</span><span class="p">]</span>  <span class="no">INFO</span> <span class="o">--</span> <span class="p">:</span> <span class="o">&lt;</span><span class="no">Stock</span><span class="p">:</span> <span class="no">AAPL</span> <span class="no">USD</span><span class="o">&gt;</span>
-<span class="mo">06</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">53.248</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">52</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ContractDataEnd</span><span class="p">)</span>
-<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T06</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">53.248435</span> <span class="vg">$1969</span><span class="p">]</span>  <span class="no">INFO</span> <span class="o">--</span> <span class="p">:</span> <span class="o">&lt;</span><span class="no">ContractDataEnd</span><span class="p">:</span> <span class="n">request_id</span> <span class="mi">456</span> <span class="o">&gt;</span>
-</code></pre></div></div>
+<h3 id="historical-data">Historical Data</h3>
 
-<h2 id="examples-using-this-feature">Examples using this feature</h2>
+<p>The <em>historical data feature</em> of the <em>TWS</em> is invoked by sending a <code class="language-plaintext highlighter-rouge">:RequestHistoricalData</code>-Message.<br />
+Next the script has to listen for a <code class="language-plaintext highlighter-rouge">:HistoricalData</code>-Response.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">IB::Contract.eod</code>-method bundles the nesseary steps to get <em>End of Day</em>-Data for specified date ranges.</p>
 
 <ul>
-  <li><a href="https://github.com/ib-ruby/ib-examples/blob/main/contract/contract_details">contract details</a></li>
-  <li><a href="https://github.com/ib-ruby/ib-examples/blob/main/contract/historic-data">historic data</a></li>
-  <li><a href="https://github.com/ib-ruby/ib-examples/blob/main/contract/option_data">option data</a></li>
-  <li><a href="https://github.com/ib-ruby/ib-examples/blob/main/contract/option-greeks">option-greeks</a></li>
+  <li><code class="language-plaintext highlighter-rouge">contract.eod( duration: '10 d' )</code>  gets closing price of the last 10 trading days.</li>
+  <li><code class="language-plaintext highlighter-rouge">contract.eod( duration: '10 w', start: Date.new(2019,3,14) what: :historical_volatility )</code>  gets the histrorical volatility for the  10 weeks starting on March 14th 2019.</li>
 </ul>
 
-<h2 id="list-of-messages-supporting-auto-generated-request_ids">List of Messages supporting auto-generated request_id’s</h2>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>:RequestAccountSummary
-
-:RequestPositionsMulti
-
-:RequestAccountUpdatesMulti
-
-:RequestContractDetails = :RequestContractData
-
-:RequestExecutions
-
-:RequestFundamentalData
-
-:RequestHeadTimeStamp
-
-:RequestHistogramData
-
-:RequestHistoricalData
-
-:RequestRealTimeBars
-
-:RequestCalculateImpliedVolatility = :CalculateImpliedVolatility 
-                                   = :RequestImpliedVolatility 
-
-:RequestCalculateOptionPrice = :CalculateOptionPrice 
-                             = :RequestOptionPrice 
-
-:RequestScannerSubscription 
-
-:RequestSecurityDefinitionOptionParameters = :ReqSecDefOptParams  
-                                           = :RequestOptionChainDefinition 
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="no">IB</span><span class="o">::</span><span class="no">Contract</span><span class="p">.</span><span class="nf">eod</span> <span class="ss">start: </span><span class="p">{</span><span class="n">a</span> <span class="n">date</span><span class="p">},</span> <span class="ss">to: </span><span class="p">{</span><span class="n">a</span> <span class="n">date</span><span class="p">;</span> <span class="no">Default</span><span class="p">:</span> <span class="no">Date</span><span class="p">.</span><span class="nf">today</span><span class="p">},</span>
+                 <span class="ss">duration: </span><span class="p">{</span><span class="n">string</span>  <span class="n">or</span> <span class="n">integer</span><span class="p">},</span>
+                 <span class="ss">what: </span><span class="p">{</span><span class="n">symbol</span><span class="p">;</span> <span class="no">Default</span><span class="p">:</span> <span class="ss">:trades</span> <span class="p">}</span>
 
 </code></pre></div></div>
+
+<p>The duration can either be specified as Sting “ yx D”, “ yx W”, “yx M” , “xy Y” 
+or as Integer. If the string-notation is used, ensure to include a space.</p>
+
+<p>The parameter :what specifies the kind of received data.</p>
+
+<p>Valid values:</p>
+
+<ul>
+  <li>:trades, :midpoint, :bid, :ask, :bid_ask,</li>
+  <li>:historical_volatility, :option_implied_volatility,</li>
+  <li>:option_volume, :option_open_interest</li>
+</ul>
+
+<blockquote>
+  <p>IB::Contract.eod returns an array of IB::Bar objects unless they are  preprocessed in a block.</p>
+</blockquote>
+
+<h3 id="examples">Examples</h3>
+
+<ul>
+  <li>Retrieve close prices of the last ten days.</li>
+</ul>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">.</span><span class="no">Index</span><span class="p">.</span><span class="nf">estx</span><span class="p">.</span><span class="nf">eod</span><span class="p">(</span> <span class="ss">duration: </span><span class="s1">'10 d'</span> <span class="p">){</span> <span class="o">|</span><span class="n">r</span><span class="o">|</span> <span class="n">r</span><span class="p">.</span><span class="nf">close</span>  <span class="p">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Get  price-ranges  of the last ten days.</li>
+</ul>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">.</span><span class="no">Index</span><span class="p">.</span><span class="nf">estx</span><span class="p">.</span><span class="nf">eod</span><span class="p">(</span> <span class="ss">duration: </span><span class="s1">'10 d'</span> <span class="p">){</span> <span class="o">|</span><span class="n">r</span><span class="o">|</span> <span class="n">r</span><span class="p">.</span><span class="nf">high</span> <span class="o">-</span> <span class="n">r</span><span class="p">.</span><span class="nf">low</span>  <span class="p">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Get close prices for General Electric between Jun 15 and Jun 21 2015</li>
+</ul>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="no">IB</span><span class="o">::</span><span class="no">Stock</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span> <span class="ss">symbol: </span><span class="s1">'GE'</span> <span class="p">).</span>
+           <span class="nf">eod</span><span class="p">(</span> <span class="ss">start: </span><span class="no">Date</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">2015</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">15</span><span class="p">),</span> <span class="ss">to: </span><span class="no">Date</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">2015</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">21</span><span class="p">)</span> <span class="p">).</span>
+           <span class="nf">map</span><span class="p">(</span> <span class="o">&amp;</span><span class="ss">:close</span> <span class="p">).</span>
+           <span class="nf">join</span><span class="p">(</span> <span class="s2">" : "</span> <span class="p">)</span>
+ <span class="o">=&gt;</span> <span class="s2">"26.19 : 26.17 : 26.24 : 26.18"</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Get Overnight Gaps for the stock</li>
+</ul>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="n">yesterdays_close</span> <span class="o">=</span> <span class="kp">nil</span>
+ <span class="no">IB</span><span class="o">::</span><span class="no">Stock</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span> <span class="ss">symbol: </span><span class="s1">'GE'</span><span class="p">).</span>
+           <span class="nf">eod</span><span class="p">(</span> <span class="ss">start: </span><span class="no">Date</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="mi">2010</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">15</span><span class="p">),</span> <span class="ss">duration: </span><span class="mi">10</span> <span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">r</span><span class="o">|</span>
+                  <span class="n">z</span><span class="o">=</span> <span class="k">if</span>  <span class="n">yesterdays_close</span><span class="p">.</span><span class="nf">nil?</span> 
+                         <span class="mi">0</span>
+                     <span class="k">else</span> 
+                         <span class="p">(</span><span class="n">yesterdays_close</span> <span class="o">-</span> <span class="n">r</span><span class="p">.</span><span class="nf">open</span><span class="p">).</span><span class="nf">abs</span>
+                     <span class="k">end</span>
+                  <span class="n">yesterdays_close</span> <span class="o">=</span> <span class="n">r</span><span class="p">.</span><span class="nf">close</span> 
+                  <span class="n">z</span>        <span class="c1">#   return value </span>
+          <span class="k">end</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span> <span class="s2">" : "</span> <span class="p">)</span>
+<span class="o">=&gt;</span> <span class="s2">"0 : 0.08 : 0.02 : 0.0 : 0.01 : 0.03 : 0.03 : 0.1 : 0.04 : 0.03"</span> 
+</code></pre></div></div>
+<p>We save the close of each day in <code class="language-plaintext highlighter-rouge">yesterdays_close</code> and pass it to the next iteration.  <code class="language-plaintext highlighter-rouge">yesterdays_close</code> has to be declared outside of the block!</p>
+
+<ul>
+  <li>Get the daily median of Implied Volatilities</li>
+</ul>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="n">ge</span> <span class="o">=</span> <span class="no">IB</span><span class="o">::</span><span class="no">Stock</span><span class="p">.</span><span class="nf">new</span> <span class="ss">symbol: :ge</span>
+ <span class="n">ge</span><span class="p">.</span><span class="nf">eod</span><span class="p">(</span> <span class="ss">duration: </span><span class="mi">10</span><span class="p">,</span> <span class="ss">what: :option_implied_volatility</span><span class="p">){</span><span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="nf">high</span> <span class="o">+</span> <span class="n">x</span><span class="p">.</span><span class="nf">low</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span> <span class="p">}.</span><span class="nf">round</span> <span class="mi">3</span>
+<span class="o">=&gt;</span> <span class="p">[</span><span class="mf">0.434</span><span class="p">,</span> <span class="mf">0.425</span><span class="p">,</span> <span class="mf">0.437</span><span class="p">,</span> <span class="mf">0.442</span><span class="p">,</span> <span class="mf">0.441</span><span class="p">,</span> <span class="mf">0.436</span><span class="p">,</span> <span class="mf">0.491</span><span class="p">,</span> <span class="mf">0.491</span><span class="p">,</span> <span class="mf">0.491</span><span class="p">,</span> <span class="mf">0.494</span><span class="p">]</span> 
+
+</code></pre></div></div>
+
+<ul>
+  <li>Save historical data as csv file</li>
+</ul>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="c1"># reopen IB::Contrct and add to_csv method</span>
+ <span class="k">module</span> <span class="nn">IB</span>
+   <span class="k">class</span> <span class="nc">Contract</span> 
+     <span class="k">def</span> <span class="nf">to_csv</span> <span class="n">file</span><span class="ss">:nil</span>
+       <span class="n">file</span> <span class="o">||=</span>  <span class="s2">"</span><span class="si">#{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">.csv"</span>
+       <span class="k">if</span> <span class="n">bars</span><span class="p">.</span><span class="nf">present?</span>
+         <span class="n">headers</span> <span class="o">=</span> <span class="n">bars</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">invariant_attributes</span><span class="p">.</span><span class="nf">keys</span>
+         <span class="no">CSV</span><span class="p">.</span><span class="nf">open</span><span class="p">(</span> <span class="n">file</span><span class="p">,</span> <span class="s1">'w'</span>  <span class="p">)</span> <span class="p">{</span><span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="n">f</span> <span class="o">&lt;&lt;</span> <span class="n">headers</span> <span class="p">;</span> <span class="n">bars</span><span class="p">.</span><span class="nf">each</span> <span class="p">{</span><span class="o">|</span><span class="n">y</span><span class="o">|</span> <span class="n">f</span> <span class="o">&lt;&lt;</span> <span class="n">y</span><span class="p">.</span><span class="nf">invariant_attributes</span><span class="p">.</span><span class="nf">values</span> <span class="p">}</span> <span class="p">}</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+ <span class="k">end</span>
+
+ <span class="n">ge</span> <span class="o">=</span> <span class="no">IB</span><span class="o">::</span><span class="no">Stock</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span> <span class="ss">symbol: :ge</span>  <span class="p">)</span>
+ <span class="n">ge</span><span class="p">.</span><span class="nf">eod</span><span class="p">(</span> <span class="ss">duration: </span><span class="s1">'200 D'</span> <span class="p">)</span>
+ <span class="n">ge</span><span class="p">.</span><span class="nf">to_csv</span>         <span class="c1"># writes ohlc-data to ge.csv</span>
+
+</code></pre></div></div>
+<div class="alert alert-info" role="alert"><i class="fa fa-bars"></i> A script is also included in the <a href="https://github.com/ib-ruby/ib-examples/blob/main/contract/create-eod-csv-file">Examples-Section</a></div>
+
+<p>v</p>
+
 
 
     <div class="tags">
@@ -667,7 +730,7 @@ You can either specify the <code class="language-plaintext highlighter-rouge">id
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2021 IB-Ruby. All rights reserved. <br />
-<span>Page last updated:</span> October 29, 2020<br/> Site last generated: Jul 26, 2021 <br />
+<span>Page last updated:</span> Jan 1, 2021<br/> Site last generated: Jul 26, 2021 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>

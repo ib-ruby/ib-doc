@@ -5,8 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
-<meta name="keywords" content="message,  messages">
-<title>Usage of Request_ID | IB-Ruby documentation</title>
+<meta name="keywords" content="orders,  orders, messages">
+<title>Place, Modify and Cancel Orders | IB-Ruby documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -144,7 +144,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Usage of Request_ID">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Place, Modify and Cancel Orders">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -291,7 +291,7 @@
           
           
           
-          <li class="active"><a title="Request-ID" href="message_request_id.html">Request-ID</a></li>
+          <li><a title="Request-ID" href="message_request_id.html">Request-ID</a></li>
           
           
           
@@ -400,7 +400,7 @@
           
           
           
-          <li><a title="Place, Modify and Cancel" href="order_placement.html">Place, Modify and Cancel</a></li>
+          <li class="active"><a title="Place, Modify and Cancel" href="order_placement.html">Place, Modify and Cancel</a></li>
           
           
           
@@ -541,7 +541,7 @@
         <!-- Content Column -->
         <div class="col-md-9" id="tg-sb-content">
             <div class="post-header">
-   <h1 class="post-title-main">Usage of Request_ID</h1>
+   <h1 class="post-title-main">Place, Modify and Cancel Orders</h1>
 </div>
 
 
@@ -578,72 +578,87 @@ $('#toc').on('click', 'a', function() {
 
     
 
-   <p>Several message-calls use <code class="language-plaintext highlighter-rouge">:id</code>, <code class="language-plaintext highlighter-rouge">:ticker_id</code> or <code class="language-plaintext highlighter-rouge">:request_id</code> to distinguish between separate requests.<br />
-You can either specify the <code class="language-plaintext highlighter-rouge">id</code> or delegate it to <strong><em>IB-Ruby</em></strong>.</p>
+   <div class="bs-callout bs-callout-info">
+To use the features described, include the <em>ib-extensions</em> Gem  in the Gemfile and use    
 
-<p>To delegate, just omit the specification of an <code class="language-plaintext highlighter-rouge">:id</code> of any kind.</p>
 
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">C</span><span class="p">.</span><span class="nf">send_message</span> <span class="ss">:RequestContractData</span><span class="p">,</span> <span class="ss">contract: </span><span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Stocks</span><span class="p">.</span><span class="nf">aapl</span>
- <span class="o">=&gt;</span> <span class="mi">171</span> 
-<span class="mo">06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">31.555</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">10</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ContractData</span><span class="p">)</span>
-<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">31.556812</span> <span class="vg">$1969</span><span class="p">]</span>  <span class="no">INFO</span> <span class="o">--</span> <span class="p">:</span> <span class="o">&lt;</span><span class="no">Stock</span><span class="p">:</span> <span class="no">AAPL</span> <span class="no">USD</span><span class="o">&gt;</span>
-<span class="mo">06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">31.557</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">52</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ContractDataEnd</span><span class="p">)</span>
-<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">31.557438</span> <span class="vg">$1969</span><span class="p">]</span>  <span class="no">INFO</span> <span class="o">--</span> <span class="p">:</span> <span class="o">&lt;</span><span class="no">ContractDataEnd</span><span class="p">:</span> <span class="n">request_id</span> <span class="mi">171</span> <span class="o">&gt;</span>
+<pre> 
+require 'ib-api' 
+require 'ib/symbols' 
+require 'ib/order-prototypes' 
+</pre>
+
+in your scripts.
+</div>
+
+<div class="alert alert-info" role="alert"><i class="fa fa-bars"></i> This page covers order placement using B::Connection. <br />
+ The approach using IB::Gateway is described in <a href="/order_workflow">workflow</a></div>
+
+<h2 id="place-by-sending-a-message">Place by sending a Message</h2>
+<p>To place an order, basically a <code class="language-plaintext highlighter-rouge">:PlaceOrder</code>- Message has to be transmitted</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">ib</span> <span class="o">=</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Connection</span><span class="p">.</span><span class="nf">current</span>
+<span class="o">&gt;</span> <span class="n">ib</span><span class="p">.</span><span class="nf">send_message</span> <span class="ss">:PlaceOrder</span><span class="p">,</span> <span class="ss">contract: </span><span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Stocks</span><span class="p">.</span><span class="nf">wfc</span> <span class="p">,</span> 
+                   <span class="ss">order: </span><span class="no">Limit</span><span class="p">.</span><span class="nf">order</span><span class="p">(</span> <span class="ss">action: :buy</span><span class="p">,</span> <span class="ss">size: </span><span class="mi">100</span><span class="p">,</span> <span class="ss">price: </span><span class="mi">22</span>  <span class="p">),</span>
+                   <span class="ss">local_id: </span><span class="n">ib</span><span class="p">.</span><span class="nf">next_local_id</span>
 </code></pre></div></div>
-<p>The <code class="language-plaintext highlighter-rouge">:send_message</code>-method returns the generated »request_id«. The corresponding <code class="language-plaintext highlighter-rouge">:ContractDataEnd</code> message finishes the request.</p>
 
-<p>If you want to control the <code class="language-plaintext highlighter-rouge">:request_id</code>, just specify it. The autogeneration mechanism is simply overridden.</p>
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="no">C</span><span class="p">.</span><span class="nf">send_message</span> <span class="ss">:RequestContractData</span><span class="p">,</span> <span class="ss">contract: </span><span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Stocks</span><span class="p">.</span><span class="nf">aapl</span><span class="p">,</span> <span class="ss">:id</span> <span class="o">=&gt;</span> <span class="mi">456</span>
-  <span class="o">=&gt;</span> <span class="mi">456</span> 
-<span class="mo">06</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">53.247</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">10</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ContractData</span><span class="p">)</span>
-<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T06</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">53.248262</span> <span class="vg">$1969</span><span class="p">]</span>  <span class="no">INFO</span> <span class="o">--</span> <span class="p">:</span> <span class="o">&lt;</span><span class="no">Stock</span><span class="p">:</span> <span class="no">AAPL</span> <span class="no">USD</span><span class="o">&gt;</span>
-<span class="mo">06</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">53.248</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">52</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ContractDataEnd</span><span class="p">)</span>
-<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T06</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">53.248435</span> <span class="vg">$1969</span><span class="p">]</span>  <span class="no">INFO</span> <span class="o">--</span> <span class="p">:</span> <span class="o">&lt;</span><span class="no">ContractDataEnd</span><span class="p">:</span> <span class="n">request_id</span> <span class="mi">456</span> <span class="o">&gt;</span>
+<p>TWS responses with <code class="language-plaintext highlighter-rouge">:OpenOrder</code> and <code class="language-plaintext highlighter-rouge">OrderStatus</code> messages.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">PlaceOrder</code> message is also used  to modify orders. <br />
+A new order requires an incremented <code class="language-plaintext highlighter-rouge">:local_id</code>.
+By transmitting a  <code class="language-plaintext highlighter-rouge">:PlaceOrder</code>-Message with an unchanged  <code class="language-plaintext highlighter-rouge">:local_id</code> the order is modified (without warning).</p>
+
+<h2 id="place-with-ibconnection-methods">Place with IB::Connection-methods</h2>
+
+<p>To avoid unintended order-modifications, explicit calls to <code class="language-plaintext highlighter-rouge">:place_order</code> and <code class="language-plaintext highlighter-rouge">:modify_order</code> are implemented.</p>
+
+<p><strong><em>IB-Api</em></strong> provides handy <code class="language-plaintext highlighter-rouge">IB::Connection#place_order</code> and <code class="language-plaintext highlighter-rouge">IB::Connection#modify_order</code> methods.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">ib</span> <span class="o">=</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Connection</span><span class="p">.</span><span class="nf">current</span>
+<span class="o">&gt;</span> <span class="n">the_order</span> <span class="o">=</span>  <span class="no">Limit</span><span class="p">.</span><span class="nf">order</span> <span class="ss">action: :buy</span><span class="p">,</span> <span class="ss">size: </span><span class="mi">100</span><span class="p">,</span> <span class="ss">price: </span><span class="mi">50</span>
+<span class="o">&gt;</span> <span class="n">the_contract</span> <span class="o">=</span> <span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Stocks</span><span class="p">.</span><span class="nf">wfc</span> 
+  <span class="c1"># call _place_order_ and get the current _order_id</span>
+<span class="o">&gt;</span> <span class="n">order_id</span> <span class="o">=</span> <span class="n">ib</span><span class="p">.</span><span class="nf">place_order</span> <span class="n">the_order</span><span class="p">,</span> <span class="n">the_contract</span> 
+	<span class="c1"># adjust the order and transmit the modification </span>
+<span class="o">&gt;</span> <span class="n">the_order</span><span class="p">.</span><span class="nf">price</span> <span class="o">=</span> <span class="mi">51</span>
+<span class="o">&gt;</span> <span class="n">the_order</span><span class="p">.</span><span class="nf">local_id</span> <span class="o">=</span> <span class="n">order_id</span>
+<span class="o">&gt;</span> <span class="n">ib</span><span class="p">.</span><span class="nf">modify_order</span> <span class="n">the_order</span><span class="p">,</span> <span class="n">the_contract</span>
+</code></pre></div></div>
+<p>The response is stored in <code class="language-plaintext highlighter-rouge">IB::Connection.received</code>.</p>
+
+<h2 id="preview-and-place">Preview and Place</h2>
+
+<p>To preview the impact of an order, <code class="language-plaintext highlighter-rouge">what_if=true</code> is added to the <code class="language-plaintext highlighter-rouge">:PlaceOrder</code>- Message</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">ib</span> <span class="o">=</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Connection</span><span class="p">.</span><span class="nf">current</span>
+<span class="o">&gt;</span> <span class="n">ib</span><span class="p">.</span><span class="nf">send_message</span> <span class="ss">:PlaceOrder</span><span class="p">,</span> <span class="ss">contract: </span><span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Stocks</span><span class="p">.</span><span class="nf">wfc</span> <span class="p">,</span> 
+                   <span class="ss">order: </span><span class="no">Limit</span><span class="p">.</span><span class="nf">order</span><span class="p">(</span> <span class="ss">action: :buy</span><span class="p">,</span> <span class="ss">size: </span><span class="mi">100</span><span class="p">,</span> <span class="ss">price: </span><span class="mi">22</span> <span class="p">,</span> 
+                                       <span class="ss">what_if: </span><span class="kp">true</span><span class="p">,</span> <span class="ss">account: </span><span class="s1">'DU1111222'</span><span class="p">),</span>
+                   <span class="ss">local_id: </span><span class="n">ib</span><span class="p">.</span><span class="nf">next_local_id</span>
+
+<span class="o">&gt;</span> <span class="n">ib</span><span class="p">.</span><span class="nf">received</span><span class="p">[</span><span class="ss">:OpenOrder</span><span class="p">].</span><span class="nf">to_human</span>
+ <span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"&lt;OpenOrder: &lt;Stock: WFC USD NYSE&gt; &lt;Order: LMT GTC buy 100.0  @ 21.0 PreSubmitted #22/1729171652 from 0/DU167349 fee 1.0&gt;&gt;"</span><span class="p">]</span> 
+<span class="o">&gt;</span> <span class="n">ib</span><span class="p">.</span><span class="nf">received</span><span class="p">[</span><span class="ss">:OpenOrder</span><span class="p">].</span><span class="nf">first</span><span class="p">.</span><span class="nf">order</span><span class="p">.</span><span class="nf">init_margin</span><span class="p">.</span><span class="nf">to_f</span>              <span class="o">=&gt;</span>  <span class="mf">54164.28</span> 
+<span class="o">&gt;</span> <span class="n">ib</span><span class="p">.</span><span class="nf">received</span><span class="p">[</span><span class="ss">:OpenOrder</span><span class="p">].</span><span class="nf">first</span><span class="p">.</span><span class="nf">order</span><span class="p">.</span><span class="nf">equity_with_loan</span><span class="p">.</span><span class="nf">to_f</span>          <span class="o">=&gt;</span> <span class="mf">894806.34</span> 
+
+
+<span class="o">&gt;</span> <span class="n">ib</span><span class="p">.</span><span class="nf">send_message</span> <span class="ss">:PlaceOrder</span><span class="p">,</span> <span class="ss">contract: </span><span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Stocks</span><span class="p">.</span><span class="nf">wfc</span> <span class="p">,</span> 
+                   <span class="ss">order: </span><span class="no">Limit</span><span class="p">.</span><span class="nf">order</span><span class="p">(</span> <span class="ss">action: :buy</span><span class="p">,</span> <span class="ss">size: </span><span class="mi">100</span><span class="p">,</span> <span class="ss">price: </span><span class="mi">22</span> <span class="p">,</span> 
+                                       <span class="ss">what_if: </span><span class="kp">false</span><span class="p">,</span> <span class="ss">account: </span><span class="s1">'DU1111222'</span><span class="p">),</span>
+                   <span class="ss">local_id: </span><span class="n">ib</span><span class="p">.</span><span class="nf">next_local_id</span>
+  <span class="o">&lt;</span><span class="no">OrderState</span><span class="p">:</span> <span class="no">Submitted</span> <span class="c1">#24/1729171653 from 2000 filled 0.0/100.0 at 0.0/0.0 why_held &gt;  # log entry</span>
+
+<span class="o">&gt;</span> <span class="n">ib</span><span class="p">.</span><span class="nf">received</span><span class="p">[</span><span class="ss">:OpenOrder</span><span class="p">].</span><span class="nf">to_human</span>
+ <span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"&lt;OpenOrder: &lt;Stock: WFC USD NYSE&gt; &lt;Order: LMT GTC buy 100.0  @ 21.0 PreSubmitted #22/1729171652 from 0/DU167349 fee 1.0&gt;&gt;"</span><span class="p">,</span>
+     <span class="s2">"&lt;OpenOrder: &lt;Stock: WFC USD NYSE&gt; &lt;Order: LMT GTC buy 100.0  @ 21.0 Submitted #24/1729171653 from 2000/DU167349&gt;&gt;"</span><span class="p">]</span> 
+
+
+ 
 </code></pre></div></div>
 
-<h2 id="examples-using-this-feature">Examples using this feature</h2>
+<div class="alert alert-info" role="alert"><i class="fa fa-bars"></i> More details on reviewing  orders: <a href="/order_preview">preview</a></div>
 
-<ul>
-  <li><a href="https://github.com/ib-ruby/ib-examples/blob/main/contract/contract_details">contract details</a></li>
-  <li><a href="https://github.com/ib-ruby/ib-examples/blob/main/contract/historic-data">historic data</a></li>
-  <li><a href="https://github.com/ib-ruby/ib-examples/blob/main/contract/option_data">option data</a></li>
-  <li><a href="https://github.com/ib-ruby/ib-examples/blob/main/contract/option-greeks">option-greeks</a></li>
-</ul>
-
-<h2 id="list-of-messages-supporting-auto-generated-request_ids">List of Messages supporting auto-generated request_id’s</h2>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>:RequestAccountSummary
-
-:RequestPositionsMulti
-
-:RequestAccountUpdatesMulti
-
-:RequestContractDetails = :RequestContractData
-
-:RequestExecutions
-
-:RequestFundamentalData
-
-:RequestHeadTimeStamp
-
-:RequestHistogramData
-
-:RequestHistoricalData
-
-:RequestRealTimeBars
-
-:RequestCalculateImpliedVolatility = :CalculateImpliedVolatility 
-                                   = :RequestImpliedVolatility 
-
-:RequestCalculateOptionPrice = :CalculateOptionPrice 
-                             = :RequestOptionPrice 
-
-:RequestScannerSubscription 
-
-:RequestSecurityDefinitionOptionParameters = :ReqSecDefOptParams  
-                                           = :RequestOptionChainDefinition 
-
-</code></pre></div></div>
 
 
     <div class="tags">
@@ -667,7 +682,7 @@ You can either specify the <code class="language-plaintext highlighter-rouge">id
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2021 IB-Ruby. All rights reserved. <br />
-<span>Page last updated:</span> October 29, 2020<br/> Site last generated: Jul 26, 2021 <br />
+<span>Page last updated:</span> November 1, 2020<br/> Site last generated: Jul 26, 2021 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>

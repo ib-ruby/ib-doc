@@ -5,8 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
-<meta name="keywords" content="message,  messages">
-<title>Usage of Request_ID | IB-Ruby documentation</title>
+<meta name="keywords" content="orders,  orders">
+<title>Order Prototypes | IB-Ruby documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
 
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -144,7 +144,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: 'search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Usage of Request_ID">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="Order Prototypes">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -291,7 +291,7 @@
           
           
           
-          <li class="active"><a title="Request-ID" href="message_request_id.html">Request-ID</a></li>
+          <li><a title="Request-ID" href="message_request_id.html">Request-ID</a></li>
           
           
           
@@ -393,7 +393,7 @@
           
           
           
-          <li><a title="Prototypes" href="order_prototypes.html">Prototypes</a></li>
+          <li class="active"><a title="Prototypes" href="order_prototypes.html">Prototypes</a></li>
           
           
           
@@ -541,7 +541,7 @@
         <!-- Content Column -->
         <div class="col-md-9" id="tg-sb-content">
             <div class="post-header">
-   <h1 class="post-title-main">Usage of Request_ID</h1>
+   <h1 class="post-title-main">Order Prototypes</h1>
 </div>
 
 
@@ -578,72 +578,105 @@ $('#toc').on('click', 'a', function() {
 
     
 
-   <p>Several message-calls use <code class="language-plaintext highlighter-rouge">:id</code>, <code class="language-plaintext highlighter-rouge">:ticker_id</code> or <code class="language-plaintext highlighter-rouge">:request_id</code> to distinguish between separate requests.<br />
-You can either specify the <code class="language-plaintext highlighter-rouge">id</code> or delegate it to <strong><em>IB-Ruby</em></strong>.</p>
+   <div class="bs-callout bs-callout-info">
+To use the features described, include the <em>ib-extensions</em> Gem  in the Gemfile and use    
 
-<p>To delegate, just omit the specification of an <code class="language-plaintext highlighter-rouge">:id</code> of any kind.</p>
 
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">C</span><span class="p">.</span><span class="nf">send_message</span> <span class="ss">:RequestContractData</span><span class="p">,</span> <span class="ss">contract: </span><span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Stocks</span><span class="p">.</span><span class="nf">aapl</span>
- <span class="o">=&gt;</span> <span class="mi">171</span> 
-<span class="mo">06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">31.555</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">10</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ContractData</span><span class="p">)</span>
-<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">31.556812</span> <span class="vg">$1969</span><span class="p">]</span>  <span class="no">INFO</span> <span class="o">--</span> <span class="p">:</span> <span class="o">&lt;</span><span class="no">Stock</span><span class="p">:</span> <span class="no">AAPL</span> <span class="no">USD</span><span class="o">&gt;</span>
-<span class="mo">06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">31.557</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">52</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ContractDataEnd</span><span class="p">)</span>
-<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T06</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mf">31.557438</span> <span class="vg">$1969</span><span class="p">]</span>  <span class="no">INFO</span> <span class="o">--</span> <span class="p">:</span> <span class="o">&lt;</span><span class="no">ContractDataEnd</span><span class="p">:</span> <span class="n">request_id</span> <span class="mi">171</span> <span class="o">&gt;</span>
-</code></pre></div></div>
-<p>The <code class="language-plaintext highlighter-rouge">:send_message</code>-method returns the generated »request_id«. The corresponding <code class="language-plaintext highlighter-rouge">:ContractDataEnd</code> message finishes the request.</p>
+<pre> 
+require 'ib-api' 
+require 'ib/order-prototypes' 
+</pre>
 
-<p>If you want to control the <code class="language-plaintext highlighter-rouge">:request_id</code>, just specify it. The autogeneration mechanism is simply overridden.</p>
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="no">C</span><span class="p">.</span><span class="nf">send_message</span> <span class="ss">:RequestContractData</span><span class="p">,</span> <span class="ss">contract: </span><span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Stocks</span><span class="p">.</span><span class="nf">aapl</span><span class="p">,</span> <span class="ss">:id</span> <span class="o">=&gt;</span> <span class="mi">456</span>
-  <span class="o">=&gt;</span> <span class="mi">456</span> 
-<span class="mo">06</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">53.247</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">10</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ContractData</span><span class="p">)</span>
-<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T06</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">53.248262</span> <span class="vg">$1969</span><span class="p">]</span>  <span class="no">INFO</span> <span class="o">--</span> <span class="p">:</span> <span class="o">&lt;</span><span class="no">Stock</span><span class="p">:</span> <span class="no">AAPL</span> <span class="no">USD</span><span class="o">&gt;</span>
-<span class="mo">06</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">53.248</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">52</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">ContractDataEnd</span><span class="p">)</span>
-<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T06</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">53.248435</span> <span class="vg">$1969</span><span class="p">]</span>  <span class="no">INFO</span> <span class="o">--</span> <span class="p">:</span> <span class="o">&lt;</span><span class="no">ContractDataEnd</span><span class="p">:</span> <span class="n">request_id</span> <span class="mi">456</span> <span class="o">&gt;</span>
-</code></pre></div></div>
+in your scripts.
+</div>
 
-<h2 id="examples-using-this-feature">Examples using this feature</h2>
+<p>Interactive Brokers offers more than 60 ordertypes to its clients.</p>
 
+<p>There might be a reason for each and everyone. But it’s virtually impossible to know all of them, and even for less common, but very usefull ordertypes, one must think carefully which attributes apply and/or are required.</p>
+
+<p><strong><em>IB-Ruby</em></strong> offers <span class="label label-info">Order-Prototypes</span> to simplify the ordering process.</p>
+
+<p>Order-Prototypes define the order. For Placement look <a href="/oders_placement">here</a>.</p>
+
+<h2 id="list-of-prototypes">List of Prototypes</h2>
 <ul>
-  <li><a href="https://github.com/ib-ruby/ib-examples/blob/main/contract/contract_details">contract details</a></li>
-  <li><a href="https://github.com/ib-ruby/ib-examples/blob/main/contract/historic-data">historic data</a></li>
-  <li><a href="https://github.com/ib-ruby/ib-examples/blob/main/contract/option_data">option data</a></li>
-  <li><a href="https://github.com/ib-ruby/ib-examples/blob/main/contract/option-greeks">option-greeks</a></li>
+  <li><code class="language-plaintext highlighter-rouge">Market</code>,  <code class="language-plaintext highlighter-rouge">MarketIfTouched</code>, <code class="language-plaintext highlighter-rouge">MarketOnClose</code>, <code class="language-plaintext highlighter-rouge">MarketOnOpen</code>, <code class="language-plaintext highlighter-rouge">AtAuction</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Limit</code>,  <code class="language-plaintext highlighter-rouge">Discretionary</code>, <code class="language-plaintext highlighter-rouge">Sweep2Fill</code>, <code class="language-plaintext highlighter-rouge">LimitIfTouched</code>, <code class="language-plaintext highlighter-rouge">LimitOnClose</code>, <code class="language-plaintext highlighter-rouge">LimitOnOpen</code></li>
+  <li><code class="language-plaintext highlighter-rouge">SimpleStop</code>, <code class="language-plaintext highlighter-rouge">StopLimit</code>, <code class="language-plaintext highlighter-rouge">StopProtected</code>, <code class="language-plaintext highlighter-rouge">TrailingStop</code>, <code class="language-plaintext highlighter-rouge">TrailingStopLimit</code></li>
+  <li><code class="language-plaintext highlighter-rouge">ForexLimit</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Volatility</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Combo</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Pegged2Primary</code>, <code class="language-plaintext highlighter-rouge">Pegged2Market</code>, <code class="language-plaintext highlighter-rouge">Pegged2Stock</code>, <code class="language-plaintext highlighter-rouge">Pegged2Benchmark</code></li>
 </ul>
 
-<h2 id="list-of-messages-supporting-auto-generated-request_ids">List of Messages supporting auto-generated request_id’s</h2>
+<h2 id="commandline-autocomplete">Commandline autocomplete</h2>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>:RequestAccountSummary
+<p>For every OrderPrototpye, a handy command line autocomplete mechanism is provided.</p>
 
-:RequestPositionsMulti
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">o</span> <span class="o">=</span> <span class="no">Limit</span><span class="p">.</span><span class="nf">order</span>
+		<span class="p">(</span><span class="o">...</span><span class="p">)</span> 
+<span class="no">IB</span><span class="o">::</span><span class="no">ArgumentError</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Limit</span><span class="p">.</span><span class="nf">order</span> <span class="o">-&gt;</span> <span class="no">A</span> <span class="n">necessary</span> <span class="n">field</span> <span class="n">is</span> <span class="ss">missing: action: 
+</span><span class="o">--&gt;</span> <span class="p">{</span><span class="s2">"B"</span><span class="o">=&gt;</span><span class="ss">:buy</span><span class="p">,</span> <span class="s2">"S"</span><span class="o">=&gt;</span><span class="ss">:sell</span><span class="p">,</span> <span class="s2">"T"</span><span class="o">=&gt;</span><span class="ss">:short</span><span class="p">,</span> <span class="s2">"X"</span><span class="o">=&gt;</span><span class="ss">:short_exempt</span><span class="p">})</span>
 
-:RequestAccountUpdatesMulti
+<span class="o">&gt;</span> <span class="n">o</span> <span class="o">=</span> <span class="no">Limit</span><span class="p">.</span><span class="nf">order</span> <span class="ss">action: :buy</span>
+		<span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="no">IB</span><span class="o">::</span><span class="no">ArgumentError</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Limit</span><span class="p">.</span><span class="nf">order</span> <span class="o">-&gt;</span> <span class="no">A</span> <span class="n">necessary</span> <span class="n">field</span> <span class="n">is</span> <span class="ss">missing: total_quantity: 
+</span><span class="o">--&gt;</span> <span class="n">also</span> <span class="n">aliased</span> <span class="n">as</span> <span class="ss">:size</span><span class="p">)</span>
 
-:RequestContractDetails = :RequestContractData
+<span class="o">&gt;</span> <span class="n">o</span> <span class="o">=</span> <span class="no">Limit</span><span class="p">.</span><span class="nf">order</span> <span class="ss">action: :buy</span><span class="p">,</span> <span class="ss">size: </span><span class="mi">100</span>
+		<span class="p">(</span><span class="o">...</span><span class="p">)</span>
+ <span class="no">IB</span><span class="o">::</span><span class="no">ArgumentError</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Limit</span><span class="p">.</span><span class="nf">order</span> <span class="o">-&gt;</span> <span class="no">A</span> <span class="n">necessary</span> <span class="n">field</span> <span class="n">is</span> <span class="ss">missing: limit_price: 
+ </span><span class="o">--&gt;</span> <span class="n">also</span> <span class="n">aliased</span> <span class="n">as</span> <span class="ss">:price</span><span class="p">)</span>
 
-:RequestExecutions
-
-:RequestFundamentalData
-
-:RequestHeadTimeStamp
-
-:RequestHistogramData
-
-:RequestHistoricalData
-
-:RequestRealTimeBars
-
-:RequestCalculateImpliedVolatility = :CalculateImpliedVolatility 
-                                   = :RequestImpliedVolatility 
-
-:RequestCalculateOptionPrice = :CalculateOptionPrice 
-                             = :RequestOptionPrice 
-
-:RequestScannerSubscription 
-
-:RequestSecurityDefinitionOptionParameters = :ReqSecDefOptParams  
-                                           = :RequestOptionChainDefinition 
+<span class="o">&gt;</span> <span class="n">o</span> <span class="o">=</span> <span class="no">Limit</span><span class="p">.</span><span class="nf">order</span> <span class="ss">action: :buy</span><span class="p">,</span> <span class="ss">size: </span><span class="mi">100</span><span class="p">,</span> <span class="ss">price: </span><span class="mi">15</span>
+  <span class="o">=&gt;</span> <span class="c1">#&lt;IB::Order:0x0000000002fa5fd0 @attributes={:tif=&gt;"GTC", :order_type=&gt;"LMT", :side=&gt;"B", :total_quantity=&gt;100, :limit_price=&gt;15, :created_at=&gt;2018-03-22 08:50:57 +0000, :active_start_time=&gt;"", :active_stop_time=&gt;"", :algo_strategy=&gt;"", :algo_id=&gt;"", :auction_strategy=&gt;0, :conditions=&gt;[], :continuous_update=&gt;0, :designated_location=&gt;"", :display_size=&gt;0, :discretionary_amount=&gt;0, :etrade_only=&gt;true, :exempt_code=&gt;-1, :ext_operator=&gt;"", :firm_quote_only=&gt;true, :not_held=&gt;false, :oca_type=&gt;0, :open_close=&gt;1, :opt_out_smart_routing=&gt;false, :origin=&gt;0, :outside_rth=&gt;false, :parent_id=&gt;0, :random_size=&gt;false, :random_price=&gt;false, :scale_auto_reset=&gt;false, :scale_random_percent=&gt;false, :scale_table=&gt;"", :short_sale_slot=&gt;0, :solicided=&gt;false, :transmit=&gt;true, :trigger_method=&gt;0, :what_if=&gt;false, :leg_prices=&gt;[], :algo_params=&gt;{}, :combo_params=&gt;[], :soft_dollar_tier_params=&gt;{"name"=&gt;"", "val"=&gt;"", "display_name"=&gt;""}}, @order_states=[#&lt;IB::OrderState:0x0000000002f9b670 @attributes={:status=&gt;"New", :filled=&gt;0, :remaining=&gt;0, :price=&gt;0, :average_price=&gt;0, :created_at=&gt;2018-03-22 08:50:57 +0000}&gt;]&gt; </span>
 
 </code></pre></div></div>
+<h2 id="summary-method">Summary Method</h2>
+
+<p>Order-Prototypes provide a <code class="language-plaintext highlighter-rouge">summary</code> class-method</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; print Limit.summary
+  A Limit order is an order to buy or sell at a specified price or better. 
+  The Limit order ensures that if the order fills, it will not fill at a 
+  price less favorable than your limit price, but it does not guarantee a fill. 
+  It appears in the orderbook.
+</code></pre></div></div>
+<h2 id="special-treatment-of-size">Special treatment of :size</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">:size</code> attribute is primarily  an alias for <code class="language-plaintext highlighter-rouge">:total_quantity</code>.</p>
+
+<p>However, as in real live, size an be a negative number. If the <code class="language-plaintext highlighter-rouge">size</code>-attribute is specified <em>without</em> noticing any <code class="language-plaintext highlighter-rouge">:action</code>, the sign is interpreted as intention for the <code class="language-plaintext highlighter-rouge">:action</code>, ie.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="no">Limit</span><span class="p">.</span><span class="nf">order</span><span class="p">(</span> <span class="ss">price: </span><span class="mi">34</span><span class="p">,</span> <span class="ss">size:  </span><span class="mi">5</span> <span class="p">)</span> <span class="o">==&gt;</span>  <span class="no">IB</span><span class="p">:</span><span class="o">.</span><span class="no">Order</span> <span class="ss">attributes: action: :buy</span><span class="p">,</span> <span class="ss">total_quantity: </span><span class="mi">5</span><span class="p">,</span> <span class="ss">limit_price: </span><span class="mi">34</span>
+<span class="o">&gt;</span> <span class="no">Limit</span><span class="p">.</span><span class="nf">order</span><span class="p">(</span> <span class="ss">price: </span><span class="mi">24</span><span class="p">,</span> <span class="ss">size: </span><span class="o">-</span><span class="mi">5</span> <span class="p">)</span> <span class="o">==&gt;</span> <span class="no">IB</span><span class="p">:</span><span class="o">.</span><span class="no">Order</span> <span class="ss">attributes: action: :sell</span><span class="p">,</span> <span class="ss">total_quantity: </span><span class="mi">5</span><span class="p">,</span> <span class="ss">limit_price: </span><span class="mi">34</span>
+</code></pre></div></div>
+
+<h2 id="additional-arguments">Additional Arguments</h2>
+
+<p>Order-Prototypes are just a wrapper for  <code class="language-plaintext highlighter-rouge">IB::Order.new</code>. Other arguments(properties) can specified as usual</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="no">C</span><span class="p">.</span><span class="nf">place_order</span> <span class="n">order</span><span class="p">,</span> <span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Stocks</span><span class="p">.</span><span class="nf">wfc</span> 
+<span class="mi">09</span><span class="p">:</span><span class="mo">00</span><span class="p">:</span><span class="mf">50.168</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">4</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">Alert</span><span class="p">)</span>
+<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T09</span><span class="p">:</span><span class="mo">00</span><span class="p">:</span><span class="mf">50.168223</span> <span class="c1">#1501]  INFO -- : TWS Error 436: You must specify an allocation (either a single account, group, or profile).</span>
+
+<span class="o">&gt;</span> <span class="n">order</span> <span class="o">=</span> <span class="no">Limit</span><span class="p">.</span><span class="nf">order</span> <span class="ss">action: :buy</span><span class="p">,</span> <span class="ss">size: </span><span class="mi">100</span><span class="p">,</span> <span class="ss">price: </span><span class="mi">15</span><span class="p">,</span> <span class="ss">account: </span><span class="s1">'DU167349'</span><span class="p">,</span> <span class="ss">transmit: </span><span class="kp">true</span>
+<span class="o">&gt;</span> <span class="no">C</span><span class="p">.</span><span class="nf">place_order</span> <span class="n">order</span><span class="p">,</span> <span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Stocks</span><span class="p">.</span><span class="nf">wfc</span> 
+<span class="mi">09</span><span class="p">:</span><span class="mo">03</span><span class="p">:</span><span class="mf">23.600</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">5</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">OpenOrder</span><span class="p">)</span>
+<span class="mi">09</span><span class="p">:</span><span class="mo">03</span><span class="p">:</span><span class="mf">23.601</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">3</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">OrderStatus</span><span class="p">)</span>
+<span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T09</span><span class="p">:</span><span class="mo">03</span><span class="p">:</span><span class="mf">23.601694</span> <span class="c1">#1501]  INFO -- : &lt;OrderStatus: &lt;OrderState: Submitted #13/1114784592 from 2000 filled 0.0/100.0 at 0.0/0.0 why_held &gt;&gt;</span>
+</code></pre></div></div>
+
+<h2 id="examples">Examples</h2>
+
+<p>In the example-section Order-Prototypes are used to demonstrate the placement-process</p>
+
+<ul>
+  <li><a href="https://github.com/ib-ruby/ib-extensions/tree/master/examples/place_limit_order">place_limit_order</a></li>
+  <li><a href="https://github.com/ib-ruby/ib-extensions/tree/master/examples/place_combo_order">place_combo_order</a></li>
+  <li><a href="https://github.com/ib-ruby/ib-extensions/tree/master/examples/place_butterfly_order">place_butterfly_order</a></li>
+  <li><a href="https://github.com/ib-ruby/ib-extensions/tree/master/examples/place_bracket_order">place_bracket_order</a></li>
+</ul>
+
 
 
     <div class="tags">
@@ -667,7 +700,7 @@ You can either specify the <code class="language-plaintext highlighter-rouge">id
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2021 IB-Ruby. All rights reserved. <br />
-<span>Page last updated:</span> October 29, 2020<br/> Site last generated: Jul 26, 2021 <br />
+<span>Page last updated:</span> November 1, 2020<br/> Site last generated: Jul 26, 2021 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>
