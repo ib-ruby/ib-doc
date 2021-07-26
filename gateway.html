@@ -686,9 +686,7 @@ and provides account-based trading tools.</div>
 </ul>
 
 <p><code class="language-plaintext highlighter-rouge">IB::Gateway.current.clients</code>  contain  <code class="language-plaintext highlighter-rouge">Account-Positions</code> and <code class="language-plaintext highlighter-rouge">Portfolio-Values</code>. They are synchronized with the <em>TWS</em> by
-<code class="language-plaintext highlighter-rouge">IB::Gateway.current.get_account_data {the account}</code>. Visit <a href="account_overview">Account Overview</a> for further details.</p>
-
-<p>and beeing accessed via</p>
+<code class="language-plaintext highlighter-rouge">IB::Gateway.current.get_account_data {the account}</code> and beeing accessed via</p>
 
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">g</span> <span class="o">=</span> <span class="no">IB</span><span class="o">::</span><span class="no">Gateway</span><span class="p">.</span><span class="nf">current</span>
 <span class="c1"># thread safe access</span>
@@ -700,18 +698,17 @@ and provides account-based trading tools.</div>
 <span class="n">g</span><span class="p">.</span><span class="nf">clients</span><span class="p">.</span><span class="nf">map</span> <span class="o">&amp;</span><span class="ss">:portfolio_values</span>
 <span class="n">g</span><span class="p">.</span><span class="nf">clients</span><span class="p">.</span><span class="nf">map</span> <span class="o">&amp;</span><span class="ss">:account_values</span>
 </code></pre></div></div>
+<p>Visit <a href="account_overview">Account Overview</a> for further details.</p>
 
 <h3 id="order-management">Order Management</h3>
 
 <p>A simplified order management process is included.</p>
 
-<p>The centerpiece is an <code class="language-plaintext highlighter-rouge">IB::Order</code>-Object. Its reused and updated through the process and keeps the history and current status.</p>
+<p>The centerpiece is an <code class="language-plaintext highlighter-rouge">IB::Order</code>-Object. It is reused and updated through the process and keeps the history and current status.</p>
 
-<p>The process is initiated by calling <br />
-<code class="language-plaintext highlighter-rouge">IB::Account.preview</code> or <code class="language-plaintext highlighter-rouge">IB::Account.place</code> with  <code class="language-plaintext highlighter-rouge">IB::Contract</code> and <code class="language-plaintext highlighter-rouge">IB::Order_Prototype</code> as arguments. 
-Other steps ( <code class="language-plaintext highlighter-rouge">modify</code>, <code class="language-plaintext highlighter-rouge">reverse</code>, <code class="language-plaintext highlighter-rouge">close</code> or <code class="language-plaintext highlighter-rouge">cancel</code> )  just 
-require the <code class="language-plaintext highlighter-rouge">IB-Order</code> object as argument.</p>
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="no">G</span> <span class="o">=</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Gateway</span><span class="p">.</span><span class="nf">new</span>   <span class="c1"># initialize with default parameter</span>
+<p>The process is initiated by calling <code class="language-plaintext highlighter-rouge">IB::Account.preview</code> or <code class="language-plaintext highlighter-rouge">IB::Account.place</code> with  <code class="language-plaintext highlighter-rouge">IB::Contract</code> and <code class="language-plaintext highlighter-rouge">IB::Order_Prototype</code> as arguments.<br />
+Other steps ( <code class="language-plaintext highlighter-rouge">modify</code>, <code class="language-plaintext highlighter-rouge">reverse</code>, <code class="language-plaintext highlighter-rouge">close</code> or <code class="language-plaintext highlighter-rouge">cancel</code> )  just require the <code class="language-plaintext highlighter-rouge">IB-Order</code> object as argument.</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">g</span> <span class="o">=</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Gateway</span><span class="p">.</span><span class="nf">current</span>
 <span class="o">&gt;</span> <span class="n">the_contract</span> <span class="o">=</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Stocks</span><span class="p">.</span><span class="nf">msft</span>  <span class="c1"># Microsoft</span>
 <span class="o">&gt;</span> <span class="n">the_order</span> <span class="o">=</span> <span class="no">Limit</span><span class="p">.</span><span class="nf">order</span> <span class="ss">size: </span><span class="mi">100</span><span class="p">,</span> 
                           <span class="ss">price: </span><span class="n">the_contract</span><span class="p">.</span><span class="nf">market_price</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">,</span>
@@ -719,7 +716,7 @@ require the <code class="language-plaintext highlighter-rouge">IB-Order</code> o
 <span class="o">&gt;</span> <span class="n">the_order</span><span class="p">.</span><span class="nf">to_human</span>
  <span class="o">=&gt;</span> <span class="s2">"&lt;Order: LMT GTC buy 100  @ 201.33 New #/ from &gt;"</span> 
 
-<span class="o">&gt;</span> <span class="n">the_account</span>  <span class="o">=</span>  <span class="no">G</span><span class="p">.</span><span class="nf">clients</span><span class="p">.</span><span class="nf">first</span>
+<span class="o">&gt;</span> <span class="n">the_account</span>  <span class="o">=</span>  <span class="n">g</span><span class="p">.</span><span class="nf">clients</span><span class="p">.</span><span class="nf">first</span>
 
 <span class="o">&gt;</span> <span class="n">the_account</span><span class="p">.</span><span class="nf">preview</span> <span class="ss">order: </span><span class="n">the_order</span><span class="p">,</span> 
                       <span class="ss">contract: </span><span class="n">the_contract</span>
@@ -730,7 +727,7 @@ require the <code class="language-plaintext highlighter-rouge">IB-Order</code> o
 
 <span class="o">&gt;</span> <span class="n">the_account</span><span class="p">.</span><span class="nf">place</span> <span class="ss">order: </span><span class="n">the_order</span>
 
-<span class="o">&gt;</span> <span class="no">G</span><span class="p">.</span><span class="nf">cancel_order</span> <span class="n">the_order</span>              <span class="c1"># general order cancelling facility</span>
+<span class="o">&gt;</span> <span class="n">g</span><span class="p">.</span><span class="nf">cancel_order</span> <span class="n">the_order</span>              <span class="c1"># general order cancelling facility</span>
 <span class="o">&gt;</span> <span class="n">the_account</span><span class="p">.</span><span class="nf">cancel</span> <span class="ss">order: </span><span class="n">the_order</span>   <span class="c1"># identical</span>
 
 </code></pre></div></div>
@@ -747,7 +744,8 @@ require the <code class="language-plaintext highlighter-rouge">IB-Order</code> o
 
 <p><code class="language-plaintext highlighter-rouge">locate_order</code> offers a versatile option to monitor the status an order.</p>
 
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">one</span><span class="o">=</span> <span class="no">G</span><span class="p">.</span><span class="nf">clients</span><span class="p">.</span><span class="nf">first</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">g</span> <span class="o">=</span>  <span class="no">IB</span><span class="o">::</span><span class="no">Gateway</span><span class="p">.</span><span class="nf">current</span>
+<span class="o">&gt;</span> <span class="n">one</span><span class="o">=</span> <span class="n">g</span><span class="p">.</span><span class="nf">clients</span><span class="p">.</span><span class="nf">first</span>
 <span class="o">&gt;</span> <span class="n">one</span><span class="p">.</span><span class="nf">orders</span>                        <span class="o">=&gt;</span> <span class="p">[]</span>  <span class="c1">#  No open orders</span>
 
 <span class="o">&gt;</span> <span class="n">dbk</span> <span class="o">=</span>  <span class="no">Stock</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span> <span class="ss">symbol: :dbk</span><span class="p">,</span> <span class="ss">currency: :eur</span><span class="p">).</span><span class="nf">verify</span><span class="p">.</span><span class="nf">first</span>
