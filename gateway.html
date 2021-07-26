@@ -589,6 +589,32 @@ require 'ib/gateway'
 
 in your scripts.
 </div>
+<h3 id="public-interface">public interface</h3>
+
+<table>
+  <tbody>
+    <tr>
+      <td>connect</td>
+      <td>disconnect</td>
+      <td>reconnect</td>
+    </tr>
+    <tr>
+      <td>check_conection</td>
+      <td> </td>
+      <td>tws</td>
+    </tr>
+    <tr>
+      <td>get_account_data</td>
+      <td>update_orders</td>
+      <td>all_contracts</td>
+    </tr>
+    <tr>
+      <td>advisor</td>
+      <td>clients</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
 
 <h2 id="typical-setup">Typical setup</h2>
 
@@ -608,10 +634,12 @@ in your scripts.
   <span class="k">end</span>
 </code></pre></div></div>
 
-<div class="alert alert-info" role="alert"><i class="fa fa-bars"></i> <code class="language-plaintext highlighter-rouge">IB::Gateway</code> keeps Account- and Portfolio-Data, Contracts, Orders  in an in-line database
+<div class="alert alert-info" role="alert"><i class="fa fa-bars"></i> <code class="language-plaintext highlighter-rouge">IB::Gateway</code> keeps Account- and Portfolio-Data, Contracts, Orders  in an inline database
 and provides account-based trading tools.</div>
 
 <p>If called with <code class="language-plaintext highlighter-rouge">get_account_data: true</code> it detects accounts and reads available data from the <em>TWS</em>.</p>
+
+<p>Later, <code class="language-plaintext highlighter-rouge">get_account_data</code>  and <code class="language-plaintext highlighter-rouge">update_orders</code> synchonize the internal database with TWS-Data.</p>
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">## use /bin/gateway to reproduce</span>
  <span class="n">gw</span> <span class="o">=</span> <span class="no">IB</span><span class="o">::</span><span class="no">Gateway</span><span class="p">.</span><span class="nf">new</span> <span class="ss">host: </span><span class="no">TWS</span><span class="p">,</span> <span class="ss">get_account_data: </span><span class="kp">true</span>
  <span class="nb">puts</span> <span class="n">gw</span><span class="p">.</span><span class="nf">clients</span><span class="p">.</span><span class="nf">portfolio_values</span><span class="p">.</span><span class="nf">to_human</span>
@@ -813,7 +841,7 @@ require the <code class="language-plaintext highlighter-rouge">IB-Order</code> o
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2021 IB-Ruby. All rights reserved. <br />
- Site last generated: Jun 18, 2021 <br />
+ Site last generated: Jul 26, 2021 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="In most cases, first a proper Ruby-Installation is needed. The software can then installed in your Home-directory and/or as gem.">
+<meta name="description" content="A proper Ruby-Installation is needed. The software can then installed in your Home-directory and/or as gem.">
 <meta name="keywords" content="getting_startedtroubleshooting,  ">
 <title>Setup Ruby and Install the Software | IB-Ruby documentation</title>
 <link rel="stylesheet" href="css/syntax.css">
@@ -549,7 +549,7 @@
 <div class="post-content">
 
    
-    <div class="summary">In most cases, first a proper <em>Ruby-Installation</em> is needed. The software can then installed in your <em>Home</em>-directory and/or as gem.</div>
+    <div class="summary">A proper <em>Ruby-Installation</em> is needed. The software can then installed in your <em>Home</em>-directory and/or as gem.</div>
    
 
     
@@ -583,10 +583,13 @@ $('#toc').on('click', 'a', function() {
    <h2 id="setup-the-ruby-language">Setup the Ruby Language</h2>
 <p>The <a href="https://ruby-doc.org/">ruby</a> language is not a <em>Mainstream-Computer-Language</em>.  It may be installed on your system, but is then most probably present in a not suitable version. Refer to  the <a href="https://www.ruby-lang.org/en/documentation/installation/">official documentation</a>.</p>
 
-<p>We recommend to use <a href="https://rvm.io">rvm</a> to install ruby in user-space. Please follow the <a href="https://rvm.io/rvm/install">install notes</a> and install ruby-version 2.7.</p>
+<p>We recommend to use <a href="https://rvm.io">rvm</a> to install ruby in user-space. Please follow the <a href="https://rvm.io/rvm/install">install notes</a> and install the most recent ruby version.</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> $ \curl -sSL https://get.rvm.io | bash -s stable 
- $ rvm install 2.7
+ $ rvm install 3.0
 </code></pre></div></div>
+
+<p>On Debian/Ubuntu-systems rvm can be installed directly via <code class="language-plaintext highlighter-rouge">apt</code>: <a href="https://github.com/rvm/ubuntu_rvm">GitHup-Project-Page with instructions</a>.</p>
+
 <p>Next <a href="http://bundler.io/">Bundle</a> has to be installed. Its a gem, which is available through</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> $ gem install bundler
@@ -645,7 +648,7 @@ and  note at least <code class="language-plaintext highlighter-rouge">require 'i
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2021 IB-Ruby. All rights reserved. <br />
- Site last generated: Jun 18, 2021 <br />
+ Site last generated: Jul 26, 2021 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>

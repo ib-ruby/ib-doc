@@ -603,24 +603,11 @@ $('#toc').on('click', 'a', function() {
   ## or
   require 'ib-gateway'
 </code></pre></div></div>
-<p>can address the services of <strong><em>IB-Ruby</em></strong>.</p>
+<p>can access the services of <strong><em>IB-Ruby</em></strong>.</p>
 
-<p>This is easiest demonstrated by copying  example-files to the  project</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> $ cd {your project}
- $ ib_api=`bundle info --path ib-api`  # get the path of the installed gem
- $ cp -r $ib_api/example  .
- $ cd example
- $ ./account_positions
- # TWS Warning 2104: Market data farm connection is OK:usfarm
- #(...)
-  #&lt;PositionValue: DU167348 -&gt;  &lt;Stock: DBB USD&gt; ( Amount -1.0 ) : Market-Price 17.6295 &gt;
+<h3 id="ib-examples">IB-Examples</h3>
 
-</code></pre></div></div>
-
-<p>Unless the account is empty, you should get a list of <em>PortfolioValues</em>.</p>
-
-<div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> <b>::</b> If the example script fails to connect to the TWS, check the API-settings 
-in the TWS/Gateway and change the <code class="language-plaintext highlighter-rouge">:port</code> parameter in the script. The default is to listen on port 4002.</div>
+<p>The <strong>IB-Examples</strong> repository contains a variety of sample scripts.</p>
 
 <h3 id="a-local-console">A local Console</h3>
 
@@ -650,7 +637,7 @@ in the TWS/Gateway and change the <code class="language-plaintext highlighter-ro
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2021 IB-Ruby. All rights reserved. <br />
- Site last generated: Jun 18, 2021 <br />
+ Site last generated: Jul 26, 2021 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>

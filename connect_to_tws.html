@@ -610,15 +610,16 @@ in your scripts.
 <h2 id="ibgateway">IB::Gateway</h2>
 
 <p>In the WAN-World many things can go terribly wrong.<br />
-Even a super stable cable connection can suddenly vanish. Then a reconnection may be necessary.</p>
+Even a super stable cable connection can suddenly vanish. Then a reconnection may be necessary.
+`ib-api’ implements the basics to connect to the TWS-Server.</p>
 
-<p>The connection to the TWS is performed in <code class="language-plaintext highlighter-rouge">IB::Connection.connect</code>, simply by opening a port</p>
+<p>This is performed in <code class="language-plaintext highlighter-rouge">IB::Connection.connect</code>, simply by opening a port</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>self.socket = IBSocket.open(@host, @port)  
 </code></pre></div></div>
 <p><code class="language-plaintext highlighter-rouge">IBSocket</code> is in fact a specialized <code class="language-plaintext highlighter-rouge">TCPSocket</code>. It inherits  its complete error-handling repertoire.</p>
 
 <p>If the connection cannot be established,  <code class="language-plaintext highlighter-rouge">Errno::ECONNREFUSED</code>  is fired. Its up to the user 
-to handle this error.</p>
+to handle this error. <code class="language-plaintext highlighter-rouge">IB-Gateway</code> does handle most common failures.</p>
 
 <div class="bs-callout bs-callout-info">
 The <em>ib-extensions</em> Gem includes the <em>Gateway</em> application.    
@@ -632,7 +633,7 @@ require 'ib/gateway'
 in your scripts.
 </div>
 
-<p><code class="language-plaintext highlighter-rouge">IB::Gateway#Connect</code>  handles <code class="language-plaintext highlighter-rouge">Errno::ECONNREFUSED</code>, <code class="language-plaintext highlighter-rouge">Errno::EHOSTUNREACH</code> and  the unspecified <code class="language-plaintext highlighter-rouge">SocketError</code>. It’s designed to handle uncertain and often interrupted connections via DSL, WLAN or even GSM.</p>
+<p><code class="language-plaintext highlighter-rouge">IB::Gateway#Connect</code>  covers <code class="language-plaintext highlighter-rouge">Errno::ECONNREFUSED</code>, <code class="language-plaintext highlighter-rouge">Errno::EHOSTUNREACH</code> and  the unspecified <code class="language-plaintext highlighter-rouge">SocketError</code>. It’s designed to manage uncertain and often interrupted connections via DSL, WLAN or even GSM.</p>
 
 <p>If the Host is not reached, it tries to reconnect for at least one hour.</p>
 
@@ -657,7 +658,7 @@ Then an error-message is transmitted:</p>
 </code></pre></div></div>
 <p>Simple and efficient.</p>
 
-<p><code class="language-plaintext highlighter-rouge">IB::Gateway#CheckConnection</code> requests the current time. If this simple message is not answered properly, we disconnect the client and start from the beginning.</p>
+<div class="alert alert-info" role="alert"><i class="fa fa-bars"></i> IB::Gateway#CheckConnection` requests the current time. If this simple message is not answered properly,  the client is disconnected and the program tries to reestablish the connection.</div>
 
 <p>Its safe to call <code class="language-plaintext highlighter-rouge">IB::Gateway#CheckConnection</code> prior to every critical message, as order-placement or contract-verification. It delays the process by approx. 7 ms.</p>
 
@@ -684,7 +685,7 @@ Then an error-message is transmitted:</p>
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2021 IB-Ruby. All rights reserved. <br />
- Site last generated: Jun 18, 2021 <br />
+ Site last generated: Jul 26, 2021 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>
