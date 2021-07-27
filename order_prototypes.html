@@ -321,6 +321,27 @@
           
           
           
+          <li><a title="Verify" href="Verify_contracts.html">Verify</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Market Price" href="market_price.html">Market Price</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Historical Data" href="Historical_data.html">Historical Data</a></li>
+          
+          
+          
+          
+          
+          
           <li><a title="Expiry vs. Last-Trading-Day" href="expiry_and_last_trading_day.html">Expiry vs. Last-Trading-Day</a></li>
           
           
@@ -342,28 +363,7 @@
           
           
           
-          <li><a title="Options rolling" href="roll-options.html">Options rolling</a></li>
-          
-          
-          
-          
-          
-          
-          <li><a title="Verify" href="Verify_contracts.html">Verify</a></li>
-          
-          
-          
-          
-          
-          
-          <li><a title="Market Price" href="market_price.html">Market Price</a></li>
-          
-          
-          
-          
-          
-          
-          <li><a title="Historical Data" href="Historical_data.html">Historical Data</a></li>
+          <li><a title="Rolling of Options nd Futures" href="roll-options.html">Rolling of Options nd Futures</a></li>
           
           
           
@@ -415,24 +415,6 @@
           
           
           <li><a title="Workflow" href="order_workflow.html">Workflow</a></li>
-          
-          
-          
-          <li class="subfolders">
-              <a title="Tag archive pages" href="#">Tag archive pages</a>
-              <ul>
-                  
-              </ul>
-          </li>
-          
-          
-          
-          <li class="subfolders">
-              <a title="Formatting pages" href="#">Formatting pages</a>
-              <ul>
-                  
-              </ul>
-          </li>
           
           
           
@@ -592,9 +574,9 @@ in your scripts.
 
 <p>Interactive Brokers offers more than 60 ordertypes to its clients.</p>
 
-<p>There might be a reason for each and everyone. But it’s virtually impossible to know all of them, and even for less common, but very usefull ordertypes, one must think carefully which attributes apply and/or are required.</p>
+<p>There might be a reason for each and everyone. But it’s virtually impossible to know all of them, and even for less common, but very useful ordertypes, one must think carefully which attributes apply and/or are required.</p>
 
-<p><strong><em>IB-Ruby</em></strong> offers <span class="label label-info">Order-Prototypes</span> to simplify the ordering process.</p>
+<p><strong><em>IB-Ruby</em></strong> implements <span class="label label-info">Order-Prototypes</span> to simplify the ordering process.</p>
 
 <p>Order-Prototypes define the order. For Placement look <a href="oders_placement">here</a>.</p>
 
@@ -611,7 +593,7 @@ in your scripts.
 
 <h2 id="commandline-autocomplete">Commandline autocomplete</h2>
 
-<p>For every OrderPrototpye, a handy command line autocomplete mechanism is provided.</p>
+<p>A handy command line autocomplete mechanism is provided.</p>
 
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">o</span> <span class="o">=</span> <span class="no">Limit</span><span class="p">.</span><span class="nf">order</span>
 		<span class="p">(</span><span class="o">...</span><span class="p">)</span> 
@@ -645,7 +627,7 @@ in your scripts.
 
 <p>The <code class="language-plaintext highlighter-rouge">:size</code> attribute is primarily  an alias for <code class="language-plaintext highlighter-rouge">:total_quantity</code>.</p>
 
-<p>However, as in real live, size an be a negative number. If the <code class="language-plaintext highlighter-rouge">size</code>-attribute is specified <em>without</em> noticing any <code class="language-plaintext highlighter-rouge">:action</code>, the sign is interpreted as intention for the <code class="language-plaintext highlighter-rouge">:action</code>, ie.</p>
+<p>However, as in real live, size can be a negative number. If the <code class="language-plaintext highlighter-rouge">size</code>-attribute is specified <em>without</em> noticing any <code class="language-plaintext highlighter-rouge">:action</code>, the sign is interpreted as intention for the <code class="language-plaintext highlighter-rouge">:action</code>, ie.</p>
 
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="no">Limit</span><span class="p">.</span><span class="nf">order</span><span class="p">(</span> <span class="ss">price: </span><span class="mi">34</span><span class="p">,</span> <span class="ss">size:  </span><span class="mi">5</span> <span class="p">)</span> <span class="o">==&gt;</span>  <span class="no">IB</span><span class="p">:</span><span class="o">.</span><span class="no">Order</span> <span class="ss">attributes: action: :buy</span><span class="p">,</span> <span class="ss">total_quantity: </span><span class="mi">5</span><span class="p">,</span> <span class="ss">limit_price: </span><span class="mi">34</span>
 <span class="o">&gt;</span> <span class="no">Limit</span><span class="p">.</span><span class="nf">order</span><span class="p">(</span> <span class="ss">price: </span><span class="mi">24</span><span class="p">,</span> <span class="ss">size: </span><span class="o">-</span><span class="mi">5</span> <span class="p">)</span> <span class="o">==&gt;</span> <span class="no">IB</span><span class="p">:</span><span class="o">.</span><span class="no">Order</span> <span class="ss">attributes: action: :sell</span><span class="p">,</span> <span class="ss">total_quantity: </span><span class="mi">5</span><span class="p">,</span> <span class="ss">limit_price: </span><span class="mi">34</span>
@@ -653,16 +635,14 @@ in your scripts.
 
 <h2 id="additional-arguments">Additional Arguments</h2>
 
-<p>Order-Prototypes are just a wrapper for  <code class="language-plaintext highlighter-rouge">IB::Order.new</code>. Other arguments(properties) can specified as usual</p>
+<p>Order-Prototypes are just a wrapper for  <code class="language-plaintext highlighter-rouge">IB::Order.new</code>. Other arguments(properties) are specified as usual</p>
 
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="no">C</span><span class="p">.</span><span class="nf">place_order</span> <span class="n">order</span><span class="p">,</span> <span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Stocks</span><span class="p">.</span><span class="nf">wfc</span> 
-<span class="mi">09</span><span class="p">:</span><span class="mo">00</span><span class="p">:</span><span class="mf">50.168</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">4</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">Alert</span><span class="p">)</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span>  <span class="n">order</span> <span class="o">=</span> <span class="no">Limit</span><span class="p">.</span><span class="nf">order</span> <span class="ss">price: </span><span class="mi">15</span><span class="p">,</span> <span class="ss">size:  </span><span class="mi">100</span>  
+<span class="o">&gt;</span>  <span class="no">C</span><span class="p">.</span><span class="nf">place_order</span> <span class="n">order</span><span class="p">,</span> <span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Stocks</span><span class="p">.</span><span class="nf">wfc</span> 
 <span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T09</span><span class="p">:</span><span class="mo">00</span><span class="p">:</span><span class="mf">50.168223</span> <span class="c1">#1501]  INFO -- : TWS Error 436: You must specify an allocation (either a single account, group, or profile).</span>
 
-<span class="o">&gt;</span> <span class="n">order</span> <span class="o">=</span> <span class="no">Limit</span><span class="p">.</span><span class="nf">order</span> <span class="ss">action: :buy</span><span class="p">,</span> <span class="ss">size: </span><span class="mi">100</span><span class="p">,</span> <span class="ss">price: </span><span class="mi">15</span><span class="p">,</span> <span class="ss">account: </span><span class="s1">'DU167349'</span><span class="p">,</span> <span class="ss">transmit: </span><span class="kp">true</span>
+<span class="o">&gt;</span> <span class="n">order</span> <span class="o">=</span> <span class="no">Limit</span><span class="p">.</span><span class="nf">order</span>  <span class="ss">size: </span><span class="mi">100</span><span class="p">,</span> <span class="ss">price: </span><span class="mi">15</span><span class="p">,</span> <span class="ss">account: </span><span class="s1">'DU167349'</span><span class="p">,</span> <span class="ss">transmit: </span><span class="kp">true</span>
 <span class="o">&gt;</span> <span class="no">C</span><span class="p">.</span><span class="nf">place_order</span> <span class="n">order</span><span class="p">,</span> <span class="no">IB</span><span class="o">::</span><span class="no">Symbols</span><span class="o">::</span><span class="no">Stocks</span><span class="p">.</span><span class="nf">wfc</span> 
-<span class="mi">09</span><span class="p">:</span><span class="mo">03</span><span class="p">:</span><span class="mf">23.600</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">5</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">OpenOrder</span><span class="p">)</span>
-<span class="mi">09</span><span class="p">:</span><span class="mo">03</span><span class="p">:</span><span class="mf">23.601</span> <span class="no">Got</span> <span class="n">message</span> <span class="mi">3</span> <span class="p">(</span><span class="no">IB</span><span class="o">::</span><span class="no">Messages</span><span class="o">::</span><span class="no">Incoming</span><span class="o">::</span><span class="no">OrderStatus</span><span class="p">)</span>
 <span class="no">I</span><span class="p">,</span> <span class="p">[</span><span class="mi">2018</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">22</span><span class="no">T09</span><span class="p">:</span><span class="mo">03</span><span class="p">:</span><span class="mf">23.601694</span> <span class="c1">#1501]  INFO -- : &lt;OrderStatus: &lt;OrderState: Submitted #13/1114784592 from 2000 filled 0.0/100.0 at 0.0/0.0 why_held &gt;&gt;</span>
 </code></pre></div></div>
 
@@ -700,7 +680,7 @@ in your scripts.
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2021 IB-Ruby. All rights reserved. <br />
-<span>Page last updated:</span> November 1, 2020<br/> Site last generated: Jul 26, 2021 <br />
+<span>Page last updated:</span> November 1, 2020<br/> Site last generated: Jul 27, 2021 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>

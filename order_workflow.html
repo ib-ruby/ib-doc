@@ -321,6 +321,27 @@
           
           
           
+          <li><a title="Verify" href="Verify_contracts.html">Verify</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Market Price" href="market_price.html">Market Price</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a title="Historical Data" href="Historical_data.html">Historical Data</a></li>
+          
+          
+          
+          
+          
+          
           <li><a title="Expiry vs. Last-Trading-Day" href="expiry_and_last_trading_day.html">Expiry vs. Last-Trading-Day</a></li>
           
           
@@ -342,28 +363,7 @@
           
           
           
-          <li><a title="Options rolling" href="roll-options.html">Options rolling</a></li>
-          
-          
-          
-          
-          
-          
-          <li><a title="Verify" href="Verify_contracts.html">Verify</a></li>
-          
-          
-          
-          
-          
-          
-          <li><a title="Market Price" href="market_price.html">Market Price</a></li>
-          
-          
-          
-          
-          
-          
-          <li><a title="Historical Data" href="Historical_data.html">Historical Data</a></li>
+          <li><a title="Rolling of Options nd Futures" href="roll-options.html">Rolling of Options nd Futures</a></li>
           
           
           
@@ -415,24 +415,6 @@
           
           
           <li class="active"><a title="Workflow" href="order_workflow.html">Workflow</a></li>
-          
-          
-          
-          <li class="subfolders">
-              <a title="Tag archive pages" href="#">Tag archive pages</a>
-              <ul>
-                  
-              </ul>
-          </li>
-          
-          
-          
-          <li class="subfolders">
-              <a title="Formatting pages" href="#">Formatting pages</a>
-              <ul>
-                  
-              </ul>
-          </li>
           
           
           
@@ -620,9 +602,9 @@ in your scripts.
 
 </code></pre></div></div>
 
-<p>see also <a href="/order_preview">Preview Orders</a></p>
+<p>see also <a href="order_preview">Preview Orders</a></p>
 
-<p><code class="language-plaintext highlighter-rouge">IB::Account.preview</code>  transmits a <em>What-if</em> message. To determine, if its possible to place the
+<p><code class="language-plaintext highlighter-rouge">IB::Account.preview</code>  transmits a <em>What-if</em> message. To determine if its possible to place the
 order, just  subtract the <em>margin impact</em> from <em>NetLiquidation</em>.</p>
 
 <h4 id="step-3-place-and-modify-the-order">Step 3: Place and modify the order</h4>
@@ -650,7 +632,7 @@ order, just  subtract the <em>margin impact</em> from <em>NetLiquidation</em>.</
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;</span> <span class="n">the_account</span><span class="p">.</span><span class="nf">cancel</span>  <span class="n">the_order</span>
 <span class="o">&gt;</span> <span class="n">the_account</span><span class="p">.</span><span class="nf">orders</span><span class="p">.</span><span class="nf">to_human</span>
  <span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"&lt;Order: LMT GTC buy 100.0  @ 201.33 PreSubmitted #18/1729171645 from 0/DU167348&gt;"</span><span class="p">,</span> 
- <span class="s2">"&lt;Order: LMT GTC buy 100.0  @ 198.0 Cancelled #19/1729171646 from 2000/DU167348&gt;"</span><span class="p">]</span>         <span class="c1"># cancelled</span>
+     <span class="s2">"&lt;Order: LMT GTC buy 100.0  @ 198.0 Cancelled #19/1729171646 from 2000/DU167348&gt;"</span><span class="p">]</span>         <span class="c1"># cancelled</span>
 
 </code></pre></div></div>
 
@@ -679,7 +661,7 @@ order, just  subtract the <em>margin impact</em> from <em>NetLiquidation</em>.</
             <div class="row">
                 <div class="col-lg-12 footer">
                &copy;2021 IB-Ruby. All rights reserved. <br />
-<span>Page last updated:</span> November 3, 2020<br/> Site last generated: Jul 26, 2021 <br />
+<span>Page last updated:</span> November 3, 2020<br/> Site last generated: Jul 27, 2021 <br />
 <p><img src="images/company_logo.png" alt="Company logo"/></p>
                 </div>
             </div>
